@@ -653,22 +653,36 @@ void PrintListOfStudentInClass(string NameOfClass ){
 }
 
 void PrintListOfStudentInClass(ClassInfo temp){
+    if (temp.NumberOfStudent_current == 0){
+        cout <<"Danh sach sinh vien lop "<< temp.nameClass <<" trong" << endl;
+        return;
+    }
+    GoTo(25, 0); cout <<"Danh sach sinh vien lop " << temp.nameClass << endl;
+    SetColor(14, 1);
+    cout << setw(3)  << "STT";
+    cout << setw(20) << "Ho va Ten Lot";
+    cout << setw(20) << "Ten";
+    cout << setw(15) << "Gioi tinh";
+    cout << setw(15) << "Ngay sinh";
+    cout << setw(15) << "MSSV";
+    cout << setw(20) << "CCCD" <<endl;
+    TextColor(7);
     for (int i = 0; i < temp.NumberOfStudent_current; i++){
         cout << setw(3)  << i + 1;
         cout << setw(20) << temp.student[i].FirstName;
         cout << setw(20) << temp.student[i].LastName;
-        cout << setw(10) << temp.student[i].Gender;
+        cout << setw(15) << temp.student[i].Gender;
         cout << setw(15) << temp.student[i].DateOfBirth;
         cout << setw(15) << temp.student[i].StudentID;
         cout << setw(20) << temp.student[i].SocialID <<endl;
     }
 }
 
-void MenuListOfClass(){
+void MenuListOfClass(SchoolTime NienKhoa){
     system("cls");
-    extern hcmus NamHoc;
-    cout <<"DANH SACH CAC LOP NAM HOC " << NamHoc.ptr[NamHoc.NumberOfSchoolYear - 1].SchoolYear << endl;
-    ListOfClasses* temp = NamHoc.ptr[NamHoc.NumberOfSchoolYear - 1].HeadList;
+    //extern hcmus NamHoc;
+    cout <<"DANH SACH CAC LOP NAM HOC " << NienKhoa.SchoolYear << endl;
+    ListOfClasses* temp = NienKhoa.HeadList;
     int NumberOfClasses = 1;
 
     SetColor(14, 1);
@@ -686,15 +700,7 @@ void MenuListOfClass(){
     for (int i = 0; i <= 92; i++){
         GoTo(i, 2 + NumberOfClasses); cout <<' ';
     }
-    GoTo(0 , 2 + NumberOfClasses); cout << NumberOfClasses;
-    GoTo(10, 2 + NumberOfClasses); cout << temp->data.nameClass;
-    GoTo(25, 2 + NumberOfClasses); cout << temp->data.major;
-    GoTo(59, 2 + NumberOfClasses); cout << temp->data.NumberOfStudent_current;
-    GoTo(72, 2 + NumberOfClasses); cout << temp->data.NumberOfStudent_max;
-    GoTo(84, 2 + NumberOfClasses); cout << ConvertFirst(temp->data.TimeBegin) << endl;
-    temp = temp->pNext;
-    NumberOfClasses++;
-    TextColor(7);
+  
     while (temp != nullptr){
         GoTo(0 , 2 + NumberOfClasses); cout << NumberOfClasses;
         GoTo(10, 2 + NumberOfClasses); cout << temp->data.nameClass;
@@ -702,12 +708,13 @@ void MenuListOfClass(){
         GoTo(59, 2 + NumberOfClasses); cout << temp->data.NumberOfStudent_current;
         GoTo(72, 2 + NumberOfClasses); cout << temp->data.NumberOfStudent_max;
         GoTo(84, 2 + NumberOfClasses); cout << ConvertFirst(temp->data.TimeBegin) << endl;
+        if (temp == NienKhoa.HeadList) TextColor(7);
         temp = temp->pNext;
         NumberOfClasses++;
     }
     NumberOfClasses--;
     int dem = 1;
-    temp = NamHoc.ptr[NamHoc.NumberOfSchoolYear - 1].HeadList;
+    temp = NienKhoa.HeadList;
     while(true){
         if (kbhit()){
             char c = getch();
@@ -727,7 +734,7 @@ void MenuListOfClass(){
                     dem--;
                     if (dem == 0){
                         dem = NumberOfClasses;
-                        temp = NamHoc.ptr[NamHoc.NumberOfSchoolYear - 1].EndList;
+                        temp = NienKhoa.EndList;
                     }
                     else temp = temp->pPrev;
                     SetColor(7, 0);
@@ -755,7 +762,7 @@ void MenuListOfClass(){
                     dem++;
                     if (dem > NumberOfClasses){
                         dem = 1;
-                        temp = NamHoc.ptr[NamHoc.NumberOfSchoolYear - 1].HeadList;
+                        temp = NienKhoa.HeadList;
                     }
                     else temp = temp->pNext;
                     SetColor(7, 0);
@@ -771,8 +778,11 @@ void MenuListOfClass(){
                 }
             }
             if (c == 13){
-                    PrintListOfStudentInClass(temp->data);
+                    TextColor(7);
                     system("cls");
+                    PrintListOfStudentInClass(temp->data);
+                    system("pause");
+                    break;
             }
             if (c == 27){
                     GoTo(0, NumberOfClasses + 5);

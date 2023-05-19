@@ -92,4 +92,4 @@ void AddOneStudentToClass(string NameOfClass);
 void InputStudentFromFile(string NameOfClass);
 void PrintListOfStudentInClass(string NameOfClass );
 void PrintListOfStudentInClass(ClassInfo temp);
-void MenuListOfClass();
+void MenuListOfClass(SchoolTime NienKhoa);

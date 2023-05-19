@@ -20,7 +20,7 @@ int main(){
     // CreateMultipleClasses(NamHoc.ptr[1]);
     // InputStudentFromFile("19CTT2");
     // AddOneStudentToClass("18CTT2");
-    MenuListOfClass();
+    MenuListOfClass(NamHoc.ptr[0]);
     // // cout <<"*************" << endl;
     // // string st;
     // // cout <<"Nhap lop muon them sinh vien: ";
