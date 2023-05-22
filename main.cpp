@@ -13,7 +13,10 @@ int main(){
     CreateMultipleClasses(NamHoc.ptr[0]);
     //CreateMultipleClasses(NamHoc.ptr[0]);
     //CreateSimpleClass(NamHoc.ptr[0]);
-    InputStudentFromFile("18CTT3");
+    InputStudentFromFile("22CTT3");
+    InputStudentFromFile("22CTT2");
+    InputStudentFromFile("22CTT4");
+
     // PrintListOfStudentInClass("18CTT3");
     // CreateMultipleClasses(NamHoc.ptr[0]);
     // InputSchoolYear(NamHoc);
