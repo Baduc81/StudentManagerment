@@ -15,9 +15,9 @@ int main(){
     //CreateSimpleClass(NamHoc.ptr[0]);
     InputStudentFromFile("22CTT3");
     InputStudentFromFile("22CTT2");
-    InputStudentFromFile("22CTT4");
-
-    // PrintListOfStudentInClass("18CTT3");
+    InputStudentFromFile("22CTT4");   
+    
+    //PrintListOfStudentInClass(NamHoc.ptr[0].HeadList->pNext->pNext->data);
     // CreateMultipleClasses(NamHoc.ptr[0]);
     // InputSchoolYear(NamHoc);
     // CreateMultipleClasses(NamHoc.ptr[1]);

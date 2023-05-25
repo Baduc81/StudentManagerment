@@ -93,3 +93,4 @@ void InputStudentFromFile(string NameOfClass);
 void PrintListOfStudentInClass(string NameOfClass );
 void PrintListOfStudentInClass(ClassInfo temp);
 void MenuListOfClass(SchoolTime NienKhoa);
+void DeleteOneStudent(ClassInfo& temp, int pos); //Xoa sinh vien co vi tri pos trong lop temp

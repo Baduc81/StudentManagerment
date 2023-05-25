@@ -46,7 +46,7 @@ void TextColor(int color_code)//X là mã màu
 void UploadAccount(){
     extern Account* SignIn;
     extern int quantity;
-    ifstream input("Login.txt");
+    ifstream input("Data\\Login.txt");
     input >> quantity;
     SignIn = new Account[quantity + 1];
     for (int i = 0; i < quantity; i++){
@@ -54,7 +54,7 @@ void UploadAccount(){
     }
     input.close();
 
-    ifstream ifs("Information.txt");
+    ifstream ifs("Data\\Information.txt");
     for (int i = 0; i < quantity; i++){
         getline(ifs, SignIn[i].name);
         ifs >> SignIn[i].birthday;
@@ -247,7 +247,7 @@ void ChangePassword(int pos){ //pos là vị trí tài khoản lưu trong mảng
     TextColor(2);
     GoTo(45, 7); cout <<"Change password successfully";
     sleep(2);
-    ofstream ofs("Login.txt");
+    ofstream ofs("Data\\Login.txt");
     ofs << quantity <<"\n";
     for (int i = 0; i < quantity; i++)
         ofs << SignIn[i].username <<' '<< SignIn[i].password<<' '<<SignIn[i].IsStaff<<"\n";
@@ -595,7 +595,7 @@ void InputStudentFromFile(string NameOfClass){
         }
         tam = tam->pNext;
     }
-    NameOfClass = NameOfClass + ".csv";
+    NameOfClass = "Data\\" + NameOfClass + ".csv";
     ifstream ifs(NameOfClass);
     if (!ifs){
         cout <<"Khong the mo file" << endl;
@@ -650,6 +650,13 @@ void PrintListOfStudentInClass(string NameOfClass ){
         cout << setw(15) << tam->data.student[i].StudentID;
         cout << setw(20) << tam->data.student[i].SocialID <<endl;
     }
+}
+
+void DeleteOneStudent(ClassInfo& temp, int pos){ //Xoa sinh vien co vi tri pos trong lop temp
+    for (int i = pos; i < temp.NumberOfStudent_current; i++){
+        temp.student[i] = temp.student[i + 1];
+    }
+    temp.NumberOfStudent_current--;
 }
 
 void PrintListOfStudentInClass(ClassInfo temp){
@@ -744,6 +751,13 @@ void PrintListOfStudentInClass(ClassInfo temp){
                 }
             }
             if (c == 27) {TextColor(7);return;}
+            if (c == 8) {
+                TextColor(7);
+                DeleteOneStudent(temp, pos);
+                system("cls");
+                PrintListOfStudentInClass(temp);
+                return;
+            }
         }
     }
 }
@@ -900,3 +914,4 @@ void MenuListOfClass(SchoolTime NienKhoa){
         }
     }
 }
+
