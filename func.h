@@ -36,10 +36,28 @@ struct StudentInfo{
     string SocialID;
 };
 
+struct Course{
+    string CourseID;
+    string CourseName;
+    string TeacherName;
+    int NumberOfCredit;
+    int NumberOfStudent_Max;
+    string DayOfWeek;
+    string session;
+};
+
+struct ListOfCourse{
+    Course data;
+    ListOfCourse* pNext;
+    ListOfCourse* pPrev;
+};
+
 struct HocKy{
-    short number;
+    short STT;
     string StartDate;
     string EndDate;
+    ListOfCourse* HeadList;
+    ListOfCourse* EndList;
 };
 
 struct ClassInfo{
@@ -54,7 +72,7 @@ struct ClassInfo{
 struct ListOfClasses{
     ClassInfo data;
     ListOfClasses* pNext;
-    ListOfClasses* pPrev;
+    ListOfClasses* pPrev; //Tạo ra để làm menu lên xuống
 };
 
 struct SchoolTime{
@@ -69,6 +87,8 @@ struct hcmus{
     int NumberOfSchoolYear;
     SchoolTime* ptr;
 };
+
+
 
 void GoTo(SHORT posX, SHORT posY);
 void SetColor(int background_color, int text_color);
@@ -91,6 +111,8 @@ ListOfClasses* FindClass(SchoolTime temp, string NameOfClass);
 void AddOneStudentToClass(string NameOfClass);
 void InputStudentFromFile(string NameOfClass);
 void PrintListOfStudentInClass(string NameOfClass );
-void PrintListOfStudentInClass(ClassInfo temp);
+void PrintListOfStudentInClass(ClassInfo& temp);
 void MenuListOfClass(SchoolTime NienKhoa);
 void DeleteOneStudent(ClassInfo& temp, int pos); //Xoa sinh vien co vi tri pos trong lop temp
+void InputCourseInfo(Course& temp);
+void AddCourseToSemester(HocKy& temp);

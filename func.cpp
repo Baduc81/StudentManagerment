@@ -430,14 +430,16 @@ void InputSemester(hcmus &KHTN){
                 }
                 KHTN.ptr[i].NumberOfSemester++;
                 cout <<"Nhap hoc ky       : ";
-                cin >> KHTN.ptr[i].semester[KHTN.ptr[i].NumberOfSemester - 1].number;
+                cin >> KHTN.ptr[i].semester[KHTN.ptr[i].NumberOfSemester - 1].STT;
                 cin.ignore();
                 cout <<"Nhap ngay bat dau : ";
                 getline(cin, KHTN.ptr[i].semester[KHTN.ptr[i].NumberOfSemester - 1].StartDate);
                 cout <<"Nhap ngay ket thuc: ";
                 getline(cin, KHTN.ptr[i].semester[KHTN.ptr[i].NumberOfSemester - 1].EndDate);
-                cout <<"Da nhap hoc ky "<<KHTN.ptr[i].semester[KHTN.ptr[i].NumberOfSemester - 1].number<<" cho nam hoc "<<temp<<endl;
+                cout <<"Da nhap hoc ky "<<KHTN.ptr[i].semester[KHTN.ptr[i].NumberOfSemester - 1].STT<<" cho nam hoc "<<temp<<endl;
                 //KHTN.ptr[i].semester[KHTN.ptr[i].NumberOfSemester - 1] = KHTN.ptr[i].NumberOfSemester;
+                KHTN.ptr[i].semester[KHTN.ptr[i].NumberOfSemester - 1].HeadList = nullptr;
+                KHTN.ptr[i].semester[KHTN.ptr[i].NumberOfSemester - 1].EndList = nullptr;
                 return;
             }
         }
@@ -603,12 +605,12 @@ void InputStudentFromFile(string NameOfClass){
     }
 
     string num, firstname, lastname, birthday, MSSV, ID, sex;
-    getline(ifs, num, ';');
-    getline(ifs, firstname, ';');
-    getline(ifs, lastname, ';');
-    getline(ifs, sex, ';');
-    getline(ifs, birthday, ';');
-    getline(ifs, MSSV, ';');
+    getline(ifs, num, ',');
+    getline(ifs, firstname, ',');
+    getline(ifs, lastname, ',');
+    getline(ifs, sex, ',');
+    getline(ifs, birthday, ',');
+    getline(ifs, MSSV, ',');
     getline(ifs, ID);
     //cout << num <<' '<< firstname <<' '<<lastname<<' '<< sex <<' '<<birthday<<' '<<MSSV <<' '<< ID << endl;
     while (!ifs.eof()){
@@ -617,12 +619,12 @@ void InputStudentFromFile(string NameOfClass){
             return;
         }
         int i = tam->data.NumberOfStudent_current++;
-        getline(ifs, num, ';');
-        getline(ifs, tam->data.student[i].FirstName, ';');
-        getline(ifs, tam->data.student[i].LastName, ';');
-        getline(ifs, tam->data.student[i].Gender, ';');
-        getline(ifs, tam->data.student[i].DateOfBirth, ';');
-        getline(ifs, tam->data.student[i].StudentID, ';');
+        getline(ifs, num, ',');
+        getline(ifs, tam->data.student[i].FirstName, ',');
+        getline(ifs, tam->data.student[i].LastName, ',');
+        getline(ifs, tam->data.student[i].Gender, ',');
+        getline(ifs, tam->data.student[i].DateOfBirth, ',');
+        getline(ifs, tam->data.student[i].StudentID, ',');
         getline(ifs, tam->data.student[i].SocialID);
     }
     ifs.close();
@@ -659,7 +661,7 @@ void DeleteOneStudent(ClassInfo& temp, int pos){ //Xoa sinh vien co vi tri pos t
     temp.NumberOfStudent_current--;
 }
 
-void PrintListOfStudentInClass(ClassInfo temp){
+void PrintListOfStudentInClass(ClassInfo& temp){
     if (temp.NumberOfStudent_current == 0){
         cout <<"Danh sach sinh vien lop "<< temp.nameClass <<" trong" << endl;
         system("pause");
@@ -753,8 +755,8 @@ void PrintListOfStudentInClass(ClassInfo temp){
             if (c == 27) {TextColor(7);return;}
             if (c == 8) {
                 TextColor(7);
-                DeleteOneStudent(temp, pos);
                 system("cls");
+                DeleteOneStudent(temp, pos);
                 PrintListOfStudentInClass(temp);
                 return;
             }
@@ -915,3 +917,47 @@ void MenuListOfClass(SchoolTime NienKhoa){
     }
 }
 
+void InputCourseInfo(Course& temp){
+    cout <<"Enter course ID: ";
+    getline(cin, temp.CourseID);
+    cout <<"Enter course name: ";
+    getline(cin, temp.CourseName);
+    cout <<"Enter teacher name: ";
+    getline(cin, temp.TeacherName);
+    cout <<"Enter number of credits: ";
+    cin >> temp.NumberOfCredit;
+    cin.ignore();
+    cout <<"Enter the maximum number of student: ";
+    cin >> temp.NumberOfStudent_Max;
+    cin.ignore();
+    cout <<"Enter day of week (MON / TUE / WED / THU / FRI / SAT): ";
+    getline(cin, temp.DayOfWeek);
+    cout <<"Enter session: S1(07:30); S2(09:30); S3(13:30); S4(15:30): ";
+    getline(cin, temp.session); 
+}
+
+// AddCourseToSemester(KHTN.ptr[0].semester[1])
+void AddCourseToSemester(HocKy& temp){
+    ListOfCourse* node = new ListOfCourse;
+    InputCourseInfo(node->data);
+    node->pNext = nullptr;
+    node->pPrev = nullptr;
+    if (temp.HeadList == nullptr) temp.HeadList = node;
+    else if (temp.EndList == nullptr){
+            node->pNext = nullptr;
+            node->pPrev = temp.HeadList;
+            temp.EndList = node;
+        }
+        else {
+            temp.EndList->pNext = node;
+            node->pPrev = temp.EndList;
+            temp.EndList = node;
+        }
+}
+
+void PrintListOfCourseInSemester(HocKy temp){
+    ListOfCourse* node = temp.HeadList;
+    while (node != nullptr){
+        cout << node->data.CourseID
+    }
+}
