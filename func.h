@@ -39,6 +39,7 @@ struct StudentInfo{
 struct Course{
     string CourseID;
     string CourseName;
+    string ClassName;
     string TeacherName;
     int NumberOfCredit;
     int NumberOfStudent_Max;
@@ -116,3 +117,4 @@ void MenuListOfClass(SchoolTime NienKhoa);
 void DeleteOneStudent(ClassInfo& temp, int pos); //Xoa sinh vien co vi tri pos trong lop temp
 void InputCourseInfo(Course& temp);
 void AddCourseToSemester(HocKy& temp);
+void PrintListOfCourseInSemester(HocKy temp);

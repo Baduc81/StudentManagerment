@@ -922,6 +922,8 @@ void InputCourseInfo(Course& temp){
     getline(cin, temp.CourseID);
     cout <<"Enter course name: ";
     getline(cin, temp.CourseName);
+    cout <<"Enter class name: ";
+    getline(cin, temp.ClassName);
     cout <<"Enter teacher name: ";
     getline(cin, temp.TeacherName);
     cout <<"Enter number of credits: ";
@@ -944,7 +946,7 @@ void AddCourseToSemester(HocKy& temp){
     node->pPrev = nullptr;
     if (temp.HeadList == nullptr) temp.HeadList = node;
     else if (temp.EndList == nullptr){
-            node->pNext = nullptr;
+            temp.HeadList->pNext = node;
             node->pPrev = temp.HeadList;
             temp.EndList = node;
         }
@@ -956,8 +958,117 @@ void AddCourseToSemester(HocKy& temp){
 }
 
 void PrintListOfCourseInSemester(HocKy temp){
+    system("cls");
     ListOfCourse* node = temp.HeadList;
+    SetColor(14, 1);
+    for (int i = 0; i <= 132; i++){
+        GoTo(i, 2); cout <<' ';
+    }
+    GoTo(0, 2); cout << "STT";
+    GoTo(5, 2); cout << "COURSE ID";
+    GoTo(19, 2);cout << "COURSE NAME";
+    GoTo(40, 2);cout << "CLASS NAME";
+    GoTo(57, 2);cout << "TEACHER NAME";
+    GoTo(76, 2);cout << "NUMBER OF CREDIT";
+    GoTo(95, 2);cout << "MAXIMUM OF STUDENT";
+    GoTo(117, 2);cout << "DAY OF WEEK";
+    GoTo(132, 2);cout << "SESSION";
+    int dem = 1;
+    SetColor(7, 0);
+    for (int i = 0; i <= 132; i++){
+        GoTo(i, 3); cout <<' ';
+    }
     while (node != nullptr){
-        cout << node->data.CourseID
+        GoTo(0, 2 + dem);  cout << dem;
+        GoTo(5, 2 + dem);  cout << node->data.CourseID;
+        GoTo(18, 2 + dem); cout << node->data.CourseName;
+        GoTo(42, 2 + dem); cout << node->data.ClassName;
+        GoTo(56, 2 + dem); cout << node->data.TeacherName;
+        GoTo(83, 2 + dem); cout << node->data.NumberOfCredit;
+        GoTo(102, 2 + dem); cout << node->data.NumberOfStudent_Max;
+        GoTo(120, 2 + dem);cout << node->data.DayOfWeek;
+        GoTo(134, 2 + dem);cout << node->data.session;
+        node = node->pNext;
+        if (dem == 1) TextColor(7);
+        dem++;
+    }
+    int NumberOfCourse = dem - 1;
+    dem = 1;
+    node = temp.HeadList;
+    while(true){
+        if (kbhit()){
+            char c = getch();
+            if (c == -32){
+                c = getch();
+                if (c == 72) { //Di len
+                    TextColor(7);
+                    for (int i = 0; i <= 132; i++){
+                        GoTo(i, 2 + dem); cout <<' ';
+                    }
+                    GoTo(0, 2 + dem);  cout << dem;
+                    GoTo(5, 2 + dem);  cout << node->data.CourseID;
+                    GoTo(18, 2 + dem); cout << node->data.CourseName;
+                    GoTo(42, 2 + dem); cout << node->data.ClassName;
+                    GoTo(56, 2 + dem); cout << node->data.TeacherName;
+                    GoTo(83, 2 + dem); cout << node->data.NumberOfCredit;
+                    GoTo(102, 2 + dem); cout << node->data.NumberOfStudent_Max;
+                    GoTo(120, 2 + dem);cout << node->data.DayOfWeek;
+                    GoTo(134, 2 + dem);cout << node->data.session;
+                    dem--;
+                    if (dem == 0){ 
+                        dem = NumberOfCourse; 
+                        node = temp.EndList; 
+                    }
+                    else node = node->pPrev;
+                    SetColor(7, 0);
+                    for (int i = 0; i <= 132; i++){
+                        GoTo(i, 2 + dem); cout <<' ';
+                    }
+                    GoTo(0, 2 + dem);  cout << dem;
+                    GoTo(5, 2 + dem);  cout << node->data.CourseID;
+                    GoTo(18, 2 + dem); cout << node->data.CourseName;
+                    GoTo(42, 2 + dem); cout << node->data.ClassName;
+                    GoTo(56, 2 + dem); cout << node->data.TeacherName;
+                    GoTo(83, 2 + dem); cout << node->data.NumberOfCredit;
+                    GoTo(102, 2 + dem); cout << node->data.NumberOfStudent_Max;
+                    GoTo(120, 2 + dem);cout << node->data.DayOfWeek;
+                    GoTo(134, 2 + dem);cout << node->data.session;
+                }
+                if (c == 80){ //Di xuong
+                    TextColor(7);
+                    for (int i = 0; i <= 132; i++){
+                        GoTo(i, 2 + dem); cout <<' ';
+                    }
+                    GoTo(0, 2 + dem);  cout << dem;
+                    GoTo(5, 2 + dem);  cout << node->data.CourseID;
+                    GoTo(18, 2 + dem); cout << node->data.CourseName;
+                    GoTo(42, 2 + dem); cout << node->data.ClassName;
+                    GoTo(56, 2 + dem); cout << node->data.TeacherName;
+                    GoTo(83, 2 + dem); cout << node->data.NumberOfCredit;
+                    GoTo(102, 2 + dem); cout << node->data.NumberOfStudent_Max;
+                    GoTo(120, 2 + dem);cout << node->data.DayOfWeek;
+                    GoTo(134, 2 + dem);cout << node->data.session;
+                    dem++;
+                    if (dem == NumberOfCourse + 1){ 
+                        dem = 1; 
+                        node = temp.HeadList; 
+                    }
+                    else node = node->pNext;
+                    SetColor(7, 0);
+                    for (int i = 0; i <= 132; i++){
+                        GoTo(i, 2 + dem); cout <<' ';
+                    }
+                    GoTo(0, 2 + dem);  cout << dem;
+                    GoTo(5, 2 + dem);  cout << node->data.CourseID;
+                    GoTo(18, 2 + dem); cout << node->data.CourseName;
+                    GoTo(42, 2 + dem); cout << node->data.ClassName;
+                    GoTo(56, 2 + dem); cout << node->data.TeacherName;
+                    GoTo(83, 2 + dem); cout << node->data.NumberOfCredit;
+                    GoTo(102, 2 + dem); cout << node->data.NumberOfStudent_Max;
+                    GoTo(120, 2 + dem);cout << node->data.DayOfWeek;
+                    GoTo(134, 2 + dem);cout << node->data.session;
+                }
+            }
+        }
     }
 }

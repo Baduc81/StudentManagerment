@@ -12,8 +12,10 @@ int main(){
     InputSchoolYear(NamHoc);
     InputSemester(NamHoc);
     AddCourseToSemester(NamHoc.ptr[0].semester[0]);
-    system("pause");
-    cout << NamHoc.ptr[0].semester[0].HeadList->data.CourseName << endl;
+    AddCourseToSemester(NamHoc.ptr[0].semester[0]);
+    //AddCourseToSemester(NamHoc.ptr[0].semester[0]);
+    PrintListOfCourseInSemester(NamHoc.ptr[0].semester[0]);
+    // system("pause");
     // CreateMultipleClasses(NamHoc.ptr[0]);
     // CreateMultipleClasses(NamHoc.ptr[0]);
     // CreateSimpleClass(NamHoc.ptr[0]);
