@@ -10,11 +10,12 @@ int main(){
     // // Login();
     NamHoc.NumberOfSchoolYear = 0;
     InputSchoolYear(NamHoc);
-    InputSemester(NamHoc);
+    // InputSemester(NamHoc);
     AddCourseToSemester(NamHoc.ptr[0].semester[0]);
     AddCourseToSemester(NamHoc.ptr[0].semester[0]);
-    //AddCourseToSemester(NamHoc.ptr[0].semester[0]);
+    AddCourseToSemester(NamHoc.ptr[0].semester[0]);
     PrintListOfCourseInSemester(NamHoc.ptr[0].semester[0]);
+    //EditCourse(NamHoc.ptr[0].semester[0].HeadList->data);
     // system("pause");
     // CreateMultipleClasses(NamHoc.ptr[0]);
     // CreateMultipleClasses(NamHoc.ptr[0]);
