@@ -119,3 +119,4 @@ void InputCourseInfo(Course& temp);
 void AddCourseToSemester(HocKy& temp);
 void PrintListOfCourseInSemester(HocKy& temp);
 void EditCourse(Course& temp);
+void DeleteCourse(HocKy& temp, ListOfCourse* node);

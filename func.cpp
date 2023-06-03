@@ -1110,6 +1110,11 @@ void PrintListOfCourseInSemester(HocKy& temp){
                     dem_sub++;
                 }
             }
+            if (c == 8){ //Backspace
+                DeleteCourse(temp, node);
+                TextColor(7);
+                PrintListOfCourseInSemester(temp);
+            }
             if (c == 27) {GoTo(0, 10); return;} //ESC
         }
     }
@@ -1256,4 +1261,22 @@ void EditCourse(Course& temp){
         }
     }
     TextColor(7);
+}
+
+void DeleteCourse(HocKy& temp, ListOfCourse* node){
+    if (node == temp.HeadList){
+        temp.HeadList = node->pNext;
+        if (temp.HeadList != nullptr) temp.HeadList->pPrev = nullptr;
+    }
+    else if (node == temp.EndList){
+            temp.EndList = node->pPrev;
+            if (temp.EndList != nullptr) temp.EndList->pNext = nullptr;
+        }
+        else {
+            ListOfCourse* node_pre = node->pPrev;
+            ListOfCourse* node_next = node->pNext;
+            node_pre->pNext = node_next;
+            node_next->pPrev = node_pre;
+        }
+    
 }
