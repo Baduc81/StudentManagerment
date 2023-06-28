@@ -936,6 +936,8 @@ void InputCourseInfo(Course& temp){
     getline(cin, temp.DayOfWeek);
     cout <<"Enter session: S1(07:30); S2(09:30); S3(13:30); S4(15:30): ";
     getline(cin, temp.session); 
+    temp.student = new StudentInfo[temp.NumberOfStudent_Max + 1];
+    temp.NumberOfStudent_Current = 0;
 }
 
 // AddCourseToSemester(KHTN.ptr[0].semester[1])
@@ -961,33 +963,35 @@ void PrintListOfCourseInSemester(HocKy& temp){
     system("cls");
     ListOfCourse* node = temp.HeadList;
     SetColor(14, 1);
-    for (int i = 0; i <= 138; i++){
+    for (int i = 0; i <= 147; i++){
         GoTo(i, 2); cout <<' ';
     }
     GoTo(0, 2); cout << "STT";
     GoTo(5, 2); cout << "COURSE ID";
-    GoTo(19, 2);cout << "COURSE NAME";
-    GoTo(40, 2);cout << "CLASS NAME";
+    GoTo(22, 2);cout << "COURSE NAME";
+    GoTo(42, 2);cout << "CLASS NAME";
     GoTo(57, 2);cout << "TEACHER NAME";
-    GoTo(76, 2);cout << "NUMBER OF CREDIT";
-    GoTo(95, 2);cout << "MAXIMUM OF STUDENT";
-    GoTo(117, 2);cout << "DAY OF WEEK";
-    GoTo(132, 2);cout << "SESSION";
+    GoTo(80, 2);cout << "CREDITs";
+    GoTo(93, 2);cout << "STUDENT_Current";
+    GoTo(112, 2);cout << "STUDENT_Max";
+    GoTo(126, 2);cout << "DAY OF WEEK";
+    GoTo(140, 2);cout << "SESSION";
     int dem = 1;
     SetColor(7, 0);
-    for (int i = 0; i <= 138; i++){
+    for (int i = 0; i <= 147; i++){
         GoTo(i, 3); cout <<' ';
     }
     while (node != nullptr){
-        GoTo(0, 2 + dem);  cout << dem;
-        GoTo(5, 2 + dem);  cout << node->data.CourseID;
-        GoTo(18, 2 + dem); cout << node->data.CourseName;
-        GoTo(42, 2 + dem); cout << node->data.ClassName;
-        GoTo(56, 2 + dem); cout << node->data.TeacherName;
-        GoTo(83, 2 + dem); cout << node->data.NumberOfCredit;
-        GoTo(102, 2 + dem); cout << node->data.NumberOfStudent_Max;
-        GoTo(120, 2 + dem);cout << node->data.DayOfWeek;
-        GoTo(134, 2 + dem);cout << node->data.session;
+        GoTo(0, 2 + dem); cout << dem;
+        GoTo(5, 2 + dem); cout << node->data.CourseID;
+        GoTo(19, 2 + dem);cout << node->data.CourseName;
+        GoTo(44, 2 + dem);cout << node->data.ClassName;
+        GoTo(57, 2 + dem);cout << node->data.TeacherName;
+        GoTo(83, 2 + dem);cout << node->data.NumberOfCredit;
+        GoTo(99, 2 + dem);cout << node->data.NumberOfStudent_Current;
+        GoTo(116, 2 + dem);cout << node->data.NumberOfStudent_Max;
+        GoTo(129, 2 + dem);cout << node->data.DayOfWeek;
+        GoTo(142, 2 + dem);cout << node->data.session;
         node = node->pNext;
         if (dem == 1) TextColor(7);
         dem++;
@@ -1002,18 +1006,19 @@ void PrintListOfCourseInSemester(HocKy& temp){
                 c = getch();
                 if (c == 72) { //Di len
                     TextColor(7);
-                    for (int i = 0; i <= 138; i++){
+                    for (int i = 0; i <= 147; i++){
                         GoTo(i, 2 + dem); cout <<' ';
                     }
-                    GoTo(0, 2 + dem);  cout << dem;
-                    GoTo(5, 2 + dem);  cout << node->data.CourseID;
-                    GoTo(18, 2 + dem); cout << node->data.CourseName;
-                    GoTo(42, 2 + dem); cout << node->data.ClassName;
-                    GoTo(56, 2 + dem); cout << node->data.TeacherName;
-                    GoTo(83, 2 + dem); cout << node->data.NumberOfCredit;
-                    GoTo(102, 2 + dem); cout << node->data.NumberOfStudent_Max;
-                    GoTo(120, 2 + dem);cout << node->data.DayOfWeek;
-                    GoTo(134, 2 + dem);cout << node->data.session;
+                    GoTo(0, 2 + dem); cout << dem;
+                    GoTo(5, 2 + dem); cout << node->data.CourseID;
+                    GoTo(19, 2 + dem);cout << node->data.CourseName;
+                    GoTo(44, 2 + dem);cout << node->data.ClassName;
+                    GoTo(57, 2 + dem);cout << node->data.TeacherName;
+                    GoTo(83, 2 + dem);cout << node->data.NumberOfCredit;
+                    GoTo(99, 2 + dem);cout << node->data.NumberOfStudent_Current;
+                    GoTo(116, 2 + dem);cout << node->data.NumberOfStudent_Max;
+                    GoTo(129, 2 + dem);cout << node->data.DayOfWeek;
+                    GoTo(142, 2 + dem);cout << node->data.session;
                     dem--;
                     if (dem == 0){ 
                         dem = NumberOfCourse; 
@@ -1021,33 +1026,35 @@ void PrintListOfCourseInSemester(HocKy& temp){
                     }
                     else node = node->pPrev;
                     SetColor(7, 0);
-                    for (int i = 0; i <= 138; i++){
+                    for (int i = 0; i <= 147; i++){
                         GoTo(i, 2 + dem); cout <<' ';
                     }
-                    GoTo(0, 2 + dem);  cout << dem;
-                    GoTo(5, 2 + dem);  cout << node->data.CourseID;
-                    GoTo(18, 2 + dem); cout << node->data.CourseName;
-                    GoTo(42, 2 + dem); cout << node->data.ClassName;
-                    GoTo(56, 2 + dem); cout << node->data.TeacherName;
-                    GoTo(83, 2 + dem); cout << node->data.NumberOfCredit;
-                    GoTo(102, 2 + dem); cout << node->data.NumberOfStudent_Max;
-                    GoTo(120, 2 + dem);cout << node->data.DayOfWeek;
-                    GoTo(134, 2 + dem);cout << node->data.session;
+                    GoTo(0, 2 + dem); cout << dem;
+                    GoTo(5, 2 + dem); cout << node->data.CourseID;
+                    GoTo(19, 2 + dem);cout << node->data.CourseName;
+                    GoTo(44, 2 + dem);cout << node->data.ClassName;
+                    GoTo(57, 2 + dem);cout << node->data.TeacherName;
+                    GoTo(83, 2 + dem);cout << node->data.NumberOfCredit;
+                    GoTo(99, 2 + dem);cout << node->data.NumberOfStudent_Current;
+                    GoTo(116, 2 + dem);cout << node->data.NumberOfStudent_Max;
+                    GoTo(129, 2 + dem);cout << node->data.DayOfWeek;
+                    GoTo(142, 2 + dem);cout << node->data.session;
                 }
                 if (c == 80){ //Di xuong
                     TextColor(7);
-                    for (int i = 0; i <= 138; i++){
+                    for (int i = 0; i <= 147; i++){
                         GoTo(i, 2 + dem); cout <<' ';
                     }
-                    GoTo(0, 2 + dem);  cout << dem;
-                    GoTo(5, 2 + dem);  cout << node->data.CourseID;
-                    GoTo(18, 2 + dem); cout << node->data.CourseName;
-                    GoTo(42, 2 + dem); cout << node->data.ClassName;
-                    GoTo(56, 2 + dem); cout << node->data.TeacherName;
-                    GoTo(83, 2 + dem); cout << node->data.NumberOfCredit;
-                    GoTo(102, 2 + dem); cout << node->data.NumberOfStudent_Max;
-                    GoTo(120, 2 + dem);cout << node->data.DayOfWeek;
-                    GoTo(134, 2 + dem);cout << node->data.session;
+                    GoTo(0, 2 + dem); cout << dem;
+                    GoTo(5, 2 + dem); cout << node->data.CourseID;
+                    GoTo(19, 2 + dem);cout << node->data.CourseName;
+                    GoTo(44, 2 + dem);cout << node->data.ClassName;
+                    GoTo(57, 2 + dem);cout << node->data.TeacherName;
+                    GoTo(83, 2 + dem);cout << node->data.NumberOfCredit;
+                    GoTo(99, 2 + dem);cout << node->data.NumberOfStudent_Current;
+                    GoTo(116, 2 + dem);cout << node->data.NumberOfStudent_Max;
+                    GoTo(129, 2 + dem);cout << node->data.DayOfWeek;
+                    GoTo(142, 2 + dem);cout << node->data.session;
                     dem++;
                     if (dem == NumberOfCourse + 1){ 
                         dem = 1; 
@@ -1055,18 +1062,19 @@ void PrintListOfCourseInSemester(HocKy& temp){
                     }
                     else node = node->pNext;
                     SetColor(7, 0);
-                    for (int i = 0; i <= 138; i++){
+                    for (int i = 0; i <= 147; i++){
                         GoTo(i, 2 + dem); cout <<' ';
                     }
-                    GoTo(0, 2 + dem);  cout << dem;
-                    GoTo(5, 2 + dem);  cout << node->data.CourseID;
-                    GoTo(18, 2 + dem); cout << node->data.CourseName;
-                    GoTo(42, 2 + dem); cout << node->data.ClassName;
-                    GoTo(56, 2 + dem); cout << node->data.TeacherName;
-                    GoTo(83, 2 + dem); cout << node->data.NumberOfCredit;
-                    GoTo(102, 2 + dem); cout << node->data.NumberOfStudent_Max;
-                    GoTo(120, 2 + dem);cout << node->data.DayOfWeek;
-                    GoTo(134, 2 + dem);cout << node->data.session;
+                    GoTo(0, 2 + dem); cout << dem;
+                    GoTo(5, 2 + dem); cout << node->data.CourseID;
+                    GoTo(19, 2 + dem);cout << node->data.CourseName;
+                    GoTo(44, 2 + dem);cout << node->data.ClassName;
+                    GoTo(57, 2 + dem);cout << node->data.TeacherName;
+                    GoTo(83, 2 + dem);cout << node->data.NumberOfCredit;
+                    GoTo(99, 2 + dem);cout << node->data.NumberOfStudent_Current;
+                    GoTo(116, 2 + dem);cout << node->data.NumberOfStudent_Max;
+                    GoTo(129, 2 + dem);cout << node->data.DayOfWeek;
+                    GoTo(142, 2 + dem);cout << node->data.session;
                 }
             }
             if (c == 13){ //Enter
@@ -1075,36 +1083,38 @@ void PrintListOfCourseInSemester(HocKy& temp){
                 system("cls");
                 ListOfCourse* tam = temp.HeadList;
                 SetColor(14, 1);
-                for (int i = 0; i <= 138; i++){
+                for (int i = 0; i <= 147; i++){
                     GoTo(i, 2); cout <<' ';
                 }
                 GoTo(0, 2); cout << "STT";
                 GoTo(5, 2); cout << "COURSE ID";
-                GoTo(19, 2);cout << "COURSE NAME";
-                GoTo(40, 2);cout << "CLASS NAME";
+                GoTo(22, 2);cout << "COURSE NAME";
+                GoTo(42, 2);cout << "CLASS NAME";
                 GoTo(57, 2);cout << "TEACHER NAME";
-                GoTo(76, 2);cout << "NUMBER OF CREDIT";
-                GoTo(95, 2);cout << "MAXIMUM OF STUDENT";
-                GoTo(117, 2);cout << "DAY OF WEEK";
-                GoTo(132, 2);cout << "SESSION";
+                GoTo(80, 2);cout << "CREDITs";
+                GoTo(93, 2);cout << "STUDENT_Current";
+                GoTo(112, 2);cout << "STUDENT_Max";
+                GoTo(126, 2);cout << "DAY OF WEEK";
+                GoTo(140, 2);cout << "SESSION";
                 int dem_sub = 1;
                 TextColor(7);
                 while (tam != nullptr){
                     if (dem_sub == dem) {
                         SetColor(7, 0);
-                        for (int i = 0; i <= 138; i++){
+                        for (int i = 0; i <= 147; i++){
                             GoTo(i, 2 + dem); cout <<' ';
                         }
                     }
                     GoTo(0, 2 + dem_sub);  cout << dem_sub;
                     GoTo(5, 2 + dem_sub);  cout << tam->data.CourseID;
-                    GoTo(18, 2 + dem_sub); cout << tam->data.CourseName;
-                    GoTo(42, 2 + dem_sub); cout << tam->data.ClassName;
-                    GoTo(56, 2 + dem_sub); cout << tam->data.TeacherName;
+                    GoTo(19, 2 + dem_sub); cout << tam->data.CourseName;
+                    GoTo(44, 2 + dem_sub); cout << tam->data.ClassName;
+                    GoTo(57, 2 + dem_sub); cout << tam->data.TeacherName;
                     GoTo(83, 2 + dem_sub); cout << tam->data.NumberOfCredit;
-                    GoTo(102, 2 + dem_sub);cout << tam->data.NumberOfStudent_Max;
-                    GoTo(120, 2 + dem_sub);cout << tam->data.DayOfWeek;
-                    GoTo(134, 2 + dem_sub);cout << tam->data.session;
+                    GoTo(99, 2 + dem_sub); cout << tam->data.NumberOfStudent_Current;
+                    GoTo(116, 2 + dem_sub);cout << tam->data.NumberOfStudent_Max;
+                    GoTo(129, 2 + dem_sub);cout << tam->data.DayOfWeek;
+                    GoTo(142, 2 + dem_sub);cout << tam->data.session;
                     tam = tam->pNext;
                     if (dem_sub == dem) TextColor(7);
                     dem_sub++;
@@ -1124,36 +1134,38 @@ void EditCourse(Course& temp){
     SetColor(15, 0);
     GoTo(35, 1); cout << "|A|D|J|U|S|T| |C|O|U|R|S|E| |I|N|F|O|R|M|A|T|I|O|N|" << endl;
     // TextColor(7);
-    string str[8];
+    string str[9];
     str[0] = "COURSE ID         :";
     str[1] = "COURSE NAME       :"; 
     str[2] = "CLASS NAME        :"; 
     str[3] = "TEACHER NAME      :";  
     str[4] = "NUMBER OF CREDIT  :"; 
-    str[5] = "MAXIMUM OF STUDENT:"; 
-    str[6] = "DAY OF WEEK       :";
-    str[7] = "SESSION           :";
+    str[5] = "CURRENT STUDENTs  :";
+    str[6] = "MAXIMUM STUDENTs  :"; 
+    str[7] = "DAY OF WEEK       :";
+    str[8] = "SESSION           :";
 
-    string res[8];
+    string res[9];
     res[0] = ' '+ temp.CourseID;
     res[1] = ' '+ temp.CourseName;
     res[2] = ' '+ temp.ClassName;
     res[3] = ' '+ temp.TeacherName;
     res[4] = ' '+ to_string(temp.NumberOfCredit);
-    res[5] = ' '+ to_string(temp.NumberOfStudent_Max);
-    res[6] = ' '+ temp.DayOfWeek;
-    res[7] = ' '+ temp.session;
+    res[5] = ' '+ to_string(temp.NumberOfStudent_Current);
+    res[6] = ' '+ to_string(temp.NumberOfStudent_Max);
+    res[7] = ' '+ temp.DayOfWeek;
+    res[8] = ' '+ temp.session;
 
     int lens = 50; 
     //lens la bien luu do dai cua o chu
 
-    SetColor(1, 6);
+    SetColor(1, 14);
     for (int i = 0; i <= lens; i++){
         GoTo(i, 3);
         cout <<' ';
     }
     GoTo(0, 3); cout << str[0] << res[0] << endl;
-    for (int i = 1; i < 8; i++){
+    for (int i = 1; i <= 8; i++){
         GoTo(0, 3 + i);
         SetColor(14, 1);
         cout << str[i];
@@ -1176,8 +1188,26 @@ void EditCourse(Course& temp){
                     }
                     GoTo(19, 3 + i);
                     cout << res[i];
-                    if (i == 0) i = 7;
+                    if (i == 0) i = 8;
                     else i--;
+                    GoTo(0, 15); cout << i;
+                    
+                    if (i == 5){
+                        if (temp.NumberOfStudent_Current < temp.NumberOfStudent_Max){
+                            GoTo(lens + 2, 3 + i);
+                            TextColor(2);
+                            cout << "Press 'Enter' to add student into course";
+                            TextColor(7);
+                        }
+                    }
+                    //Xóa chữ "Press 'Enter' to add student into course"
+                    if (i == 4){
+                        SetColor(0, 7);
+                        for (int j = 1; j <= 41; j++){
+                            GoTo(lens + j, 8);  //Đây là tọa độ các chữ
+                            cout <<' ';
+                        }
+                    }
                     SetColor(1, 14);
                     for (int j = 0; j <= lens; j++){
                         GoTo(j, 3 + i);
@@ -1195,8 +1225,25 @@ void EditCourse(Course& temp){
                     }
                     GoTo(19, 3 + i);
                     cout << res[i];
-                    if (i == 7) i = 0;
+                    if (i == 8) i = 0;
                     else i++;
+                    GoTo(0, 15); cout << i;
+                    if (i == 5){
+                        if (temp.NumberOfStudent_Current < temp.NumberOfStudent_Max){
+                            GoTo(lens + 2, 3 + i);
+                            TextColor(2);
+                            cout << "Press 'Enter' to add student into course";
+                            TextColor(7);
+                        }
+                    } 
+                    //Xóa chữ "Press 'Enter' to add student into course"
+                    if (i == 6){
+                        SetColor(0, 7);
+                        for (int j = 1; j <= 41; j++){
+                            GoTo(lens + j, 8); //Đây là tọa độ các chữ
+                            cout <<' ';
+                        }
+                    }
                     SetColor(1, 14);
                     for (int j = 0; j <= lens; j++){
                         GoTo(j, 3 + i);
@@ -1205,8 +1252,30 @@ void EditCourse(Course& temp){
                     GoTo(0, 3 + i); cout << str[i] << res[i] << endl;
                 }
             }
+            if (c == 13 && i == 5){ //tức là đã chọn thêm sinh viên vô lớp, i == 5 là vị trí của current_ student
+                TextColor(7);
+                AddStudentIntoCourse(temp);
+                res[5] = ' '+ to_string(temp.NumberOfStudent_Current);
+                system("cls");
+                SetColor(15, 0);
+                GoTo(35, 1); cout << "|A|D|J|U|S|T| |C|O|U|R|S|E| |I|N|F|O|R|M|A|T|I|O|N|" << endl;
+                SetColor(1, 14);
+                for (int j = 0; j <= lens; j++){
+                    GoTo(j, 3);
+                    cout <<' ';
+                }
+                GoTo(0, 3); cout << str[0] << res[0] << endl;
+                for (int j = 1; j <= 8; j++){
+                    GoTo(0, 3 + j);
+                    SetColor(14, 1);
+                    cout << str[j];
+                    TextColor(7);
+                    cout << res[j];
+                }  
+                i = 0;
+            }
             if (c == 8){ //BackSpace
-                SetColor(1, 6);
+                SetColor(1, 14);
                 for (int j = 19; j <= lens; j++){
                     GoTo(j, 3 + i);
                     cout <<' ';
@@ -1239,18 +1308,18 @@ void EditCourse(Course& temp){
                         res[i] = ' ' + to_string(temp.NumberOfCredit);
                         break;
                     }
-                    case 5:{
+                    case 6:{
                         cin >> temp.NumberOfStudent_Max;
                         res[i] = ' ' + to_string(temp.NumberOfStudent_Max);
                         cin.ignore();
                         break;
                     }
-                    case 6:{
+                    case 7:{
                         getline(cin, temp.DayOfWeek);
                         res[i] = ' ' + temp.DayOfWeek;
                         break;
                     }
-                    case 7:{
+                    case 8:{
                         getline(cin, temp.session);
                         res[i] = ' ' + temp.session;
                         break;
@@ -1279,4 +1348,28 @@ void DeleteCourse(HocKy& temp, ListOfCourse* node){
             node_next->pPrev = node_pre;
         }
     
+}
+
+void AddStudentIntoCourse(Course& temp){
+    system("cls");
+    extern hcmus NamHoc;
+    ListOfClasses* DS_Lop_Head;
+    ListOfClasses* DS_Lop_End = NamHoc.ptr[NamHoc.NumberOfSchoolYear - 1].EndList;
+    string CMPnameClass = "";
+    if (temp.NumberOfStudent_Current >= temp.NumberOfStudent_Max) return;
+
+    bool kt = 1;
+    while (kt){
+        kt = 1;
+        ListOfClasses* DS_Lop_Head = NamHoc.ptr[NamHoc.NumberOfSchoolYear - 1].HeadList;
+        cout <<"Nhap lop cua sinh vien do: ";
+        getline(cin, CMPnameClass);
+        while (DS_Lop_Head != nullptr){
+            //cout << DS_Lop_Head << endl;
+            if (DS_Lop_Head->data.nameClass == CMPnameClass){kt = 0; break;}
+            if (DS_Lop_Head == DS_Lop_End) break;
+            DS_Lop_Head = DS_Lop_Head->pNext;
+        }
+    }
+    temp.NumberOfStudent_Current++;
 }

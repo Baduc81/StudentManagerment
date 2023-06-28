@@ -43,8 +43,10 @@ struct Course{
     string TeacherName;
     int NumberOfCredit;
     int NumberOfStudent_Max;
+    int NumberOfStudent_Current;
     string DayOfWeek;
     string session;
+    StudentInfo* student;
 };
 
 struct ListOfCourse{
@@ -120,3 +122,4 @@ void AddCourseToSemester(HocKy& temp);
 void PrintListOfCourseInSemester(HocKy& temp);
 void EditCourse(Course& temp);
 void DeleteCourse(HocKy& temp, ListOfCourse* node);
+void AddStudentIntoCourse(Course& temp);
