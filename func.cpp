@@ -614,7 +614,7 @@ void InputStudentFromFile(string NameOfClass){
     getline(ifs, ID);
     //cout << num <<' '<< firstname <<' '<<lastname<<' '<< sex <<' '<<birthday<<' '<<MSSV <<' '<< ID << endl;
     while (!ifs.eof()){
-        if (tam->data.NumberOfStudent_current == tam->data.NumberOfStudent_max){
+        if (tam->data.NumberOfStudent_current == tam->data.NumberOfStudent_max){ //lop hoc con du bao nhieu slot thi se them hs vao, so con lai thi khong them vao
             cout <<"Lop da day sinh vien" << endl;
             return;
         }
@@ -1134,7 +1134,7 @@ void EditCourse(Course& temp){
     SetColor(15, 0);
     GoTo(35, 1); cout << "|A|D|J|U|S|T| |C|O|U|R|S|E| |I|N|F|O|R|M|A|T|I|O|N|" << endl;
     // TextColor(7);
-    string str[9];
+    string str[11];
     str[0] = "COURSE ID         :";
     str[1] = "COURSE NAME       :"; 
     str[2] = "CLASS NAME        :"; 
@@ -1144,8 +1144,10 @@ void EditCourse(Course& temp){
     str[6] = "MAXIMUM STUDENTs  :"; 
     str[7] = "DAY OF WEEK       :";
     str[8] = "SESSION           :";
+    str[9] = "Add Student        ";
+    str[10]= "Remove Student     ";
 
-    string res[9];
+    string res[11];
     res[0] = ' '+ temp.CourseID;
     res[1] = ' '+ temp.CourseName;
     res[2] = ' '+ temp.ClassName;
@@ -1155,7 +1157,8 @@ void EditCourse(Course& temp){
     res[6] = ' '+ to_string(temp.NumberOfStudent_Max);
     res[7] = ' '+ temp.DayOfWeek;
     res[8] = ' '+ temp.session;
-
+    res[9] = "";
+    res[10]= "";
     int lens = 50; 
     //lens la bien luu do dai cua o chu
 
@@ -1165,7 +1168,7 @@ void EditCourse(Course& temp){
         cout <<' ';
     }
     GoTo(0, 3); cout << str[0] << res[0] << endl;
-    for (int i = 1; i <= 8; i++){
+    for (int i = 1; i <= 10; i++){
         GoTo(0, 3 + i);
         SetColor(14, 1);
         cout << str[i];
@@ -1188,26 +1191,10 @@ void EditCourse(Course& temp){
                     }
                     GoTo(19, 3 + i);
                     cout << res[i];
-                    if (i == 0) i = 8;
+                    if (i == 0) i = 10;
                     else i--;
-                    GoTo(0, 15); cout << i;
                     
-                    if (i == 5){
-                        if (temp.NumberOfStudent_Current < temp.NumberOfStudent_Max){
-                            GoTo(lens + 2, 3 + i);
-                            TextColor(2);
-                            cout << "Press 'Enter' to add student into course";
-                            TextColor(7);
-                        }
-                    }
-                    //Xóa chữ "Press 'Enter' to add student into course"
-                    if (i == 4){
-                        SetColor(0, 7);
-                        for (int j = 1; j <= 41; j++){
-                            GoTo(lens + j, 8);  //Đây là tọa độ các chữ
-                            cout <<' ';
-                        }
-                    }
+                    if (i == 5) i--; //Bỏ qua i = 5 vì current student sẽ tự thay đổi khi thêm hoặc xóa sv
                     SetColor(1, 14);
                     for (int j = 0; j <= lens; j++){
                         GoTo(j, 3 + i);
@@ -1225,25 +1212,11 @@ void EditCourse(Course& temp){
                     }
                     GoTo(19, 3 + i);
                     cout << res[i];
-                    if (i == 8) i = 0;
+                    if (i == 10) i = 0;
                     else i++;
-                    GoTo(0, 15); cout << i;
-                    if (i == 5){
-                        if (temp.NumberOfStudent_Current < temp.NumberOfStudent_Max){
-                            GoTo(lens + 2, 3 + i);
-                            TextColor(2);
-                            cout << "Press 'Enter' to add student into course";
-                            TextColor(7);
-                        }
-                    } 
-                    //Xóa chữ "Press 'Enter' to add student into course"
-                    if (i == 6){
-                        SetColor(0, 7);
-                        for (int j = 1; j <= 41; j++){
-                            GoTo(lens + j, 8); //Đây là tọa độ các chữ
-                            cout <<' ';
-                        }
-                    }
+                    
+                    if (i == 5) i++; //Bỏ qua i = 5 vì current student sẽ tự thay đổi khi thêm hoặc xóa sv
+                    
                     SetColor(1, 14);
                     for (int j = 0; j <= lens; j++){
                         GoTo(j, 3 + i);
@@ -1252,9 +1225,24 @@ void EditCourse(Course& temp){
                     GoTo(0, 3 + i); cout << str[i] << res[i] << endl;
                 }
             }
-            if (c == 13 && i == 5){ //tức là đã chọn thêm sinh viên vô lớp, i == 5 là vị trí của current_ student
+            if (c == 13 && (i == 9 || i == 10)){ 
                 TextColor(7);
-                AddStudentIntoCourse(temp);
+                if (i == 9) {
+                    if (temp.NumberOfStudent_Current == temp.NumberOfStudent_Max){
+                        GoTo(0, 14);
+                        cout << "Khoa hoc da day sinh vien";
+                        sleep(1);
+                    }
+                    else AddStudentIntoCourse(temp);
+                }
+                if (i == 10){
+                    if (temp.NumberOfStudent_Current == 0){
+                        GoTo(0, 14);
+                        cout <<"Danh sach sinh vien trong khoa hoc trong";
+                        sleep(1);
+                    }
+                    else RemoveStudentFromCourse(temp);
+                }
                 res[5] = ' '+ to_string(temp.NumberOfStudent_Current);
                 system("cls");
                 SetColor(15, 0);
@@ -1265,7 +1253,7 @@ void EditCourse(Course& temp){
                     cout <<' ';
                 }
                 GoTo(0, 3); cout << str[0] << res[0] << endl;
-                for (int j = 1; j <= 8; j++){
+                for (int j = 1; j <= 10; j++){
                     GoTo(0, 3 + j);
                     SetColor(14, 1);
                     cout << str[j];
@@ -1360,16 +1348,62 @@ void AddStudentIntoCourse(Course& temp){
 
     bool kt = 1;
     while (kt){
-        kt = 1;
-        ListOfClasses* DS_Lop_Head = NamHoc.ptr[NamHoc.NumberOfSchoolYear - 1].HeadList;
+        //kt = 1;
+        DS_Lop_Head = NamHoc.ptr[NamHoc.NumberOfSchoolYear - 1].HeadList;
         cout <<"Nhap lop cua sinh vien do: ";
         getline(cin, CMPnameClass);
         while (DS_Lop_Head != nullptr){
-            //cout << DS_Lop_Head << endl;
             if (DS_Lop_Head->data.nameClass == CMPnameClass){kt = 0; break;}
             if (DS_Lop_Head == DS_Lop_End) break;
             DS_Lop_Head = DS_Lop_Head->pNext;
         }
     }
+    string ID = "";
+    kt = 1;
+    StudentInfo res;
+    while (kt){
+        cout <<"Nhap ma so sinh vien: ";
+        getline(cin, ID);
+        for (int i = 0; i < DS_Lop_Head->data.NumberOfStudent_current; i++){
+            if (ID == DS_Lop_Head->data.student[i].StudentID) { 
+                kt = 0; 
+                res = DS_Lop_Head->data.student[i];
+                break;
+            }
+        }
+    }
+    cout << res.FirstName << endl;
+    cout << res.LastName << endl;
+    cout << res.Gender << endl;
+    cout << res.DateOfBirth << endl;
+    cout << res.StudentID << endl;
+    cout << res.SocialID << endl;
+    temp.student[temp.NumberOfStudent_Current] = res;
+    TextColor(2);
+    cout <<"Da them sinh vien nay vao khoa hoc" << endl;
+    system("pause");
     temp.NumberOfStudent_Current++;
+}
+
+void RemoveStudentFromCourse (Course& temp){
+    system("cls");
+    int kt = -1;
+    string ID;
+    while (kt == -1){
+        cout <<"Nhap ma so sinh vien can xoa: ";
+        getline(cin, ID);
+        for (int i = 0; i < temp.NumberOfStudent_Current; i++){
+            if (temp.student[i].StudentID == ID){ kt = i; break;}
+        }
+    }
+    cout << temp.student[kt].FirstName << endl;
+    cout << temp.student[kt].LastName << endl;
+    cout << temp.student[kt].Gender << endl;
+    cout << temp.student[kt].DateOfBirth << endl;
+    cout << temp.student[kt].SocialID << endl;
+    cout << temp.student[kt].StudentID << endl;
+    temp.NumberOfStudent_Current--;
+    TextColor(2);
+    cout <<"Da xoa sinh vien nay khoi khoa hoc" << endl;
+    system("pause");
 }
