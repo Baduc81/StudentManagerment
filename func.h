@@ -68,7 +68,7 @@ struct ClassInfo{
     string nameClass;
     string major;
     int NumberOfStudent_max;
-    int NumberOfStudent_current;
+    int NumberOfStudent_Current;
     StudentInfo* student;
 };
 
@@ -123,5 +123,5 @@ void PrintListOfCourseInSemester(HocKy& temp);
 void EditCourse(Course& temp);
 void DeleteCourse(HocKy& temp, ListOfCourse* node);
 void AddStudentIntoCourse(Course& temp);
-void RemoveStudentFromCourse (Course& temp);
+void DeleteOneStudent(Course& temp, int pos);
 void PrintListOfStudentInCourse(Course& temp);

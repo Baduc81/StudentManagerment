@@ -489,7 +489,7 @@ void CreateSimpleClass(SchoolTime& temp){
     cin >> node->data.NumberOfStudent_max;
     cin.ignore();
     node->data.student = new StudentInfo[node->data.NumberOfStudent_max + 1];
-    node->data.NumberOfStudent_current = 0;
+    node->data.NumberOfStudent_Current = 0;
     node->pNext = nullptr;
     node->pPrev = nullptr;
 
@@ -534,7 +534,7 @@ void CreateMultipleClasses(SchoolTime& temp){
         ListOfClasses* node = new ListOfClasses;
         node->data.nameClass = name + IntToString(i);
         node->data.major = chuyenNganh;
-        node->data.NumberOfStudent_current = 0;
+        node->data.NumberOfStudent_Current = 0;
         node->data.NumberOfStudent_max = NumberStudent;
         node->data.TimeBegin = temp.SchoolYear;
         node->data.student = new StudentInfo[node->data.NumberOfStudent_max + 1];
@@ -564,12 +564,12 @@ void AddOneStudentToClass(string NameOfClass){
         cout <<"Khong ton tai lop nay hoac lop nay da tot nghiep" << endl;
         return;
     }
-    if (node->data.NumberOfStudent_current == node->data.NumberOfStudent_max){
+    if (node->data.NumberOfStudent_Current == node->data.NumberOfStudent_max){
         cout <<"Lop da day sinh vien" << endl;
         return;
     }
     cout <<"Nhap thong tin sinh vien" << endl;
-    int i = node->data.NumberOfStudent_current++;
+    int i = node->data.NumberOfStudent_Current++;
     cout <<"\t Nhap ho                            : ";
     getline(cin, node->data.student[i].FirstName);
     cout <<"\t Nhap ten                           : ";
@@ -615,11 +615,11 @@ void InputStudentFromFile(string NameOfClass){
     getline(ifs, ID);
     //cout << num <<' '<< firstname <<' '<<lastname<<' '<< sex <<' '<<birthday<<' '<<MSSV <<' '<< ID << endl;
     while (!ifs.eof()){
-        if (tam->data.NumberOfStudent_current == tam->data.NumberOfStudent_max){ //lop hoc con du bao nhieu slot thi se them hs vao, so con lai thi khong them vao
+        if (tam->data.NumberOfStudent_Current == tam->data.NumberOfStudent_max){ //lop hoc con du bao nhieu slot thi se them hs vao, so con lai thi khong them vao
             cout <<"Lop da day sinh vien" << endl;
             return;
         }
-        int i = tam->data.NumberOfStudent_current++;
+        int i = tam->data.NumberOfStudent_Current++;
         getline(ifs, num, ',');
         getline(ifs, tam->data.student[i].FirstName, ',');
         getline(ifs, tam->data.student[i].LastName, ',');
@@ -633,6 +633,7 @@ void InputStudentFromFile(string NameOfClass){
 
 //Chỉ áp dụng cho các lớp ở năm học hiện tại. Không áp dụng cho các năm trước
 void PrintListOfStudentInClass(string NameOfClass ){
+    system("cls");
     extern hcmus NamHoc;
     SchoolTime temp = NamHoc.ptr[NamHoc.NumberOfSchoolYear - 1];
     ListOfClasses* tam = temp.HeadList;
@@ -644,7 +645,7 @@ void PrintListOfStudentInClass(string NameOfClass ){
         }
         tam = tam->pNext;
     }
-    for (int i = 0; i < tam->data.NumberOfStudent_current; i++){
+    for (int i = 0; i < tam->data.NumberOfStudent_Current; i++){
         cout << setw(3)  << i + 1;
         cout << setw(20) << tam->data.student[i].FirstName;
         cout << setw(20) << tam->data.student[i].LastName;
@@ -656,14 +657,15 @@ void PrintListOfStudentInClass(string NameOfClass ){
 }
 
 void DeleteOneStudent(ClassInfo& temp, int pos){ //Xoa sinh vien co vi tri pos trong lop temp
-    for (int i = pos; i < temp.NumberOfStudent_current; i++){
+    for (int i = pos; i < temp.NumberOfStudent_Current; i++){
         temp.student[i] = temp.student[i + 1];
     }
-    temp.NumberOfStudent_current--;
+    temp.NumberOfStudent_Current--;
 }
 
 void PrintListOfStudentInClass(ClassInfo& temp){
-    if (temp.NumberOfStudent_current == 0){
+    system("cls");
+    if (temp.NumberOfStudent_Current == 0){
         cout <<"Danh sach sinh vien lop "<< temp.nameClass <<" trong" << endl;
         system("pause");
         return;
@@ -684,7 +686,7 @@ void PrintListOfStudentInClass(ClassInfo& temp){
     for (int i = 0; i <= 102; i++){
         GoTo(i, 3); cout <<' ';
     }
-    for (int i = 0; i < temp.NumberOfStudent_current; i++){
+    for (int i = 0; i < temp.NumberOfStudent_Current; i++){
         GoTo(0, 3 + i); cout << i + 1;
         GoTo(5, 3 + i); cout << temp.student[i].FirstName;
         GoTo(35,3 + i);cout << temp.student[i].LastName;
@@ -712,7 +714,7 @@ void PrintListOfStudentInClass(ClassInfo& temp){
                     GoTo(60,3 + pos);cout << temp.student[pos].DateOfBirth;
                     GoTo(75,3 + pos);cout << temp.student[pos].StudentID;
                     GoTo(90,3 + pos);cout << temp.student[pos].SocialID <<endl;
-                    if (pos == 0) pos = temp.NumberOfStudent_current - 1;
+                    if (pos == 0) pos = temp.NumberOfStudent_Current - 1;
                     else pos--;
                     SetColor(7, 0);
                     for (int i = 0; i <= 102; i++){
@@ -738,7 +740,7 @@ void PrintListOfStudentInClass(ClassInfo& temp){
                     GoTo(60,3 + pos);cout << temp.student[pos].DateOfBirth;
                     GoTo(75,3 + pos);cout << temp.student[pos].StudentID;
                     GoTo(90,3 + pos);cout << temp.student[pos].SocialID <<endl;
-                    if (pos == temp.NumberOfStudent_current - 1) pos = 0;
+                    if (pos == temp.NumberOfStudent_Current - 1) pos = 0;
                     else pos++;
                     SetColor(7, 0);
                     for (int i = 0; i <= 102; i++){
@@ -792,7 +794,7 @@ void MenuListOfClass(SchoolTime NienKhoa){
         GoTo(0 , 2 + NumberOfClasses); cout << NumberOfClasses;
         GoTo(10, 2 + NumberOfClasses); cout << temp->data.nameClass;
         GoTo(25, 2 + NumberOfClasses); cout << temp->data.major;
-        GoTo(59, 2 + NumberOfClasses); cout << temp->data.NumberOfStudent_current;
+        GoTo(59, 2 + NumberOfClasses); cout << temp->data.NumberOfStudent_Current;
         GoTo(72, 2 + NumberOfClasses); cout << temp->data.NumberOfStudent_max;
         GoTo(84, 2 + NumberOfClasses); cout << ConvertFirst(temp->data.TimeBegin) << endl;
         if (temp == NienKhoa.HeadList) TextColor(7);
@@ -815,7 +817,7 @@ void MenuListOfClass(SchoolTime NienKhoa){
                     GoTo(0 , 2 + dem); cout << dem;
                     GoTo(10, 2 + dem); cout << temp->data.nameClass;
                     GoTo(25, 2 + dem); cout << temp->data.major;
-                    GoTo(59, 2 + dem); cout << temp->data.NumberOfStudent_current;
+                    GoTo(59, 2 + dem); cout << temp->data.NumberOfStudent_Current;
                     GoTo(72, 2 + dem); cout << temp->data.NumberOfStudent_max;
                     GoTo(84, 2 + dem); cout << ConvertFirst(temp->data.TimeBegin) << endl;
                     dem--;
@@ -831,7 +833,7 @@ void MenuListOfClass(SchoolTime NienKhoa){
                     GoTo(0 , 2 + dem); cout << dem;
                     GoTo(10, 2 + dem); cout << temp->data.nameClass;
                     GoTo(25, 2 + dem); cout << temp->data.major;
-                    GoTo(59, 2 + dem); cout << temp->data.NumberOfStudent_current;
+                    GoTo(59, 2 + dem); cout << temp->data.NumberOfStudent_Current;
                     GoTo(72, 2 + dem); cout << temp->data.NumberOfStudent_max;
                     GoTo(84, 2 + dem); cout << ConvertFirst(temp->data.TimeBegin) << endl;
                 }
@@ -843,7 +845,7 @@ void MenuListOfClass(SchoolTime NienKhoa){
                     GoTo(0 , 2 + dem); cout << dem;
                     GoTo(10, 2 + dem); cout << temp->data.nameClass;
                     GoTo(25, 2 + dem); cout << temp->data.major;
-                    GoTo(59, 2 + dem); cout << temp->data.NumberOfStudent_current;
+                    GoTo(59, 2 + dem); cout << temp->data.NumberOfStudent_Current;
                     GoTo(72, 2 + dem); cout << temp->data.NumberOfStudent_max;
                     GoTo(84, 2 + dem); cout << ConvertFirst(temp->data.TimeBegin) << endl;
                     dem++;
@@ -859,7 +861,7 @@ void MenuListOfClass(SchoolTime NienKhoa){
                     GoTo(0 , 2 + dem); cout << dem;
                     GoTo(10, 2 + dem); cout << temp->data.nameClass;
                     GoTo(25, 2 + dem); cout << temp->data.major;
-                    GoTo(59, 2 + dem); cout << temp->data.NumberOfStudent_current;
+                    GoTo(59, 2 + dem); cout << temp->data.NumberOfStudent_Current;
                     GoTo(72, 2 + dem); cout << temp->data.NumberOfStudent_max;
                     GoTo(84, 2 + dem); cout << ConvertFirst(temp->data.TimeBegin) << endl;
                 }
@@ -898,7 +900,7 @@ void MenuListOfClass(SchoolTime NienKhoa){
                     GoTo(0 , 2 + NumberOfClasses); cout << NumberOfClasses;
                     GoTo(10, 2 + NumberOfClasses); cout << temp->data.nameClass;
                     GoTo(25, 2 + NumberOfClasses); cout << temp->data.major;
-                    GoTo(59, 2 + NumberOfClasses); cout << temp->data.NumberOfStudent_current;
+                    GoTo(59, 2 + NumberOfClasses); cout << temp->data.NumberOfStudent_Current;
                     GoTo(72, 2 + NumberOfClasses); cout << temp->data.NumberOfStudent_max;
                     GoTo(84, 2 + NumberOfClasses); cout << ConvertFirst(temp->data.TimeBegin) << endl;
                     if (temp == tam) TextColor(7);
@@ -1126,7 +1128,7 @@ void PrintListOfCourseInSemester(HocKy& temp){
                 TextColor(7);
                 PrintListOfCourseInSemester(temp);
             }
-            if (c == 27) {GoTo(0, 10); return;} //ESC
+            if (c == 27) {GoTo(0, 10);return;} //ESC
         }
     }
 }
@@ -1236,48 +1238,34 @@ void EditCourse(Course& temp){
                 }
             }
             if (c == 13){  //ENTER
-                SetColor(0, 7);
-                system("cls");
-                PrintListOfStudentInCourse(temp);
-                // TextColor(7);
-                // if (i == 9) {
-                //     if (temp.NumberOfStudent_Current == temp.NumberOfStudent_Max){
-                //         GoTo(0, 14);
-                //         cout << "Khoa hoc da day sinh vien";
-                //         sleep(1);
-                //     }
-                //     else AddStudentIntoCourse(temp);
-                // }
-                // if (i == 10){
-                //     if (temp.NumberOfStudent_Current == 0){
-                //         GoTo(0, 14);
-                //         cout <<"Danh sach sinh vien trong khoa hoc trong";
-                //         sleep(1);
-                //     }
-                //     else RemoveStudentFromCourse(temp);
-                // }
-                res[5] = ' '+ to_string(temp.NumberOfStudent_Current);
-                system("cls");
-                SetColor(15, 0);
-                GoTo(35, 1); cout << "|A|D|J|U|S|T| |C|O|U|R|S|E| |I|N|F|O|R|M|A|T|I|O|N|" << endl;
-                SetColor(1, 14);
-                for (int j = 0; j <= lens; j++){
-                    GoTo(j, 3);
-                    cout <<' ';
+                if (i == 9){
+                    SetColor(0, 7);
+                    system("cls");
+                    PrintListOfStudentInCourse(temp);
+
+                    res[5] = ' '+ to_string(temp.NumberOfStudent_Current);
+                    system("cls");
+                    SetColor(15, 0);
+                    GoTo(35, 1); cout << "|A|D|J|U|S|T| |C|O|U|R|S|E| |I|N|F|O|R|M|A|T|I|O|N|" << endl;
+                    SetColor(1, 14);
+                    for (int j = 0; j <= lens; j++){
+                        GoTo(j, 3);
+                        cout <<' ';
+                    }
+                    GoTo(0, 3); cout << str[0] << res[0] << endl;
+                    for (int i = 1; i <= 8; i++){
+                        GoTo(0, 3 + i);
+                        SetColor(14, 1);
+                        cout << str[i];
+                        TextColor(7);
+                        cout << res[i];
+                    }  
+                    for (int i = 9; i <= 10; i++){
+                        GoTo(0, 3 + i);
+                        cout << str[i] << res[i];
+                    }
+                    i = 0;
                 }
-                GoTo(0, 3); cout << str[0] << res[0] << endl;
-                for (int i = 1; i <= 8; i++){
-                    GoTo(0, 3 + i);
-                    SetColor(14, 1);
-                    cout << str[i];
-                    TextColor(7);
-                    cout << res[i];
-                }  
-                for (int i = 9; i <= 10; i++){
-                    GoTo(0, 3 + i);
-                    cout << str[i] << res[i];
-                }
-                i = 0;
             }
             if (c == 8){ //BackSpace
                 SetColor(1, 14);
@@ -1356,6 +1344,7 @@ void DeleteCourse(HocKy& temp, ListOfCourse* node){
 }
 
 void AddStudentIntoCourse(Course& temp){
+    TextColor(7);
     system("cls");
     extern hcmus NamHoc;
     ListOfClasses* DS_Lop_Head;
@@ -1376,7 +1365,7 @@ void AddStudentIntoCourse(Course& temp){
         }
         if (kt){
             TextColor(4);
-            cout <<"Lop hoc khong ton tai, vui long nhap lai";
+            cout <<"Lop hoc khong ton tai, vui long nhap lai" << endl;
             TextColor(7);
         }
     }
@@ -1386,7 +1375,7 @@ void AddStudentIntoCourse(Course& temp){
     while (kt){
         cout <<"Nhap ma so sinh vien: ";
         getline(cin, ID);
-        for (int i = 0; i < DS_Lop_Head->data.NumberOfStudent_current; i++){
+        for (int i = 0; i < DS_Lop_Head->data.NumberOfStudent_Current; i++){
             if (ID == DS_Lop_Head->data.student[i].StudentID) { 
                 kt = 0; 
                 res = DS_Lop_Head->data.student[i];
@@ -1395,7 +1384,7 @@ void AddStudentIntoCourse(Course& temp){
         }
         if (kt){
             TextColor(4);
-            cout << "Ma so sinh vien khong ton tai";
+            cout << "Ma so sinh vien khong ton tai" << endl;
             TextColor(7);
         }
         else{
@@ -1407,7 +1396,7 @@ void AddStudentIntoCourse(Course& temp){
             }
             if (kt){
                 TextColor(4);
-                cout << "Ma so sinh vien da ton tai trong khoa hoc";
+                cout << "Ma so sinh vien da ton tai trong khoa hoc" << endl;
                 TextColor(7);
             }
         }
@@ -1426,32 +1415,11 @@ void AddStudentIntoCourse(Course& temp){
     temp.NumberOfStudent_Current++;
 }
 
-void RemoveStudentFromCourse (Course& temp){
-    system("cls");
-    int kt = -1;
-    string ID;
-    while (kt == -1){
-        cout <<"Nhap ma so sinh vien can xoa: ";
-        getline(cin, ID);
-        for (int i = 0; i < temp.NumberOfStudent_Current; i++){
-            if (temp.student[i].StudentID == ID){ kt = i; break;}
-        }
-        if (kt == -1){
-            cout <<"Khong tin thay sinh vien nay trong lop, vui long nhap lai" << endl;
-            system("pause");
-            system("cls");
-        }
+void DeleteOneStudent(Course& temp, int pos){ //Xoa sinh vien co vi tri pos trong lop temp
+    for (int i = pos; i < temp.NumberOfStudent_Current; i++){
+        temp.student[i] = temp.student[i + 1];
     }
-    cout << temp.student[kt].FirstName << endl;
-    cout << temp.student[kt].LastName << endl;
-    cout << temp.student[kt].Gender << endl;
-    cout << temp.student[kt].DateOfBirth << endl;
-    cout << temp.student[kt].SocialID << endl;
-    cout << temp.student[kt].StudentID << endl;
     temp.NumberOfStudent_Current--;
-    TextColor(2);
-    cout <<"Da xoa sinh vien nay khoi khoa hoc" << endl;
-    system("pause");
 }
 
 //chieu ngang khung hinh la 149 => o giua la o thu 75
@@ -1517,6 +1485,7 @@ void PrintListOfStudentInCourse(Course& temp){
                     }
                     else {
                         AddStudentIntoCourse(temp);
+                        TextColor(7);
                         system("cls");
                         GoTo(120, 1); 
                         TextColor(2);
@@ -1556,7 +1525,7 @@ void PrintListOfStudentInCourse(Course& temp){
                     }
                 }
             }
-            if (c == -32){
+            if (c == -32 && temp.NumberOfStudent_Current != 0){
                 c = getch();
                 if (c == 72){ //Di len, 80 di xuong
                     TextColor(7);
@@ -1611,6 +1580,14 @@ void PrintListOfStudentInCourse(Course& temp){
                     GoTo(90,3 + pos);cout << temp.student[pos].SocialID;
                 }
             }
+            if (c == 8 && temp.NumberOfStudent_Current != 0){ //backspace
+                DeleteOneStudent(temp, pos);
+                TextColor(7);
+                system("cls");
+                PrintListOfStudentInCourse(temp);
+                return;
+            }
+            if (c == 27) {GoTo(0, 15);TextColor(7);return;} //ESC
         }
     }
     system("pause");

@@ -13,11 +13,12 @@ int main(){
     // InputSemester(NamHoc);
     CreateSimpleClass(NamHoc.ptr[0]);
     InputStudentFromFile("18CTT3");
+    // PrintListOfStudentInClass(NamHoc.ptr[0].HeadList->data);
     AddCourseToSemester(NamHoc.ptr[0].semester[0]);
     // AddCourseToSemester(NamHoc.ptr[0].semester[0]);
     // AddCourseToSemester(NamHoc.ptr[0].semester[0]);
     PrintListOfCourseInSemester(NamHoc.ptr[0].semester[0]);
-    //EditCourse(NamHoc.ptr[0].semester[0].HeadList->data);
+    // EditCourse(NamHoc.ptr[0].semester[0].HeadList->data);
     // system("pause");
     // CreateMultipleClasses(NamHoc.ptr[0]);
     // CreateMultipleClasses(NamHoc.ptr[0]);
