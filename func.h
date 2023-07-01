@@ -124,3 +124,4 @@ void EditCourse(Course& temp);
 void DeleteCourse(HocKy& temp, ListOfCourse* node);
 void AddStudentIntoCourse(Course& temp);
 void RemoveStudentFromCourse (Course& temp);
+void PrintListOfStudentInCourse(Course& temp);

@@ -591,12 +591,13 @@ void InputStudentFromFile(string NameOfClass){
     ListOfClasses* tam = temp.HeadList;
     while (tam != nullptr){
         if (tam->data.nameClass == NameOfClass) break;
-        if (tam == temp.EndList){ // neu chay den cuoi danh sach ma khong co ten lop xuat hien thi thoat chuong trinh
+        if (tam == temp.EndList || tam->pNext == nullptr){ // neu chay den cuoi danh sach ma khong co ten lop xuat hien thi thoat chuong trinh
             cout << "Khong ton tai lop nay trong nam hoc nay" << endl;
             return; 
         }
         tam = tam->pNext;
     }
+    
     NameOfClass = "Data\\" + NameOfClass + ".csv";
     ifstream ifs(NameOfClass);
     if (!ifs){
@@ -1144,8 +1145,8 @@ void EditCourse(Course& temp){
     str[6] = "MAXIMUM STUDENTs  :"; 
     str[7] = "DAY OF WEEK       :";
     str[8] = "SESSION           :";
-    str[9] = "Add Student        ";
-    str[10]= "Remove Student     ";
+    str[9] = "View List Of Student";
+    str[10]= "Export to CSV file  ";
 
     string res[11];
     res[0] = ' '+ temp.CourseID;
@@ -1158,7 +1159,8 @@ void EditCourse(Course& temp){
     res[7] = ' '+ temp.DayOfWeek;
     res[8] = ' '+ temp.session;
     res[9] = "";
-    res[10]= "";
+    res[10] = "";
+    
     int lens = 50; 
     //lens la bien luu do dai cua o chu
 
@@ -1168,13 +1170,17 @@ void EditCourse(Course& temp){
         cout <<' ';
     }
     GoTo(0, 3); cout << str[0] << res[0] << endl;
-    for (int i = 1; i <= 10; i++){
+    for (int i = 1; i <= 8; i++){
         GoTo(0, 3 + i);
         SetColor(14, 1);
         cout << str[i];
         TextColor(7);
         cout << res[i];
     }  
+    for (int i = 9; i <= 10; i++){
+        GoTo(0, 3 + i);
+        cout << str[i] << res[i];
+    }
     int i = 0;
     while (true) {
         if (kbhit()){
@@ -1182,10 +1188,12 @@ void EditCourse(Course& temp){
             if (c == -32){
                 c = getch();
                 if (c == 72){ // Di len
-                    GoTo(0, 3 + i); SetColor(14, 1); 
+                    GoTo(0, 3 + i); 
+                    if (i != 9 && i != 10) SetColor(14, 1); 
+                    else TextColor(7);
                     cout << str[i];
                     TextColor(7);
-                    for (int j = 19; j <= lens; j++){
+                    for (int j = 20; j <= lens; j++){
                         GoTo(j, 3 + i);
                         cout <<' ';
                     }
@@ -1203,10 +1211,12 @@ void EditCourse(Course& temp){
                     GoTo(0, 3 + i); cout << str[i] << res[i] << endl;
                 }
                 if (c == 80){ //Di Xuong
-                    GoTo(0, 3 + i); SetColor(14, 1); 
+                    GoTo(0, 3 + i); 
+                    if (i != 9 && i != 10) SetColor(14, 1); 
+                    else TextColor(7);
                     cout << str[i];
                     TextColor(7);
-                    for (int j = 19; j <= lens; j++){
+                    for (int j = 20; j <= lens; j++){
                         GoTo(j, 3 + i);
                         cout <<' ';
                     }
@@ -1225,24 +1235,27 @@ void EditCourse(Course& temp){
                     GoTo(0, 3 + i); cout << str[i] << res[i] << endl;
                 }
             }
-            if (c == 13 && (i == 9 || i == 10)){ 
-                TextColor(7);
-                if (i == 9) {
-                    if (temp.NumberOfStudent_Current == temp.NumberOfStudent_Max){
-                        GoTo(0, 14);
-                        cout << "Khoa hoc da day sinh vien";
-                        sleep(1);
-                    }
-                    else AddStudentIntoCourse(temp);
-                }
-                if (i == 10){
-                    if (temp.NumberOfStudent_Current == 0){
-                        GoTo(0, 14);
-                        cout <<"Danh sach sinh vien trong khoa hoc trong";
-                        sleep(1);
-                    }
-                    else RemoveStudentFromCourse(temp);
-                }
+            if (c == 13){  //ENTER
+                SetColor(0, 7);
+                system("cls");
+                PrintListOfStudentInCourse(temp);
+                // TextColor(7);
+                // if (i == 9) {
+                //     if (temp.NumberOfStudent_Current == temp.NumberOfStudent_Max){
+                //         GoTo(0, 14);
+                //         cout << "Khoa hoc da day sinh vien";
+                //         sleep(1);
+                //     }
+                //     else AddStudentIntoCourse(temp);
+                // }
+                // if (i == 10){
+                //     if (temp.NumberOfStudent_Current == 0){
+                //         GoTo(0, 14);
+                //         cout <<"Danh sach sinh vien trong khoa hoc trong";
+                //         sleep(1);
+                //     }
+                //     else RemoveStudentFromCourse(temp);
+                // }
                 res[5] = ' '+ to_string(temp.NumberOfStudent_Current);
                 system("cls");
                 SetColor(15, 0);
@@ -1253,13 +1266,17 @@ void EditCourse(Course& temp){
                     cout <<' ';
                 }
                 GoTo(0, 3); cout << str[0] << res[0] << endl;
-                for (int j = 1; j <= 10; j++){
-                    GoTo(0, 3 + j);
+                for (int i = 1; i <= 8; i++){
+                    GoTo(0, 3 + i);
                     SetColor(14, 1);
-                    cout << str[j];
+                    cout << str[i];
                     TextColor(7);
-                    cout << res[j];
+                    cout << res[i];
                 }  
+                for (int i = 9; i <= 10; i++){
+                    GoTo(0, 3 + i);
+                    cout << str[i] << res[i];
+                }
                 i = 0;
             }
             if (c == 8){ //BackSpace
@@ -1357,6 +1374,11 @@ void AddStudentIntoCourse(Course& temp){
             if (DS_Lop_Head == DS_Lop_End) break;
             DS_Lop_Head = DS_Lop_Head->pNext;
         }
+        if (kt){
+            TextColor(4);
+            cout <<"Lop hoc khong ton tai, vui long nhap lai";
+            TextColor(7);
+        }
     }
     string ID = "";
     kt = 1;
@@ -1371,6 +1393,24 @@ void AddStudentIntoCourse(Course& temp){
                 break;
             }
         }
+        if (kt){
+            TextColor(4);
+            cout << "Ma so sinh vien khong ton tai";
+            TextColor(7);
+        }
+        else{
+            for (int i = 0; i < temp.NumberOfStudent_Current; i++){
+                if (ID == temp.student[i].StudentID){
+                    kt = 1;
+                    break;
+                }
+            }
+            if (kt){
+                TextColor(4);
+                cout << "Ma so sinh vien da ton tai trong khoa hoc";
+                TextColor(7);
+            }
+        }
     }
     cout << res.FirstName << endl;
     cout << res.LastName << endl;
@@ -1381,6 +1421,7 @@ void AddStudentIntoCourse(Course& temp){
     temp.student[temp.NumberOfStudent_Current] = res;
     TextColor(2);
     cout <<"Da them sinh vien nay vao khoa hoc" << endl;
+    TextColor(7);
     system("pause");
     temp.NumberOfStudent_Current++;
 }
@@ -1395,6 +1436,11 @@ void RemoveStudentFromCourse (Course& temp){
         for (int i = 0; i < temp.NumberOfStudent_Current; i++){
             if (temp.student[i].StudentID == ID){ kt = i; break;}
         }
+        if (kt == -1){
+            cout <<"Khong tin thay sinh vien nay trong lop, vui long nhap lai" << endl;
+            system("pause");
+            system("cls");
+        }
     }
     cout << temp.student[kt].FirstName << endl;
     cout << temp.student[kt].LastName << endl;
@@ -1405,5 +1451,167 @@ void RemoveStudentFromCourse (Course& temp){
     temp.NumberOfStudent_Current--;
     TextColor(2);
     cout <<"Da xoa sinh vien nay khoi khoa hoc" << endl;
+    system("pause");
+}
+
+//chieu ngang khung hinh la 149 => o giua la o thu 75
+void PrintListOfStudentInCourse(Course& temp){
+    GoTo(120, 1); 
+    TextColor(2);
+    cout <<"Press f9 to add student";
+    GoTo(120, 2);
+    cout <<"Press f10 to export file csv";
+    TextColor(7);
+    if (temp.NumberOfStudent_Current == 0){
+        GoTo(75 - (43 + temp.CourseName.length() + temp.ClassName.length() )/ 2, 0);
+        SetColor(6, 15);
+        cout <<"Danh sach sinh vien hoc mon "<< temp.CourseName <<" cua lop "<< temp.ClassName <<" trong" << endl;
+        TextColor(7);
+    }
+    else {
+        SetColor(14, 7);
+        GoTo(75 - (37 + temp.CourseName.length() + temp.ClassName.length() )/ 2, 0); cout <<"Danh sach sinh vien hoc mon "<< temp.CourseName <<" cua lop "<< temp.ClassName << endl;
+        SetColor(14, 1);
+        for (int i = 0; i <= 102; i++){
+            GoTo(i, 2); cout <<' ';
+        }
+        GoTo(0, 2);  cout << "STT";
+        GoTo(5, 2);  cout << "Ho va Ten Lot";
+        GoTo(35, 2); cout << "Ten";
+        GoTo(45, 2); cout << "Gioi tinh";
+        GoTo(60, 2); cout << "Ngay sinh";
+        GoTo(77, 2); cout << "MSSV";
+        GoTo(94, 2); cout << "CCCD" <<endl;
+        SetColor(7, 0);
+        for (int i = 0; i <= 102; i++){
+            GoTo(i, 3); cout <<' ';
+        }
+        for (int i = 0; i < temp.NumberOfStudent_Current; i++){
+            GoTo(0, 3 + i); cout << i + 1;
+            GoTo(5, 3 + i); cout << temp.student[i].FirstName;
+            GoTo(35,3 + i);cout << temp.student[i].LastName;
+            GoTo(48,3 + i);cout << temp.student[i].Gender;
+            GoTo(60,3 + i);cout << temp.student[i].DateOfBirth;
+            GoTo(75,3 + i);cout << temp.student[i].StudentID;
+            GoTo(90,3 + i);cout << temp.student[i].SocialID <<endl;
+            if (i == 0) TextColor(7);
+        }
+    }
+    int pos = 0;
+    while (true){
+        if (kbhit()){
+            char c = getch();
+            if (c == 0){
+                c = getch();
+                if (c == 67){
+                    if (temp.NumberOfStudent_Current == temp.NumberOfStudent_Max){
+                        GoTo(58, 10);
+                        SetColor(11, 4);
+                        cout <<"DA QUA SO LUONG SINH VIEN DANG KY";
+                        sleep(1);
+                        TextColor(7);
+                        for (int i = 58; i <= 91; i++){
+                            GoTo(i, 10);
+                            cout <<' ';
+                        }
+                    }
+                    else {
+                        AddStudentIntoCourse(temp);
+                        system("cls");
+                        GoTo(120, 1); 
+                        TextColor(2);
+                        cout <<"Press f9 to add student";
+                        GoTo(120, 2);
+                        cout <<"Press f10 to export file csv";
+                        TextColor(7);
+                        SetColor(14, 7);
+                        GoTo(75 - (37 + temp.CourseName.length() + temp.ClassName.length() )/ 2, 0); 
+                        cout <<"Danh sach sinh vien hoc mon "<< temp.CourseName <<" cua lop "<< temp.ClassName << endl;
+                        SetColor(14, 1);
+                        for (int i = 0; i <= 102; i++){
+                            GoTo(i, 2); cout <<' ';
+                        }
+                        GoTo(0, 2);  cout << "STT";
+                        GoTo(5, 2);  cout << "Ho va Ten Lot";
+                        GoTo(35, 2); cout << "Ten";
+                        GoTo(45, 2); cout << "Gioi tinh";
+                        GoTo(60, 2); cout << "Ngay sinh";
+                        GoTo(77, 2); cout << "MSSV";
+                        GoTo(94, 2); cout << "CCCD" <<endl;
+                        SetColor(7, 0);
+                        for (int i = 0; i <= 102; i++){
+                            GoTo(i, 3); cout <<' ';
+                        }
+                        for (int i = 0; i < temp.NumberOfStudent_Current; i++){
+                            GoTo(0, 3 + i); cout << i + 1;
+                            GoTo(5, 3 + i); cout << temp.student[i].FirstName;
+                            GoTo(35,3 + i);cout << temp.student[i].LastName;
+                            GoTo(48,3 + i);cout << temp.student[i].Gender;
+                            GoTo(60,3 + i);cout << temp.student[i].DateOfBirth;
+                            GoTo(75,3 + i);cout << temp.student[i].StudentID;
+                            GoTo(90,3 + i);cout << temp.student[i].SocialID <<endl;
+                            if (i == 0) TextColor(7);
+                        }
+                        pos = 0;
+                    }
+                }
+            }
+            if (c == -32){
+                c = getch();
+                if (c == 72){ //Di len, 80 di xuong
+                    TextColor(7);
+                    for (int i = 0; i <= 102; i++){
+                        GoTo(i, 3 + pos); cout <<' ';
+                    }
+                    GoTo(0, 3 + pos); cout << pos + 1;
+                    GoTo(5, 3 + pos); cout << temp.student[pos].FirstName;
+                    GoTo(35,3 + pos);cout << temp.student[pos].LastName;
+                    GoTo(48,3 + pos);cout << temp.student[pos].Gender;
+                    GoTo(60,3 + pos);cout << temp.student[pos].DateOfBirth;
+                    GoTo(75,3 + pos);cout << temp.student[pos].StudentID;
+                    GoTo(90,3 + pos);cout << temp.student[pos].SocialID;
+                    if (pos == 0) pos = temp.NumberOfStudent_Current - 1;
+                    else pos--;
+                    SetColor(7, 0);
+                    for (int i = 0; i <= 102; i++){
+                        GoTo(i, 3 + pos); cout <<' ';
+                    }
+                    GoTo(0, 3 + pos); cout << pos + 1;
+                    GoTo(5, 3 + pos); cout << temp.student[pos].FirstName;
+                    GoTo(35,3 + pos);cout << temp.student[pos].LastName;
+                    GoTo(48,3 + pos);cout << temp.student[pos].Gender;
+                    GoTo(60,3 + pos);cout << temp.student[pos].DateOfBirth;
+                    GoTo(75,3 + pos);cout << temp.student[pos].StudentID;
+                    GoTo(90,3 + pos);cout << temp.student[pos].SocialID;
+                }
+                if (c == 80){ //Di Xuong
+                    TextColor(7);
+                    for (int i = 0; i <= 102; i++){
+                        GoTo(i, 3 + pos); cout <<' ';
+                    }
+                    GoTo(0, 3 + pos); cout << pos + 1;
+                    GoTo(5, 3 + pos); cout << temp.student[pos].FirstName;
+                    GoTo(35,3 + pos);cout << temp.student[pos].LastName;
+                    GoTo(48,3 + pos);cout << temp.student[pos].Gender;
+                    GoTo(60,3 + pos);cout << temp.student[pos].DateOfBirth;
+                    GoTo(75,3 + pos);cout << temp.student[pos].StudentID;
+                    GoTo(90,3 + pos);cout << temp.student[pos].SocialID;
+                    if (pos == temp.NumberOfStudent_Current - 1) pos = 0;
+                    else pos++;
+                    SetColor(7, 0);
+                    for (int i = 0; i <= 102; i++){
+                        GoTo(i, 3 + pos); cout <<' ';
+                    }
+                    GoTo(0, 3 + pos); cout << pos + 1;
+                    GoTo(5, 3 + pos); cout << temp.student[pos].FirstName;
+                    GoTo(35,3 + pos);cout << temp.student[pos].LastName;
+                    GoTo(48,3 + pos);cout << temp.student[pos].Gender;
+                    GoTo(60,3 + pos);cout << temp.student[pos].DateOfBirth;
+                    GoTo(75,3 + pos);cout << temp.student[pos].StudentID;
+                    GoTo(90,3 + pos);cout << temp.student[pos].SocialID;
+                }
+            }
+        }
+    }
     system("pause");
 }
