@@ -34,6 +34,10 @@ struct StudentInfo{
     string Gender;
     string DateOfBirth;
     string SocialID;
+    float Total_mark = -1;
+    float Final_mark = -1;
+    float Midterm_mark = -1;
+    float Other_mark = -1;
 };
 
 struct Course{
