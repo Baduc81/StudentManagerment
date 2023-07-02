@@ -130,3 +130,4 @@ void AddStudentIntoCourse(Course& temp);
 void DeleteOneStudent(Course& temp, int pos);
 void PrintListOfStudentInCourse(Course& temp);
 void ExportFileCSV(Course temp);
+bool ImportFileCSV(Course& temp);

@@ -773,7 +773,7 @@ void EditCourse(Course& temp){
     SetColor(15, 0);
     GoTo(35, 1); cout << "|A|D|J|U|S|T| |C|O|U|R|S|E| |I|N|F|O|R|M|A|T|I|O|N|" << endl;
     // TextColor(7);
-    string str[11];
+    string str[10];
     str[0] = "COURSE ID         :";
     str[1] = "COURSE NAME       :"; 
     str[2] = "CLASS NAME        :"; 
@@ -784,7 +784,7 @@ void EditCourse(Course& temp){
     str[7] = "DAY OF WEEK       :";
     str[8] = "SESSION           :";
     str[9] = "View List Of Student";
-    str[10]= "Export to CSV file  ";
+    //str[10]= "Export to CSV file  ";
 
     string res[11];
     res[0] = ' '+ temp.CourseID;
@@ -797,7 +797,7 @@ void EditCourse(Course& temp){
     res[7] = ' '+ temp.DayOfWeek;
     res[8] = ' '+ temp.session;
     res[9] = "";
-    res[10] = "";
+    //res[10] = "";
     
     int lens = 50; 
     //lens la bien luu do dai cua o chu
@@ -815,10 +815,9 @@ void EditCourse(Course& temp){
         TextColor(7);
         cout << res[i];
     }  
-    for (int i = 9; i <= 10; i++){
-        GoTo(0, 3 + i);
-        cout << str[i] << res[i];
-    }
+    GoTo(0, 12);
+    cout << str[9] << res[9];
+    
     int i = 0;
     while (true) {
         if (kbhit()){
@@ -827,7 +826,7 @@ void EditCourse(Course& temp){
                 c = getch();
                 if (c == 72){ // Di len
                     GoTo(0, 3 + i); 
-                    if (i != 9 && i != 10) SetColor(14, 1); 
+                    if (i != 9) SetColor(14, 1); 
                     else TextColor(7);
                     cout << str[i];
                     TextColor(7);
@@ -837,7 +836,7 @@ void EditCourse(Course& temp){
                     }
                     GoTo(19, 3 + i);
                     cout << res[i];
-                    if (i == 0) i = 10;
+                    if (i == 0) i = 9;
                     else i--;
                     
                     if (i == 5) i--; //Bỏ qua i = 5 vì current student sẽ tự thay đổi khi thêm hoặc xóa sv
@@ -850,7 +849,7 @@ void EditCourse(Course& temp){
                 }
                 if (c == 80){ //Di Xuong
                     GoTo(0, 3 + i); 
-                    if (i != 9 && i != 10) SetColor(14, 1); 
+                    if (i != 9) SetColor(14, 1); 
                     else TextColor(7);
                     cout << str[i];
                     TextColor(7);
@@ -860,7 +859,7 @@ void EditCourse(Course& temp){
                     }
                     GoTo(19, 3 + i);
                     cout << res[i];
-                    if (i == 10) i = 0;
+                    if (i == 9) i = 0;
                     else i++;
                     
                     if (i == 5) i++; //Bỏ qua i = 5 vì current student sẽ tự thay đổi khi thêm hoặc xóa sv
@@ -1062,9 +1061,11 @@ void DeleteOneStudent(Course& temp, int pos){ //Xoa sinh vien co vi tri pos tron
 void PrintListOfStudentInCourse(Course& temp){
     GoTo(120, 1); 
     TextColor(2);
-    cout <<"Press f9 to add student";
+    cout <<"Press f8 to add student";
     GoTo(120, 2);
-    cout <<"Press f10 to export file csv";
+    cout <<"Press f9 to export file csv";
+    GoTo(120, 3);
+    cout <<"Press f10 to import file csv";
     TextColor(7);
     if (temp.NumberOfStudent_Current == 0){
         GoTo(75 - (43 + temp.CourseName.length() + temp.ClassName.length() )/ 2, 0);
@@ -1120,7 +1121,7 @@ void PrintListOfStudentInCourse(Course& temp){
             char c = getch();
             if (c == 0){
                 c = getch();
-                if (c == 67){
+                if (c == 66){
                     if (temp.NumberOfStudent_Current == temp.NumberOfStudent_Max){
                         GoTo(58, 1);
                         SetColor(11, 4);
@@ -1138,9 +1139,11 @@ void PrintListOfStudentInCourse(Course& temp){
                         system("cls");
                         GoTo(120, 1); 
                         TextColor(2);
-                        cout <<"Press f9 to add student";
+                        cout <<"Press f8 to add student";
                         GoTo(120, 2);
-                        cout <<"Press f10 to export file csv";
+                        cout <<"Press f9 to export file csv";
+                        GoTo(120, 3);
+                        cout <<"Press f10 to import file csv";
                         TextColor(7);
                         SetColor(14, 7);
                         GoTo(75 - (37 + temp.CourseName.length() + temp.ClassName.length() )/ 2, 0); 
@@ -1169,7 +1172,7 @@ void PrintListOfStudentInCourse(Course& temp){
                             GoTo(38,3 + i);cout << temp.student[i].DateOfBirth;
                             GoTo(53,3 + i);cout << temp.student[i].StudentID;
                             if (temp.student[i].Midterm_mark != -1){
-                                (67,3 + i);cout << temp.student[i].Midterm_mark;
+                                GoTo(67,3 + i);cout << temp.student[i].Midterm_mark;
                             }
                             if (temp.student[i].Final_mark != -1){
                                 GoTo(77,3 + i);cout << temp.student[i].Final_mark;
@@ -1185,7 +1188,7 @@ void PrintListOfStudentInCourse(Course& temp){
                         pos = 0;
                     }
                 }
-                if (c == 68){
+                if (c == 67){
                     if (temp.NumberOfStudent_Current != 0) ExportFileCSV(temp);
                     else {
                         GoTo(54, 7);
@@ -1198,7 +1201,62 @@ void PrintListOfStudentInCourse(Course& temp){
                         }
                     }
                 }
-            } 
+                if (c == 68){
+                    if (ImportFileCSV(temp)){
+                        TextColor(7);
+                        system("cls");
+                        GoTo(120, 1); 
+                        TextColor(2);
+                        cout <<"Press f8 to add student";
+                        GoTo(120, 2);
+                        cout <<"Press f9 to export file csv";
+                        GoTo(120, 3);
+                        cout <<"Press f10 to import file csv";
+                        TextColor(7);
+                        SetColor(14, 7);
+                        GoTo(75 - (37 + temp.CourseName.length() + temp.ClassName.length() )/ 2, 0); 
+                        cout <<"Danh sach sinh vien hoc mon "<< temp.CourseName <<" cua lop "<< temp.ClassName << endl;
+                        SetColor(14, 1);
+                        for (int i = 0; i <= 107; i++){
+                            GoTo(i, 2); cout <<' ';
+                        }
+                        GoTo(0, 2);  cout << "STT";
+                        GoTo(7, 2);  cout << "Ho va Ten";
+                        GoTo(25, 2); cout << "Gioi tinh";
+                        GoTo(38, 2); cout << "Ngay sinh";
+                        GoTo(55, 2); cout << "MSSV";
+                        GoTo(65, 2); cout << "Diem GK";
+                        GoTo(75, 2); cout << "Diem CK";
+                        GoTo(85, 2); cout << "Diem cong";
+                        GoTo(97, 2); cout << "Tong Phay" << endl;
+                        SetColor(7, 0);
+                        for (int i = 0; i <= 107; i++){
+                            GoTo(i, 3); cout <<' ';
+                        }
+                        for (int i = 0; i < temp.NumberOfStudent_Current; i++){
+                            GoTo(0, 3 + i);cout << i + 1;
+                            GoTo(5, 3 + i);cout << temp.student[i].FirstName + ' ' + temp.student[i].LastName;
+                            GoTo(28,3 + i);cout << temp.student[i].Gender;
+                            GoTo(38,3 + i);cout << temp.student[i].DateOfBirth;
+                            GoTo(53,3 + i);cout << temp.student[i].StudentID;
+                            if (temp.student[i].Midterm_mark != -1){
+                                GoTo(67,3 + i);cout << temp.student[i].Midterm_mark;
+                            }
+                            if (temp.student[i].Final_mark != -1){
+                                GoTo(77,3 + i);cout << temp.student[i].Final_mark;
+                            }
+                            if (temp.student[i].Other_mark != -1){
+                                GoTo(88,3 + i);cout << temp.student[i].Other_mark;
+                            }
+                            if (temp.student[i].Total_mark != -1){
+                                GoTo(100,3 + i);cout << temp.student[i].Total_mark << endl;
+                            }
+                            if (i == 0) TextColor(7);
+                        }
+                        pos = 0;
+                    }
+                }
+            }
             if (c == -32 && temp.NumberOfStudent_Current != 0){
                 c = getch();
                 if (c == 72){ //Di len, 80 di xuong
@@ -1314,13 +1372,13 @@ void ExportFileCSV(Course temp){
         cout << "Co loi, khong mo duoc file";
         return;
     }
-    ofs << "No,Name,Gender,Date of Birth,Student ID" << endl;
+    ofs << "No,Name,Gender,Date of Birth,Student ID,Diem GK,Diem CK,Diem cong,Tong Phay" << endl;
     for (int i = 0; i < temp.NumberOfStudent_Current; i++){
         ofs << i + 1 << ',';
-        ofs << temp.student[i].FirstName + ' ' + temp.student[i].LastName  << ',';
+        ofs << temp.student[i].FirstName << ' ' << temp.student[i].LastName  << ',';
         ofs << temp.student[i].Gender << ',';
         ofs << temp.student[i].DateOfBirth << ',';
-        ofs << temp.student[i].StudentID <<',';
+        ofs << temp.student[i].StudentID << endl;
     }
     ofs.close();
     TextColor(2);
@@ -1331,4 +1389,57 @@ void ExportFileCSV(Course temp){
     for (int i = 63; i <= 86; i++){
         GoTo(i, 1); cout <<' ';
     }
+}
+//Score Board file
+bool ImportFileCSV(Course& temp){
+    if (temp.NumberOfStudent_Current == 0){
+        GoTo(52, 7);
+        SetColor(14, 4);
+        cout <<"Danh sach dang trong, khong the cap nhat file";
+        TextColor(7);
+        sleep(1);
+        for (int i = 52; i <= 98; i++){
+            GoTo(i, 7); cout <<' ';
+        }
+        return 0;
+    }
+    ifstream ifs(temp.CourseName + '_' + temp.ClassName  + ".csv");
+    if (!ifs){
+        TextColor(2);
+        GoTo(57, 1);
+        cout <<"Mon hoc nay chua duoc cap nhap diem";
+        TextColor(7);
+        sleep(1);
+        for (int i = 57; i <= 92; i++){
+            GoTo(i, 1); cout <<' ';
+        }
+        return 0;
+    }
+    string no, name, gender, date_of_birth, studentID, diem_gk, diem_ck, diem_cong,tong_phay;
+    getline(ifs, no, ',');
+    getline(ifs, name, ',');
+    getline(ifs, gender, ',');
+    getline(ifs, date_of_birth, ',');
+    getline(ifs, studentID, ',');
+    getline(ifs, diem_gk, ',');
+    getline(ifs, diem_ck, ',');
+    getline(ifs, diem_cong, ',');
+    getline(ifs, tong_phay);
+    char comma;
+    for (int i = 0; i < temp.NumberOfStudent_Current; i++){
+        getline(ifs, no, ',');
+        getline(ifs, name, ',');
+        getline(ifs, gender, ',');
+        getline(ifs, date_of_birth, ',');
+        getline(ifs, studentID, ',');
+        ifs >> temp.student[i].Midterm_mark;
+        ifs >> comma; //doc dau phay
+        ifs >> temp.student[i].Final_mark;
+        ifs >> comma;
+        ifs >> temp.student[i].Other_mark;
+        ifs >> comma;
+        ifs >> temp.student[i].Total_mark;
+        ifs.ignore();
+    }
+    return 1;
 }
