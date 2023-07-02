@@ -125,3 +125,4 @@ void DeleteCourse(HocKy& temp, ListOfCourse* node);
 void AddStudentIntoCourse(Course& temp);
 void DeleteOneStudent(Course& temp, int pos);
 void PrintListOfStudentInCourse(Course& temp);
+void ExportFileCSV(Course temp);

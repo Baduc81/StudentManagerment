@@ -1473,13 +1473,13 @@ void PrintListOfStudentInCourse(Course& temp){
                 c = getch();
                 if (c == 67){
                     if (temp.NumberOfStudent_Current == temp.NumberOfStudent_Max){
-                        GoTo(58, 10);
+                        GoTo(58, 1);
                         SetColor(11, 4);
                         cout <<"DA QUA SO LUONG SINH VIEN DANG KY";
                         sleep(1);
                         TextColor(7);
                         for (int i = 58; i <= 91; i++){
-                            GoTo(i, 10);
+                            GoTo(i, 1);
                             cout <<' ';
                         }
                     }
@@ -1522,6 +1522,19 @@ void PrintListOfStudentInCourse(Course& temp){
                             if (i == 0) TextColor(7);
                         }
                         pos = 0;
+                    }
+                }
+                if (c == 68){
+                    if (temp.NumberOfStudent_Current != 0) ExportFileCSV(temp);
+                    else {
+                        GoTo(54, 15);
+                        SetColor(14, 4);
+                        cout <<"Danh sach dang trong, khong the xuat file";
+                        TextColor(7);
+                        sleep(1);
+                        for (int i = 54; i <= 95; i++){
+                            GoTo(i, 15); cout <<' ';
+                        }
                     }
                 }
             }
@@ -1591,4 +1604,32 @@ void PrintListOfStudentInCourse(Course& temp){
         }
     }
     system("pause");
+}
+
+void ExportFileCSV(Course temp){
+    string filename = temp.CourseName + '_' + temp.ClassName + ".csv";
+    ofstream ofs(filename);
+    if (!ofs){
+        cout << "Co loi, khong mo duoc file";
+        return;
+    }
+    ofs << "No,First Name,Last Name,Gender,Date of Birth,Student ID,Social ID" << endl;
+    for (int i = 0; i < temp.NumberOfStudent_Current; i++){
+        ofs << i + 1 << ',';
+        ofs << temp.student[i].FirstName << ',';
+        ofs << temp.student[i].LastName  << ',';
+        ofs << temp.student[i].Gender << ',';
+        ofs << temp.student[i].DateOfBirth << ',';
+        ofs << temp.student[i].StudentID <<',';
+        ofs << temp.student[i].SocialID << endl;
+    }
+    ofs.close();
+    TextColor(2);
+    GoTo(63, 1);
+    cout <<"Da xuat file thanh cong";
+    TextColor(7);
+    sleep(1);
+    for (int i = 63; i <= 86; i++){
+        GoTo(i, 1); cout <<' ';
+    }
 }
