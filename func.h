@@ -131,3 +131,5 @@ void DeleteOneStudent(Course& temp, int pos);
 void PrintListOfStudentInCourse(Course& temp);
 void ExportFileCSV(Course temp);
 bool ImportFileCSV(Course& temp);
+void WriteOnFile_Student(StudentInfo *temp, int n, string path);
+void WriteOnFile_Course(Course temp, string path);

@@ -41,6 +41,20 @@ void InputSchoolYear(hcmus &KHTN){
             }
         }
     }while (check);
+
+    string path = "Data\\" + KHTN.ptr[n].SchoolYear; //Địa chỉ thư mục năm học
+    int kiemtra = mkdir(path.c_str());
+    if (kiemtra < 0){
+        cout <<"Co loi khi tao thu muc nam hoc moi" << endl;
+        system("pause");
+    }
+    path = path + "\\Class";
+    kiemtra = mkdir(path.c_str());
+    if (kiemtra < 0){
+        cout <<"Co loi khi tao thu muc lop hoc cho nam hoc moi" << endl;
+        system("pause");
+    }
+
     if (n == 0) return;
     ListOfClasses* temp = KHTN.ptr[n - 1].HeadList;
     while (temp != nullptr){
@@ -51,6 +65,15 @@ void InputSchoolYear(hcmus &KHTN){
         temp = temp->pNext;
     }
     KHTN.ptr[n].EndList = KHTN.ptr[n - 1].EndList;
+
+    /*Ghi lại danh sách sinh viên năm học mới lên file*/
+    temp = KHTN.ptr[n].HeadList;
+    while (temp != nullptr){
+        string address = path + '\\' + temp->data.nameClass;
+        WriteOnFile_Student(temp->data.student, temp->data.NumberOfStudent_Current, address);
+        if (temp == KHTN.ptr[n].EndList) break;
+        temp = temp->pNext;
+    }
 }
 
 void InputSemester(hcmus &KHTN){
@@ -234,7 +257,7 @@ void InputStudentFromFile(string NameOfClass){
         tam = tam->pNext;
     }
     
-    NameOfClass = "Data\\" + NameOfClass + ".csv";
+    NameOfClass = NameOfClass + ".csv";
     ifstream ifs(NameOfClass);
     if (!ifs){
         cout <<"Khong the mo file" << endl;
@@ -1442,4 +1465,63 @@ bool ImportFileCSV(Course& temp){
         ifs.ignore();
     }
     return 1;
+}
+void WriteOnFile_Student(StudentInfo *temp, int n, string path){
+    path = path +".csv";
+    ofstream ofs(path);
+    if (!ofs){
+        cout << "Co loi khong mo duoc file";
+        return;
+    }
+    ofs << "No,First Name,Last Name,Gender,Date of Birth,Student ID,Social ID" << endl;
+    for (int i = 0; i < n; i++){
+        ofs << i + 1 << ',';
+        ofs << temp[i].FirstName << ',';
+        ofs << temp[i].LastName << ',';
+        ofs << temp[i].Gender << ',';
+        ofs << temp[i].DateOfBirth << ',';
+        ofs << temp[i].StudentID << ',';
+        ofs << temp[i].SocialID << endl;
+    }
+    ofs.close();
+}
+
+void WriteOnFile_Course(Course temp, string path){
+    path = path + "data.txt";
+    ofstream ofs(path);
+    if (!ofs){
+        cout << "Co loi khong mo duoc file";
+        return;
+    }
+    ofs << temp.ClassName << endl;
+    ofs << temp.CourseID << endl;
+    ofs << temp.CourseName << endl;
+    ofs << temp.DayOfWeek << endl;
+    ofs << temp.NumberOfCredit << endl;
+    ofs << temp.NumberOfStudent_Current << endl;
+    ofs << temp.NumberOfStudent_Max << endl;
+    ofs << temp.session;
+    ofs << temp.TeacherName;
+    ofs.close();
+    WriteOnFile_Student(temp.student, temp.NumberOfStudent_Current, path);
+}
+
+void WriteOnFile_Class(ClassInfo temp, string path){
+    path = path + "data.txt";
+    ofstream ofs(path);
+    if (!ofs){
+        cout << "Co loi khong mo duoc file";
+        return;
+    }
+    ofs << temp.major << endl;
+    ofs << temp.nameClass << endl;
+    ofs << temp.NumberOfStudent_Current << endl;
+    ofs << temp.NumberOfStudent_max << endl;
+    ofs << temp.TimeBegin << endl;
+    ofs.close();
+    WriteOnFile_Student(temp.student, temp.NumberOfStudent_Current, path);
+
+
+
+
 }

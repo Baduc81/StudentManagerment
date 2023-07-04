@@ -5,6 +5,7 @@ int quantity;
 hcmus NamHoc;
 
 int main(){
+  
     // // SetConsoleTitle("Phan Ba Duc - 22120071");
     // // UploadAccount();
     // // Login();
@@ -13,11 +14,12 @@ int main(){
     // InputSemester(NamHoc);
     CreateSimpleClass(NamHoc.ptr[0]);
     InputStudentFromFile("18CTT3");
+    InputSchoolYear(NamHoc);
     // PrintListOfStudentInClass(NamHoc.ptr[0].HeadList->data);
-    AddCourseToSemester(NamHoc.ptr[0].semester[0]);
+    //AddCourseToSemester(NamHoc.ptr[0].semester[0]);
     // AddCourseToSemester(NamHoc.ptr[0].semester[0]);
     // AddCourseToSemester(NamHoc.ptr[0].semester[0]);
-    PrintListOfCourseInSemester(NamHoc.ptr[0].semester[0]);
+    //PrintListOfCourseInSemester(NamHoc.ptr[0].semester[0]);
     // EditCourse(NamHoc.ptr[0].semester[0].HeadList->data);
     // system("pause");
     // CreateMultipleClasses(NamHoc.ptr[0]);
