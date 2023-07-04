@@ -99,6 +99,10 @@ void InputSemester(hcmus &KHTN){
                 //KHTN.ptr[i].semester[KHTN.ptr[i].NumberOfSemester - 1] = KHTN.ptr[i].NumberOfSemester;
                 KHTN.ptr[i].semester[KHTN.ptr[i].NumberOfSemester - 1].HeadList = nullptr;
                 KHTN.ptr[i].semester[KHTN.ptr[i].NumberOfSemester - 1].EndList = nullptr;
+
+                string path = "Data\\" + temp + '\\' + "Semester" + to_string(KHTN.ptr[i].semester[KHTN.ptr[i].NumberOfSemester - 1].STT);
+                int check = mkdir(path.c_str());
+                if (check < 0) cout << "Co loi khi tao thu muc cho hoc ky moi" << endl;
                 return;
             }
         }
@@ -140,7 +144,15 @@ void CreateSimpleClass(SchoolTime& temp){
         if (FindClass(temp, node->data.nameClass) != nullptr) cout << "Da ton tai lop hoc nay, vui long nhap lai" << endl;
         else break;
     }while(true);
-
+    /*Tao thu muc lop moi*/
+    string path = "Data\\" + temp.SchoolYear + "\\Class\\" + node->data.nameClass + ".csv";
+    ofstream ofs(path);
+    if (!ofs) {
+        cout <<"Co loi, khong tao duoc file lop " << node->data.nameClass << endl;
+        return;
+    }
+    ofs.close();
+    /*-----------------*/
     cout <<"Nhap chuyen nganh: ";
     getline(cin, node->data.major);
     node->data.TimeBegin = temp.SchoolYear;
@@ -189,7 +201,7 @@ void CreateMultipleClasses(SchoolTime& temp){
         //Vi day la tao lop tu dong danh so tu 1 den n, nen nhieu khi co lop da tao thu cong 
         //tu truoc. Vi vay ta phai kiem tra lop da ton tai chua roi moi tao
         if (FindClass(temp, name + IntToString(i)) != nullptr) continue;
-
+        
         ListOfClasses* node = new ListOfClasses;
         node->data.nameClass = name + IntToString(i);
         node->data.major = chuyenNganh;
@@ -211,6 +223,15 @@ void CreateMultipleClasses(SchoolTime& temp){
                     temp.EndList->pNext = node;
                     temp.EndList = node;
                 }
+        /*Tao thu muc lop moi*/
+        string path = "Data\\" + temp.SchoolYear + "\\Class\\" + node->data.nameClass + ".csv";
+        ofstream ofs(path);
+        if (!ofs) {
+            cout <<"Co loi, khong tao duoc file lop " << node->data.nameClass << endl;
+            return;
+        }
+        ofs.close();
+        /*-------------*/
     }
     //NamHoc.ptr[NamHoc.NumberOfSchoolYear - 1] = temp;
 }
@@ -241,6 +262,22 @@ void AddOneStudentToClass(string NameOfClass){
     getline(cin, node->data.student[i].StudentID);
     cout <<"\t Nhap CCCD                          : ";
     getline(cin, node->data.student[i].SocialID);
+
+    /*Ghi thong tin len file*/
+    string path = "Data\\" + NamHoc.ptr[NamHoc.NumberOfSchoolYear - 1].SchoolYear + "\\Class\\" + node->data.nameClass + ".csv";
+    ofstream ofs(path, ios::ate);
+    if (!ofs){
+        cout <<"Co loi, mo file de ghi sinh vien len duoc";
+        return;
+    }
+    ofs << i + 1 << ',';
+    ofs << node->data.student[i].FirstName << ',';
+    ofs << node->data.student[i].LastName << ',';
+    ofs << node->data.student[i].Gender << ',';
+    ofs << node->data.student[i].DateOfBirth << ',';
+    ofs << node->data.student[i].StudentID << ',';
+    ofs << node->data.student[i].SocialID << endl;
+    ofs.close();
 }
 
 //Chỉ áp dụng cho các lớp ở năm học hiện tại. Không áp dụng cho các năm trước
@@ -257,7 +294,7 @@ void InputStudentFromFile(string NameOfClass){
         tam = tam->pNext;
     }
     
-    NameOfClass = NameOfClass + ".csv";
+    NameOfClass = "Data\\" + NamHoc.ptr[NamHoc.NumberOfSchoolYear - 1].SchoolYear + "\\Class\\" + NameOfClass + ".csv";
     ifstream ifs(NameOfClass);
     if (!ifs){
         cout <<"Khong the mo file" << endl;
@@ -316,10 +353,13 @@ void PrintListOfStudentInClass(string NameOfClass ){
 }
 
 void DeleteOneStudent(ClassInfo& temp, int pos){ //Xoa sinh vien co vi tri pos trong lop temp
+    extern hcmus NamHoc;
     for (int i = pos; i < temp.NumberOfStudent_Current; i++){
         temp.student[i] = temp.student[i + 1];
     }
     temp.NumberOfStudent_Current--;
+    string path = "Data\\" + NamHoc.ptr[NamHoc.NumberOfSchoolYear - 1].SchoolYear + "\\Class\\" + temp.nameClass;
+    WriteOnFile_Student(temp.student, temp.NumberOfStudent_Current, path);
 }
 
 void PrintListOfStudentInClass(ClassInfo& temp){
@@ -1484,42 +1524,6 @@ void WriteOnFile_Student(StudentInfo *temp, int n, string path){
         ofs << temp[i].SocialID << endl;
     }
     ofs.close();
-}
-
-void WriteOnFile_Course(Course temp, string path){
-    path = path + "data.txt";
-    ofstream ofs(path);
-    if (!ofs){
-        cout << "Co loi khong mo duoc file";
-        return;
-    }
-    ofs << temp.ClassName << endl;
-    ofs << temp.CourseID << endl;
-    ofs << temp.CourseName << endl;
-    ofs << temp.DayOfWeek << endl;
-    ofs << temp.NumberOfCredit << endl;
-    ofs << temp.NumberOfStudent_Current << endl;
-    ofs << temp.NumberOfStudent_Max << endl;
-    ofs << temp.session;
-    ofs << temp.TeacherName;
-    ofs.close();
-    WriteOnFile_Student(temp.student, temp.NumberOfStudent_Current, path);
-}
-
-void WriteOnFile_Class(ClassInfo temp, string path){
-    path = path + "data.txt";
-    ofstream ofs(path);
-    if (!ofs){
-        cout << "Co loi khong mo duoc file";
-        return;
-    }
-    ofs << temp.major << endl;
-    ofs << temp.nameClass << endl;
-    ofs << temp.NumberOfStudent_Current << endl;
-    ofs << temp.NumberOfStudent_max << endl;
-    ofs << temp.TimeBegin << endl;
-    ofs.close();
-    WriteOnFile_Student(temp.student, temp.NumberOfStudent_Current, path);
 
 
 
