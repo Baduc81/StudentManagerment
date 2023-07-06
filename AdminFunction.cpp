@@ -48,13 +48,6 @@ void InputSchoolYear(hcmus &KHTN){
         cout <<"Co loi khi tao thu muc nam hoc moi" << endl;
         system("pause");
     }
-    ofstream ofs(path + "\\List Of Classes.csv");
-    if (ofs){
-        ofs << "Name Of Class,";
-        ofs << "Major,";
-        ofs << "Time Begin,";
-        ofs << "The maximum number of student"<< endl;
-    }
     path = path + "\\Class";
     kiemtra = mkdir(path.c_str());
     if (kiemtra < 0){
@@ -62,7 +55,7 @@ void InputSchoolYear(hcmus &KHTN){
         system("pause");
     }
 
-    if (n == 0) {ofs.close(); return;}
+    if (n == 0) return;
     ListOfClasses* temp = KHTN.ptr[n - 1].HeadList;
     while (temp != nullptr){
         if (ConvertLast(KHTN.ptr[n].SchoolYear) - ConvertFirst(temp->data.TimeBegin) <= 4){
@@ -75,6 +68,7 @@ void InputSchoolYear(hcmus &KHTN){
 
     /*Ghi lại danh sách sinh viên năm học mới lên file*/
     temp = KHTN.ptr[n].HeadList;
+    ofstream ofs("Data\\" + KHTN.ptr[n].SchoolYear + "\\List Of Classes.csv");
     while (temp != nullptr){
         string address = path + '\\' + temp->data.nameClass;
         WriteOnFile_Student(temp->data.student, temp->data.NumberOfStudent_Current, address);
@@ -114,18 +108,26 @@ void InputSemester(hcmus &KHTN){
                 KHTN.ptr[i].semester[KHTN.ptr[i].NumberOfSemester].HeadList = nullptr;
                 KHTN.ptr[i].semester[KHTN.ptr[i].NumberOfSemester].EndList = nullptr;
 
+                ofstream ofs("Data\\" + temp + "\\List Of Semester.csv", ios::app);
+                if (ofs){
+                    ofs << KHTN.ptr[i].semester[KHTN.ptr[i].NumberOfSemester].STT << ',';
+                    ofs << KHTN.ptr[i].semester[KHTN.ptr[i].NumberOfSemester].StartDate << ',';
+                    ofs << KHTN.ptr[i].semester[KHTN.ptr[i].NumberOfSemester].EndDate << endl;
+                }
+                ofs.close();
+
                 string path = "Data\\" + temp + '\\' + "Semester" + to_string(KHTN.ptr[i].semester[KHTN.ptr[i].NumberOfSemester].STT);
                 int check = mkdir(path.c_str());
                 if (check < 0) cout << "Co loi khi tao thu muc cho hoc ky moi" << endl;
+
                 path = path + "\\Course.csv";
-                ofstream ofs(path);
+                ofs.open(path, ios::out);
                 if (!ofs) cout << "Co loi khi tao file thong tin khoa hoc";
                 ofs << "COURSE ID,";
                 ofs << "COURSE NAME,";
                 ofs << "CLASS NAME,";
                 ofs << "TEACHER NAME,";
                 ofs << "CREDITs,";
-                ofs << "STUDENT_Current,";
                 ofs << "STUDENT_Max,";
                 ofs << "DAY OF WEEK,";
                 ofs << "SESSION" << endl;
@@ -716,24 +718,24 @@ void AddCourseToSemester(HocKy& temp){
     string path = "Data\\" + NamHoc.ptr[NamHoc.NumberOfSchoolYear - 1].SchoolYear + "\\Semester" + to_string(temp.STT) + "\\Course";
     WriteOnFile_One_Course(node->data, path);
     //Tao file .csv chua thong tin SV dky khoa hoc
-    path = "Data\\" + NamHoc.ptr[NamHoc.NumberOfSchoolYear - 1].SchoolYear + "\\Semester" + to_string(temp.STT) + '\\' + node->data.CourseID + ".csv";
-    ofstream ofs(path);
-    if (!ofs){
-        cout <<"Co loi khi tao file chua thong tin SV dky khoa hoc" << endl;
-    }
-    else{
-        ofs << "First Name,";
-        ofs << "Last Name,";
-        ofs << "Gender,";
-        ofs << "Birthday,";
-        ofs << "Student ID,";
-        ofs << "Social ID,";
-        ofs << "Midterm Mark,";
-        ofs << "Final Mark,";
-        ofs << "Other Mark,";
-        ofs << "Total Mark" << endl;
-    }
-    ofs.close();
+    // path = "Data\\" + NamHoc.ptr[NamHoc.NumberOfSchoolYear - 1].SchoolYear + "\\Semester" + to_string(temp.STT) + '\\' + node->data.CourseID + ".csv";
+    // ofstream ofs(path);
+    // if (!ofs){
+    //     cout <<"Co loi khi tao file chua thong tin SV dky khoa hoc" << endl;
+    // }
+    // else{
+    //     ofs << "First Name,";
+    //     ofs << "Last Name,";
+    //     ofs << "Gender,";
+    //     ofs << "Birthday,";
+    //     ofs << "Student ID,";
+    //     ofs << "Social ID,";
+    //     ofs << "Midterm Mark,";
+    //     ofs << "Final Mark,";
+    //     ofs << "Other Mark,";
+    //     ofs << "Total Mark" << endl;
+    // }
+    // ofs.close();
 
     node->pNext = nullptr;
     node->pPrev = nullptr;
@@ -1442,7 +1444,7 @@ void PrintListOfStudentInCourse(Course& temp){
                     GoTo(38,3 + pos);cout << temp.student[pos].DateOfBirth;
                     GoTo(53,3 + pos);cout << temp.student[pos].StudentID;
                     if (temp.student[pos].Midterm_mark != -1){
-                        (67,3 + pos);cout << temp.student[pos].Midterm_mark;
+                        GoTo(67,3 + pos);cout << temp.student[pos].Midterm_mark;
                     }
                     if (temp.student[pos].Final_mark != -1){
                         GoTo(77,3 + pos);cout << temp.student[pos].Final_mark;
@@ -1465,7 +1467,7 @@ void PrintListOfStudentInCourse(Course& temp){
                     GoTo(30,3 + pos);cout << temp.student[pos].DateOfBirth;
                     GoTo(53,3 + pos);cout << temp.student[pos].StudentID;
                     if (temp.student[pos].Midterm_mark != -1){
-                        (67,3 + pos);cout << temp.student[pos].Midterm_mark;
+                        GoTo(67,3 + pos);cout << temp.student[pos].Midterm_mark;
                     }
                     if (temp.student[pos].Final_mark != -1){
                         GoTo(77,3 + pos);cout << temp.student[pos].Final_mark;
@@ -1488,7 +1490,7 @@ void PrintListOfStudentInCourse(Course& temp){
                     GoTo(38,3 + pos);cout << temp.student[pos].DateOfBirth;
                     GoTo(53,3 + pos);cout << temp.student[pos].StudentID;
                     if (temp.student[pos].Midterm_mark != -1){
-                        (67,3 + pos);cout << temp.student[pos].Midterm_mark;
+                        GoTo(67,3 + pos);cout << temp.student[pos].Midterm_mark;
                     }
                     if (temp.student[pos].Final_mark != -1){
                         GoTo(77,3 + pos);cout << temp.student[pos].Final_mark;
@@ -1511,7 +1513,7 @@ void PrintListOfStudentInCourse(Course& temp){
                     GoTo(38,3 + pos);cout << temp.student[pos].DateOfBirth;
                     GoTo(53,3 + pos);cout << temp.student[pos].StudentID;
                     if (temp.student[pos].Midterm_mark != -1){
-                        (67,3 + pos);cout << temp.student[pos].Midterm_mark;
+                        GoTo(67,3 + pos);cout << temp.student[pos].Midterm_mark;
                     }
                     if (temp.student[pos].Final_mark != -1){
                         GoTo(77,3 + pos);cout << temp.student[pos].Final_mark;
@@ -1531,10 +1533,156 @@ void PrintListOfStudentInCourse(Course& temp){
                 PrintListOfStudentInCourse(temp);
                 return;
             }
+            if (c == 13){
+                EditResult(temp, pos);
+                TextColor(7);
+                system("cls");
+                GoTo(120, 1); 
+                TextColor(2);
+                cout <<"Press f8 to add student";
+                GoTo(120, 2);
+                cout <<"Press f9 to export file csv";
+                GoTo(120, 3);
+                cout <<"Press f10 to import file csv";
+                TextColor(7);
+                SetColor(14, 7);
+                GoTo(75 - (37 + temp.CourseName.length() + temp.ClassName.length() )/ 2, 0); 
+                cout <<"Danh sach sinh vien hoc mon "<< temp.CourseName <<" cua lop "<< temp.ClassName << endl;
+                SetColor(14, 1);
+                for (int i = 0; i <= 107; i++){
+                    GoTo(i, 2); cout <<' ';
+                }
+                GoTo(0, 2);  cout << "STT";
+                GoTo(7, 2);  cout << "Ho va Ten";
+                GoTo(25, 2); cout << "Gioi tinh";
+                GoTo(38, 2); cout << "Ngay sinh";
+                GoTo(55, 2); cout << "MSSV";
+                GoTo(65, 2); cout << "Diem GK";
+                GoTo(75, 2); cout << "Diem CK";
+                GoTo(85, 2); cout << "Diem cong";
+                GoTo(97, 2); cout << "Tong Phay" << endl;
+                SetColor(7, 0);
+                for (int i = 0; i <= 107; i++){
+                    GoTo(i, 3); cout <<' ';
+                }
+                for (int i = 0; i < temp.NumberOfStudent_Current; i++){
+                    GoTo(0, 3 + i);cout << i + 1;
+                    GoTo(5, 3 + i);cout << temp.student[i].FirstName + ' ' + temp.student[i].LastName;
+                    GoTo(28,3 + i);cout << temp.student[i].Gender;
+                    GoTo(38,3 + i);cout << temp.student[i].DateOfBirth;
+                    GoTo(53,3 + i);cout << temp.student[i].StudentID;
+                    if (temp.student[i].Midterm_mark != -1){
+                        GoTo(67,3 + i);cout << temp.student[i].Midterm_mark;
+                    }
+                    if (temp.student[i].Final_mark != -1){
+                        GoTo(77,3 + i);cout << temp.student[i].Final_mark;
+                    }
+                    if (temp.student[i].Other_mark != -1){
+                        GoTo(88,3 + i);cout << temp.student[i].Other_mark;
+                    }
+                    if (temp.student[i].Total_mark != -1){
+                        GoTo(100,3 + i);cout << temp.student[i].Total_mark << endl;
+                    }
+                    if (i == 0) TextColor(7);
+                }
+                pos = 0;
+            }
             if (c == 27) {GoTo(0, 15);TextColor(7);return;} //ESC
         }
     }
     system("pause");
+}
+
+void EditResult(Course& temp, int pos){
+    TextColor(7);
+    system("cls");
+    cout <<"Sinh vien: " << temp.student[pos].FirstName + ' ' + temp.student[pos].LastName << endl;
+    cout <<"MSSV     : " << temp.student[pos].StudentID << endl;
+    string str[4];
+    str[0] = "Diem giua ky: ";
+    str[1] = "Diem cuoi ky: ";
+    str[2] = "Diem cong   : ";
+    str[3] = "Diem tong   : ";
+    float res[4];
+    res[0] = temp.student[pos].Midterm_mark;
+    res[1] = temp.student[pos].Final_mark;
+    res[2] = temp.student[pos].Other_mark;
+    res[3] = temp.student[pos].Total_mark;
+    
+    SetColor(7, 0);
+    GoTo(0, 5); cout << str[0] << res[0];
+    TextColor(7);
+    for (int i = 1; i < 4; i++){
+        GoTo(0, 5 + i);
+        cout << str[i] << res[i];
+    }
+    int i = 0;
+    while (true){
+        if (kbhit()){
+            char c = getch();
+            if (c == -32){
+                c = getch();
+                if (c == 72){ //Di len
+                    TextColor(7);
+                    GoTo(0, 5 + i);
+                    cout << str[i] << res[i];
+                    if (i == 0) i = 3;
+                    else i--;
+                    SetColor(7, 0);
+                    GoTo(0, 5 + i);
+                    cout << str[i] << res[i];
+                    TextColor(7);
+                }
+                if (c == 80){ //Di xuong
+                    TextColor(7);
+                    GoTo(0, 5 + i);
+                    cout << str[i] << res[i];
+                    if (i == 3) i = 0;
+                    else i++;
+                    SetColor(7, 0);
+                    GoTo(0, 5 + i);
+                    cout << str[i] << res[i];
+                    TextColor(7);
+                }
+            }
+            if (c == 8){ //backspace
+                TextColor(7);
+                for (int j = 14; j <= 18; j++) {
+                    GoTo(j, 5 + i);
+                    cout <<' ';
+                }
+                GoTo(14, 5 + i);
+                switch (i){
+                    case 0:{
+                        cin >> temp.student[pos].Midterm_mark;
+                        res[0] = temp.student[pos].Midterm_mark;
+                        break;
+                    }
+                    case 1:{
+                        cin >> temp.student[pos].Final_mark;
+                        res[1] = temp.student[pos].Final_mark;
+                        break;
+                    }
+                    case 2:{
+                        cin >> temp.student[pos].Other_mark;
+                        res[2] = temp.student[pos].Other_mark;
+                        break;
+                    }
+                    case 3:{
+                        cin >> temp.student[pos].Total_mark;
+                        res[3] = temp.student[pos].Total_mark;
+                        break;
+                    }
+                }
+                extern hcmus NamHoc;
+                int n = NamHoc.NumberOfSchoolYear - 1;
+                int hocky = NamHoc.ptr[n].NumberOfSemester;
+                string path = "Data\\" + NamHoc.ptr[n].SchoolYear + "\\Semester" + to_string(NamHoc.ptr[n].semester[hocky].STT) + '\\' + temp.CourseID;
+                WriteOnFile_Student(temp.student, temp.NumberOfStudent_Current, path);
+            }
+            if (c == 27) return;
+        }
+    }
 }
 
 void ExportFileCSV(Course temp){
@@ -1682,7 +1830,6 @@ void WriteOnFile_One_Course(Course temp, string path){
     ofs << temp.ClassName << ',';
     ofs << temp.TeacherName << ',';
     ofs << temp.NumberOfCredit << ',';
-    ofs << temp.NumberOfStudent_Current << ',';
     ofs << temp.NumberOfStudent_Max << ',';
     ofs << temp.DayOfWeek << ',';
     ofs << temp.session << endl;
@@ -1701,7 +1848,6 @@ void WriteOnFile_Course(ListOfCourse* temp, string path){
     ofs << "CLASS NAME,";
     ofs << "TEACHER NAME,";
     ofs << "CREDITs,";
-    ofs << "STUDENT_Current,";
     ofs << "STUDENT_Max,";
     ofs << "DAY OF WEEK,";
     ofs << "SESSION" << endl;
@@ -1711,11 +1857,93 @@ void WriteOnFile_Course(ListOfCourse* temp, string path){
         ofs << temp->data.ClassName << ',';
         ofs << temp->data.TeacherName << ',';
         ofs << temp->data.NumberOfCredit << ',';
-        ofs << temp->data.NumberOfStudent_Current << ',';
         ofs << temp->data.NumberOfStudent_Max << ',';
         ofs << temp->data.DayOfWeek << ',';
         ofs << temp->data.session << endl;
         temp = temp->pNext;
     }
     ofs.close();
+}
+
+void UploadAllInfor(){
+    extern hcmus NamHoc;
+    ifstream ifs("Data\\SchoolYear.txt");
+    ifstream ifs1,ifs2;
+    if (!ifs){
+        cout << "Co loi khi mo file nam hoc" << endl;
+        return;
+    }
+    string schoolyear_stt;
+    string path = "Data\\";
+    string s1, s2, s3, s4;
+    char ch;
+    while (ifs >> schoolyear_stt){
+        reallocate(NamHoc);
+        int n = NamHoc.NumberOfSchoolYear - 1;
+        NamHoc.ptr[n].SchoolYear = schoolyear_stt;
+        NamHoc.ptr[n].HeadList = nullptr;
+        NamHoc.ptr[n].EndList = nullptr;
+        //cout << path + schoolyear_stt + "\\List Of Classes.csv" << endl;
+        //system("pause");
+        ifs1.open(path + schoolyear_stt + "\\List Of Classes.csv");
+        if (!ifs1){
+            cout <<"Co loi, khong mo duoc file" << endl;
+            return;
+        }
+
+        while (!ifs1.eof()){ //Lop
+            ListOfClasses* node = new ListOfClasses;
+            node->pNext = nullptr;
+            node->pPrev = nullptr;
+            node->data.NumberOfStudent_Current = 0;
+            getline(ifs1, node->data.nameClass, ',');
+            getline(ifs1, node->data.major, ',');
+            getline(ifs1, node->data.TimeBegin, ',');
+            ifs >> ch; //doc dau phay
+            ifs1 >> node->data.NumberOfStudent_max;
+            node->data.student = new StudentInfo[node->data.NumberOfStudent_max + 1];
+            ifs1.ignore();
+            //cout << node->data.nameClass << ' '<< node->data.major <<' ' << node->data.TimeBegin << ' ' << node->data.NumberOfStudent_max << endl;
+            //cout << path + schoolyear_stt + "\\Class\\" + node->data.nameClass + ".csv" << endl;
+            //system("pause");
+            ifs2.open(path + schoolyear_stt + "\\Class\\" + node->data.nameClass + ".csv");
+            if (!ifs2){
+                cout <<"Co loi khong mo duoc file" << endl;
+                return;
+            }
+            int i = 0;
+            while (!ifs2.eof()){ //Sinh Vien trong lop
+                ifs2 >> i;
+                ifs2 >> ch; //Doc dau phay
+                //ifs2.ignore();
+                getline(ifs2, node->data.student[i - 1].StudentID, ',');
+                getline(ifs2, node->data.student[i - 1].FirstName, ',');
+                getline(ifs2, node->data.student[i - 1].LastName, ',');
+                getline(ifs2, node->data.student[i - 1].Gender, ',');
+                getline(ifs2, node->data.student[i - 1].DateOfBirth, ',');
+                getline(ifs2, node->data.student[i - 1].SocialID);
+                node->data.student[i - 1].Midterm_mark = -1;
+                node->data.student[i - 1].Final_mark = -1;
+                node->data.student[i - 1].Other_mark = -1;
+                node->data.student[i - 1].Total_mark = -1;
+                //cout << i <<' '<<ch <<' '<<node->data.student[i - 1].StudentID <<' '<<node->data.student[i-1].FirstName<< endl;
+            }
+            ifs2.close();
+            node->data.NumberOfStudent_Current = i;
+            if (NamHoc.ptr[n].HeadList == nullptr) NamHoc.ptr[n].HeadList = node;
+            else if (NamHoc.ptr[n].EndList == nullptr){
+                NamHoc.ptr[n].EndList = node;
+                NamHoc.ptr[n].HeadList->pNext = NamHoc.ptr[n].EndList;
+                NamHoc.ptr[n].EndList->pPrev = NamHoc.ptr[n].HeadList;
+            }
+            else {
+                node->pPrev = NamHoc.ptr[n].EndList;
+                NamHoc.ptr[n].EndList->pNext = node;
+                NamHoc.ptr[n].EndList = node;
+            }
+        }
+        ifs1.close();
+        
+    }
+    ifs.close();
 }
