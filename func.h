@@ -135,4 +135,4 @@ void WriteOnFile_One_Student(StudentInfo temp, int stt, string path);
 void WriteOnFile_One_Course(Course temp, string path);
 void WriteOnFile_Course(ListOfCourse* temp, string path);
 void EditResult(Course& temp, int pos);
-void UploadAllInforAboutClass();
+void UploadAllInfor();

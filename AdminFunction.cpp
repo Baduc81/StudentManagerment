@@ -120,18 +120,18 @@ void InputSemester(hcmus &KHTN){
                 int check = mkdir(path.c_str());
                 if (check < 0) cout << "Co loi khi tao thu muc cho hoc ky moi" << endl;
 
-                path = path + "\\Course.csv";
-                ofs.open(path, ios::out);
-                if (!ofs) cout << "Co loi khi tao file thong tin khoa hoc";
-                ofs << "COURSE ID,";
-                ofs << "COURSE NAME,";
-                ofs << "CLASS NAME,";
-                ofs << "TEACHER NAME,";
-                ofs << "CREDITs,";
-                ofs << "STUDENT_Max,";
-                ofs << "DAY OF WEEK,";
-                ofs << "SESSION" << endl;
-                ofs.close();
+                // path = path + "\\Course.csv";
+                // ofs.open(path, ios::out);
+                // if (!ofs) cout << "Co loi khi tao file thong tin khoa hoc";
+                // ofs << "COURSE ID,";
+                // ofs << "COURSE NAME,";
+                // ofs << "CLASS NAME,";
+                // ofs << "TEACHER NAME,";
+                // ofs << "CREDITs,";
+                // ofs << "STUDENT_Max,";
+                // ofs << "DAY OF WEEK,";
+                // ofs << "SESSION" << endl;
+                // ofs.close();
                 return;
             }
         }
@@ -762,9 +762,9 @@ void PrintListOfCourseInSemester(HocKy& temp){
     GoTo(0, 2); cout << "STT";
     GoTo(5, 2); cout << "COURSE ID";
     GoTo(22, 2);cout << "COURSE NAME";
-    GoTo(42, 2);cout << "CLASS NAME";
-    GoTo(57, 2);cout << "TEACHER NAME";
-    GoTo(80, 2);cout << "CREDITs";
+    GoTo(47, 2);cout << "CLASS NAME";
+    GoTo(61, 2);cout << "TEACHER NAME";
+    GoTo(83, 2);cout << "CREDITs";
     GoTo(93, 2);cout << "STUDENT_Current";
     GoTo(112, 2);cout << "STUDENT_Max";
     GoTo(126, 2);cout << "DAY OF WEEK";
@@ -778,9 +778,9 @@ void PrintListOfCourseInSemester(HocKy& temp){
         GoTo(0, 2 + dem); cout << dem;
         GoTo(5, 2 + dem); cout << node->data.CourseID;
         GoTo(19, 2 + dem);cout << node->data.CourseName;
-        GoTo(44, 2 + dem);cout << node->data.ClassName;
-        GoTo(57, 2 + dem);cout << node->data.TeacherName;
-        GoTo(83, 2 + dem);cout << node->data.NumberOfCredit;
+        GoTo(49, 2 + dem);cout << node->data.ClassName;
+        GoTo(61, 2 + dem);cout << node->data.TeacherName;
+        GoTo(86, 2 + dem);cout << node->data.NumberOfCredit;
         GoTo(99, 2 + dem);cout << node->data.NumberOfStudent_Current;
         GoTo(116, 2 + dem);cout << node->data.NumberOfStudent_Max;
         GoTo(129, 2 + dem);cout << node->data.DayOfWeek;
@@ -805,9 +805,9 @@ void PrintListOfCourseInSemester(HocKy& temp){
                     GoTo(0, 2 + dem); cout << dem;
                     GoTo(5, 2 + dem); cout << node->data.CourseID;
                     GoTo(19, 2 + dem);cout << node->data.CourseName;
-                    GoTo(44, 2 + dem);cout << node->data.ClassName;
-                    GoTo(57, 2 + dem);cout << node->data.TeacherName;
-                    GoTo(83, 2 + dem);cout << node->data.NumberOfCredit;
+                    GoTo(49, 2 + dem);cout << node->data.ClassName;
+                    GoTo(61, 2 + dem);cout << node->data.TeacherName;
+                    GoTo(86, 2 + dem);cout << node->data.NumberOfCredit;
                     GoTo(99, 2 + dem);cout << node->data.NumberOfStudent_Current;
                     GoTo(116, 2 + dem);cout << node->data.NumberOfStudent_Max;
                     GoTo(129, 2 + dem);cout << node->data.DayOfWeek;
@@ -825,9 +825,9 @@ void PrintListOfCourseInSemester(HocKy& temp){
                     GoTo(0, 2 + dem); cout << dem;
                     GoTo(5, 2 + dem); cout << node->data.CourseID;
                     GoTo(19, 2 + dem);cout << node->data.CourseName;
-                    GoTo(44, 2 + dem);cout << node->data.ClassName;
-                    GoTo(57, 2 + dem);cout << node->data.TeacherName;
-                    GoTo(83, 2 + dem);cout << node->data.NumberOfCredit;
+                    GoTo(49, 2 + dem);cout << node->data.ClassName;
+                    GoTo(61, 2 + dem);cout << node->data.TeacherName;
+                    GoTo(86, 2 + dem);cout << node->data.NumberOfCredit;
                     GoTo(99, 2 + dem);cout << node->data.NumberOfStudent_Current;
                     GoTo(116, 2 + dem);cout << node->data.NumberOfStudent_Max;
                     GoTo(129, 2 + dem);cout << node->data.DayOfWeek;
@@ -841,9 +841,9 @@ void PrintListOfCourseInSemester(HocKy& temp){
                     GoTo(0, 2 + dem); cout << dem;
                     GoTo(5, 2 + dem); cout << node->data.CourseID;
                     GoTo(19, 2 + dem);cout << node->data.CourseName;
-                    GoTo(44, 2 + dem);cout << node->data.ClassName;
-                    GoTo(57, 2 + dem);cout << node->data.TeacherName;
-                    GoTo(83, 2 + dem);cout << node->data.NumberOfCredit;
+                    GoTo(49, 2 + dem);cout << node->data.ClassName;
+                    GoTo(61, 2 + dem);cout << node->data.TeacherName;
+                    GoTo(86, 2 + dem);cout << node->data.NumberOfCredit;
                     GoTo(99, 2 + dem);cout << node->data.NumberOfStudent_Current;
                     GoTo(116, 2 + dem);cout << node->data.NumberOfStudent_Max;
                     GoTo(129, 2 + dem);cout << node->data.DayOfWeek;
@@ -861,9 +861,9 @@ void PrintListOfCourseInSemester(HocKy& temp){
                     GoTo(0, 2 + dem); cout << dem;
                     GoTo(5, 2 + dem); cout << node->data.CourseID;
                     GoTo(19, 2 + dem);cout << node->data.CourseName;
-                    GoTo(44, 2 + dem);cout << node->data.ClassName;
-                    GoTo(57, 2 + dem);cout << node->data.TeacherName;
-                    GoTo(83, 2 + dem);cout << node->data.NumberOfCredit;
+                    GoTo(49, 2 + dem);cout << node->data.ClassName;
+                    GoTo(61, 2 + dem);cout << node->data.TeacherName;
+                    GoTo(86, 2 + dem);cout << node->data.NumberOfCredit;
                     GoTo(99, 2 + dem);cout << node->data.NumberOfStudent_Current;
                     GoTo(116, 2 + dem);cout << node->data.NumberOfStudent_Max;
                     GoTo(129, 2 + dem);cout << node->data.DayOfWeek;
@@ -883,9 +883,9 @@ void PrintListOfCourseInSemester(HocKy& temp){
                 GoTo(0, 2); cout << "STT";
                 GoTo(5, 2); cout << "COURSE ID";
                 GoTo(22, 2);cout << "COURSE NAME";
-                GoTo(42, 2);cout << "CLASS NAME";
-                GoTo(57, 2);cout << "TEACHER NAME";
-                GoTo(80, 2);cout << "CREDITs";
+                GoTo(47, 2);cout << "CLASS NAME";
+                GoTo(61, 2);cout << "TEACHER NAME";
+                GoTo(83, 2);cout << "CREDITs";
                 GoTo(93, 2);cout << "STUDENT_Current";
                 GoTo(112, 2);cout << "STUDENT_Max";
                 GoTo(126, 2);cout << "DAY OF WEEK";
@@ -902,9 +902,9 @@ void PrintListOfCourseInSemester(HocKy& temp){
                     GoTo(0, 2 + dem_sub);  cout << dem_sub;
                     GoTo(5, 2 + dem_sub);  cout << tam->data.CourseID;
                     GoTo(19, 2 + dem_sub); cout << tam->data.CourseName;
-                    GoTo(44, 2 + dem_sub); cout << tam->data.ClassName;
-                    GoTo(57, 2 + dem_sub); cout << tam->data.TeacherName;
-                    GoTo(83, 2 + dem_sub); cout << tam->data.NumberOfCredit;
+                    GoTo(49, 2 + dem_sub); cout << tam->data.ClassName;
+                    GoTo(61, 2 + dem_sub); cout << tam->data.TeacherName;
+                    GoTo(86, 2 + dem_sub); cout << tam->data.NumberOfCredit;
                     GoTo(99, 2 + dem_sub); cout << tam->data.NumberOfStudent_Current;
                     GoTo(116, 2 + dem_sub);cout << tam->data.NumberOfStudent_Max;
                     GoTo(129, 2 + dem_sub);cout << tam->data.DayOfWeek;
@@ -1875,75 +1875,127 @@ void UploadAllInfor(){
     }
     string schoolyear_stt;
     string path = "Data\\";
-    string s1, s2, s3, s4;
+    //string s1, s2, s3, s4;
     char ch;
     while (ifs >> schoolyear_stt){
         reallocate(NamHoc);
         int n = NamHoc.NumberOfSchoolYear - 1;
-        NamHoc.ptr[n].SchoolYear = schoolyear_stt;
-        NamHoc.ptr[n].HeadList = nullptr;
-        NamHoc.ptr[n].EndList = nullptr;
+        // NamHoc.ptr[n].SchoolYear = schoolyear_stt;
+        // NamHoc.ptr[n].HeadList = nullptr;
+        // NamHoc.ptr[n].EndList = nullptr;
         //cout << path + schoolyear_stt + "\\List Of Classes.csv" << endl;
         //system("pause");
-        ifs1.open(path + schoolyear_stt + "\\List Of Classes.csv");
+        // ifs1.open(path + schoolyear_stt + "\\List Of Classes.csv");
+        // if (!ifs1){
+        //     cout <<"Co loi, khong mo duoc file" << endl;
+        //     return;
+        // }
+        // while (!ifs1.eof()){ //Lop
+        //     ListOfClasses* node = new ListOfClasses;
+        //     node->pNext = nullptr;
+        //     node->pPrev = nullptr;
+        //     node->data.NumberOfStudent_Current = 0;
+        //     getline(ifs1, node->data.nameClass, ',');
+        //     getline(ifs1, node->data.major, ',');
+        //     getline(ifs1, node->data.TimeBegin, ',');
+        //     ifs >> ch; //doc dau phay
+        //     ifs1 >> node->data.NumberOfStudent_max;
+        //     node->data.student = new StudentInfo[node->data.NumberOfStudent_max + 1];
+        //     ifs1.ignore();
+        //     //cout << node->data.nameClass << ' '<< node->data.major <<' ' << node->data.TimeBegin << ' ' << node->data.NumberOfStudent_max << endl;
+        //     //cout << path + schoolyear_stt + "\\Class\\" + node->data.nameClass + ".csv" << endl;
+        //     //system("pause");
+        //     ifs2.open(path + schoolyear_stt + "\\Class\\" + node->data.nameClass + ".csv");
+        //     if (!ifs2){
+        //         cout <<"Co loi khong mo duoc file" << endl;
+        //         return;
+        //     }
+        //     int i = 0;
+        //     while (!ifs2.eof()){ //Sinh Vien trong lop
+        //         ifs2 >> i;
+        //         ifs2 >> ch; //Doc dau phay
+        //         //ifs2.ignore();
+        //         getline(ifs2, node->data.student[i - 1].StudentID, ',');
+        //         getline(ifs2, node->data.student[i - 1].FirstName, ',');
+        //         getline(ifs2, node->data.student[i - 1].LastName, ',');
+        //         getline(ifs2, node->data.student[i - 1].Gender, ',');
+        //         getline(ifs2, node->data.student[i - 1].DateOfBirth, ',');
+        //         getline(ifs2, node->data.student[i - 1].SocialID);
+        //         node->data.student[i - 1].Midterm_mark = -1;
+        //         node->data.student[i - 1].Final_mark = -1;
+        //         node->data.student[i - 1].Other_mark = -1;
+        //         node->data.student[i - 1].Total_mark = -1;
+        //         //cout << i <<' '<<ch <<' '<<node->data.student[i - 1].StudentID <<' '<<node->data.student[i-1].FirstName<< endl;
+        //     }
+        //     ifs2.close();
+        //     node->data.NumberOfStudent_Current = i;
+        //     if (NamHoc.ptr[n].HeadList == nullptr) NamHoc.ptr[n].HeadList = node;
+        //     else if (NamHoc.ptr[n].EndList == nullptr){
+        //         NamHoc.ptr[n].EndList = node;
+        //         NamHoc.ptr[n].HeadList->pNext = NamHoc.ptr[n].EndList;
+        //         NamHoc.ptr[n].EndList->pPrev = NamHoc.ptr[n].HeadList;
+        //     }
+        //     else {
+        //         node->pPrev = NamHoc.ptr[n].EndList;
+        //         NamHoc.ptr[n].EndList->pNext = node;
+        //         NamHoc.ptr[n].EndList = node;
+        //     }
+        // }
+        // ifs1.close();
+        /*--------Update Course--------*/
+        ifs1.open(path + schoolyear_stt + "\\List Of Semester.csv");
         if (!ifs1){
-            cout <<"Co loi, khong mo duoc file" << endl;
+            cout <<"Co loi, khong mo duoc file2" << endl;
             return;
         }
-
-        while (!ifs1.eof()){ //Lop
-            ListOfClasses* node = new ListOfClasses;
-            node->pNext = nullptr;
-            node->pPrev = nullptr;
-            node->data.NumberOfStudent_Current = 0;
-            getline(ifs1, node->data.nameClass, ',');
-            getline(ifs1, node->data.major, ',');
-            getline(ifs1, node->data.TimeBegin, ',');
-            ifs >> ch; //doc dau phay
-            ifs1 >> node->data.NumberOfStudent_max;
-            node->data.student = new StudentInfo[node->data.NumberOfStudent_max + 1];
-            ifs1.ignore();
-            //cout << node->data.nameClass << ' '<< node->data.major <<' ' << node->data.TimeBegin << ' ' << node->data.NumberOfStudent_max << endl;
-            //cout << path + schoolyear_stt + "\\Class\\" + node->data.nameClass + ".csv" << endl;
-            //system("pause");
-            ifs2.open(path + schoolyear_stt + "\\Class\\" + node->data.nameClass + ".csv");
+        while (!ifs1.eof()){ //Course
+            int Number_Semester = ++NamHoc.ptr[n].NumberOfSemester;
+            ifs1 >> NamHoc.ptr[n].semester[Number_Semester].STT;
+            ifs1 >> ch;
+            getline(ifs1, NamHoc.ptr[n].semester[Number_Semester].StartDate, ',');
+            getline(ifs1, NamHoc.ptr[n].semester[Number_Semester].EndDate, ',');
+            NamHoc.ptr[n].semester[Number_Semester].HeadList = nullptr;
+            NamHoc.ptr[n].semester[Number_Semester].EndList = nullptr;
+            // cout << path + schoolyear_stt + "\\Semester" + to_string(NamHoc.ptr[n].semester[Number_Semester].STT) + "\\Course.csv" << endl;
+            // system("pause");
+            ifs2.open(path + schoolyear_stt + "\\Semester" + to_string(NamHoc.ptr[n].semester[Number_Semester].STT) + "\\Course.csv");
             if (!ifs2){
                 cout <<"Co loi khong mo duoc file" << endl;
                 return;
             }
-            int i = 0;
-            while (!ifs2.eof()){ //Sinh Vien trong lop
-                ifs2 >> i;
-                ifs2 >> ch; //Doc dau phay
-                //ifs2.ignore();
-                getline(ifs2, node->data.student[i - 1].StudentID, ',');
-                getline(ifs2, node->data.student[i - 1].FirstName, ',');
-                getline(ifs2, node->data.student[i - 1].LastName, ',');
-                getline(ifs2, node->data.student[i - 1].Gender, ',');
-                getline(ifs2, node->data.student[i - 1].DateOfBirth, ',');
-                getline(ifs2, node->data.student[i - 1].SocialID);
-                node->data.student[i - 1].Midterm_mark = -1;
-                node->data.student[i - 1].Final_mark = -1;
-                node->data.student[i - 1].Other_mark = -1;
-                node->data.student[i - 1].Total_mark = -1;
-                //cout << i <<' '<<ch <<' '<<node->data.student[i - 1].StudentID <<' '<<node->data.student[i-1].FirstName<< endl;
+            while (!ifs2.eof()){
+                ListOfCourse* node = new ListOfCourse;
+                node->pNext = nullptr;
+                node->pPrev = nullptr;
+                getline(ifs2, node->data.CourseID, ',');
+                getline(ifs2, node->data.CourseName, ',');
+                getline(ifs2, node->data.ClassName, ',');
+                getline(ifs2, node->data.TeacherName, ',');
+                ifs2 >> node->data.NumberOfCredit;
+                ifs2 >> ch;
+                ifs2 >> node->data.NumberOfStudent_Max;
+                ifs2.ignore();
+                getline(ifs2, node->data.DayOfWeek, ',');
+                getline(ifs2, node->data.session);
+                node->data.student = new StudentInfo[node->data.NumberOfStudent_Max + 1];
+                node->data.NumberOfStudent_Current = 0;
+                //cout << node->data.CourseID <<' '<< node->data.CourseName <<' '<< node->data.ClassName <<' '<<node->data.TeacherName << ' '<<node->data.NumberOfCredit <<' '<<node->data.NumberOfStudent_Max <<' '<< node->data.DayOfWeek << ' ' << node->data.session << endl;
+                //system("pause");
+                //HocKy temp = NamHoc.ptr[n].semester[Number_Semester];
+                if (NamHoc.ptr[n].semester[Number_Semester].HeadList == nullptr) NamHoc.ptr[n].semester[Number_Semester].HeadList = node;
+                else if (NamHoc.ptr[n].semester[Number_Semester].EndList == nullptr){
+                        NamHoc.ptr[n].semester[Number_Semester].HeadList->pNext = node;
+                        node->pPrev = NamHoc.ptr[n].semester[Number_Semester].HeadList;
+                        NamHoc.ptr[n].semester[Number_Semester].EndList = node;
+                    }
+                    else {
+                        NamHoc.ptr[n].semester[Number_Semester].EndList->pNext = node;
+                        node->pPrev = NamHoc.ptr[n].semester[Number_Semester].EndList;
+                        NamHoc.ptr[n].semester[Number_Semester].EndList = node;
+                    }
             }
-            ifs2.close();
-            node->data.NumberOfStudent_Current = i;
-            if (NamHoc.ptr[n].HeadList == nullptr) NamHoc.ptr[n].HeadList = node;
-            else if (NamHoc.ptr[n].EndList == nullptr){
-                NamHoc.ptr[n].EndList = node;
-                NamHoc.ptr[n].HeadList->pNext = NamHoc.ptr[n].EndList;
-                NamHoc.ptr[n].EndList->pPrev = NamHoc.ptr[n].HeadList;
-            }
-            else {
-                node->pPrev = NamHoc.ptr[n].EndList;
-                NamHoc.ptr[n].EndList->pNext = node;
-                NamHoc.ptr[n].EndList = node;
-            }
+            system("pause");
         }
-        ifs1.close();
-        
     }
     ifs.close();
 }

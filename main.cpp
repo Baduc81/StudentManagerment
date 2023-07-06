@@ -26,7 +26,7 @@ int main(){
     // AddCourseToSemester(NamHoc.ptr[0].semester[3]);
     // AddCourseToSemester(NamHoc.ptr[0].semester[0]);
     // AddCourseToSemester(NamHoc.ptr[0].semester[0]);
-    //PrintListOfCourseInSemester(NamHoc.ptr[0].semester[1]);
+    PrintListOfCourseInSemester(NamHoc.ptr[0].semester[1]);
     // EditCourse(NamHoc.ptr[0].semester[0].HeadList->data);
     // system("pause");
     // CreateMultipleClasses(NamHoc.ptr[0]);
@@ -34,7 +34,7 @@ int main(){
     // CreateMultipleClasses(NamHoc.ptr[0]);
     // InputStudentFromFile("22CTT2");
     // InputStudentFromFile("22CTT4");   
-    MenuListOfClass(NamHoc.ptr[0]);
+    //MenuListOfClass(NamHoc.ptr[0]);
     
     // PrintListOfStudentInClass(NamHoc.ptr[0].HeadList->pNext->pNext->data);
     // CreateMultipleClasses(NamHoc.ptr[0]);
