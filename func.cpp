@@ -75,6 +75,16 @@ void UploadAccount(){
     ifs.close();
 }
 
+/*
+0 = Black      8 = Gray
+1 = Blue       9 = Light Blue
+2 = Green      10 = Light Green
+3 = Aqua       11 = Light Aqua
+4 = Red        12 = Light Red
+5 = Purple     13 = Light Purple
+6 = Yellow     14 = Light Yellow
+7 = White      15 = Bright White
+*/
 void DrawBox(int x, int y, int height, int width, int color){
     width++;
     height++;
@@ -94,29 +104,29 @@ void DrawBox(int x, int y, int height, int width, int color){
     TextColor(7);
 }
 
-void Login(){
+int Login(){
     extern Account* SignIn;
     extern int quantity;
     int find = -1;
     while (true){
-        GoTo(20, 1); cout <<"  ____  _             _            _     __  __                                   " << "\n";
-        GoTo(20, 2); cout <<" / ___|| |_ _   _  __| | ___ _ __ | |_  |  \\/  | __ _ _ __   __ _  __ _  ___ _ __ " << "\n";
-        GoTo(20, 3); cout <<" \\___ \\| __| | | |/ _` |/ _ | '_ \\| __| | |\\/| |/ _` | '_ \\ / _` |/ _` |/ _ | '__|" << "\n";
-        GoTo(20, 4); cout <<"  ___) | |_| |_| | (_| |  __| | | | |_  | |  | | (_| | | | | (_| | (_| |  __| |   " << "\n";
-        GoTo(20, 5); cout <<" |____/ \\__|\\__,_|\\__,_|\\___|_| |_|\\__| |_|  |_|\\__,_|_| |_|\\__,_|\\__, |\\___|_|   " << "\n";
-        GoTo(20, 6); cout <<"                                                                  |___/           " << "\n";
+        GoTo(32, 1); cout <<"  ____  _             _            _     __  __                                         " << "\n";
+        GoTo(32, 2); cout <<" / ___|| |_ _   _  __| | ___ _ __ | |_  |  \\/  | __ _ _ __   __ _  __ _  ___ _ __      " << "\n";
+        GoTo(32, 3); cout <<" \\___ \\| __| | | |/ _` |/ _ | '_ \\| __| | |\\/| |/ _` | '_ \\ / _` |/ _` |/ _ | '__| " << "\n";
+        GoTo(32, 4); cout <<"  ___) | |_| |_| | (_| |  __| | | | |_  | |  | | (_| | | | | (_| | (_| |  __| |   " <<  "\n";
+        GoTo(32, 5); cout <<" |____/ \\__|\\__,_|\\__,_|\\___|_| |_|\\__| |_|  |_|\\__,_|_| |_|\\__,_|\\__, |\\___|_|" << "\n";
+        GoTo(32, 6); cout <<"                                                                  |___/           " <<  "\n";
 
-        DrawBox(38, 10, 4, 41, 11);
-        GoTo(57, 11); SetColor(5, 14);
+        DrawBox(51, 10, 4, 41, 11);
+        GoTo(70, 11); SetColor(5, 14);
         cout <<"LOGIN"<<endl;
         SetColor(15, 3);
         string user, pass;
-        GoTo(42, 12); cout <<"Username:";
-        GoTo(42, 13); cout <<"Password:";
+        GoTo(55, 12); cout <<"Username:";
+        GoTo(55, 13); cout <<"Password:";
 
         TextColor(7);
-        GoTo(52, 12); cin >> user;
-        GoTo(52, 13); cin >> pass;
+        GoTo(65, 12); cin >> user;
+        GoTo(65, 13); cin >> pass;
             
         for (int i = 0; i < quantity; i++){
             if (SignIn[i].username == user && SignIn[i].password == pass) {
@@ -127,19 +137,18 @@ void Login(){
         
         if (find != -1){
             TextColor(2);
-            GoTo(50, 14); cout <<"Login successfully";
+            GoTo(63, 14); cout <<"Login successfully";
         }
         else {
             TextColor(4);
-            GoTo(45, 14); cout <<"Invalid username or password";
+            GoTo(58, 14); cout <<"Invalid username or password";
         }
         TextColor(7);
         sleep(1);
         system("cls");
         if (find != -1) break;
     }
-    MenuInfo(find);
-    return;
+    return find;
 }
 
 void Information(Account person){
@@ -257,6 +266,8 @@ void ChangePassword(int pos){ //pos là vị trí tài khoản lưu trong mảng
 }
 
 void MenuInfo(int find){ //find là vị trí tài khoản lưu trong mảng SignIn
+    TextColor(7);
+    system("cls");
     extern Account* SignIn;
     extern int quantity;
     if (!SignIn[find].IsStaff){
@@ -278,10 +289,10 @@ void MenuInfo(int find){ //find là vị trí tài khoản lưu trong mảng Sig
     }
 
 
-    string choice[] ={"View profile", "Change password", "Log out", "Back"};
-    int lens = 4;
+    string choice[] ={"View profile", "Change password", "Back"};
+    int lens = 3;
 
-    DrawBox(36, 8, 9, 45, 11);
+    DrawBox(36, 8, 7, 45, 11);
     int yn = 10;
     int stt = 0;
 
@@ -331,7 +342,7 @@ void MenuInfo(int find){ //find là vị trí tài khoản lưu trong mảng Sig
                 if (stt == 0){
                     Information(SignIn[find]);
                     system("cls");
-                    DrawBox(36, 8, 9, 45, 11);
+                    DrawBox(36, 8, 7, 45, 11);
                     SetColor(7, 0); 
                     GoTo(52, yn);
                     cout << choice[0] << endl;
@@ -348,8 +359,7 @@ void MenuInfo(int find){ //find là vị trí tài khoản lưu trong mảng Sig
         //else return;
     }
     if (stt == 1) ChangePassword(find);
-    if (stt == 2) Login();
-    if (stt == 3) return;
+    if (stt == 2) return;
 }
 
 int ConvertFirst(string st){
