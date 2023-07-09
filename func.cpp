@@ -127,7 +127,7 @@ int Login(){
         TextColor(7);
         GoTo(65, 12); cin >> user;
         GoTo(65, 13); cin >> pass;
-            
+        cin.ignore();
         for (int i = 0; i < quantity; i++){
             if (SignIn[i].username == user && SignIn[i].password == pass) {
                 find = i;
@@ -152,74 +152,75 @@ int Login(){
 }
 
 void Information(Account person){
-
+    TextColor(7);
+    system("cls");
     if (person.IsStaff == 1){
-        DrawBox(36, 3, 9, 45, 11);
+        DrawBox(52, 3, 9, 45, 11);
         SetColor(15, 0);
-        GoTo(48, 3); cout <<"|I|N|F|O|R|M|A|T|I|O|N|" << "\n";
+        GoTo(64, 3); cout <<"|I|N|F|O|R|M|A|T|I|O|N|" << "\n";
         
-        GoTo(37, 5); SetColor(14, 8);
-        cout <<"Ho va ten";
+        GoTo(53, 5); SetColor(14, 8);
+        cout <<"Name         ";
         TextColor(7); cout << ": "<< person.name;
-        GoTo(37, 6); SetColor(14, 8);
-        cout <<"Gioi tinh";
+        GoTo(53, 6); SetColor(14, 8);
+        cout <<"Gender       ";
         TextColor(7);
         cout << ": ";
         (person.gender == 1) ? cout << "Nam" : cout<< "Nu";
-        GoTo(37, 7); SetColor(14, 8);
-        cout <<"Ngay sinh";
+        GoTo(53, 7); SetColor(14, 8);
+        cout <<"Date of birth";
         TextColor(7); cout << ": "<< person.birthday;
-        GoTo(37, 8); SetColor(14, 8);
-        cout <<"Chuc vu  ";
+        GoTo(53, 8); SetColor(14, 8);
+        cout <<"Role         ";
         TextColor(7); cout << ": "<< person.profession;
-        GoTo(37, 9); SetColor(14, 8);
-        cout <<"Nganh    ";
+        GoTo(53, 9); SetColor(14, 8);
+        cout <<"Major        ";
         TextColor(7); cout << ": "<< person.faulty;
-        GoTo(37, 10); SetColor(14, 8);
-        cout <<"CCCD     ";
+        GoTo(53, 10); SetColor(14, 8);
+        cout <<"Social ID    ";
         TextColor(7); cout << ": "<< person.ID;
-        GoTo(37, 11); SetColor(14, 8);
-        cout <<"SDT      ";
+        GoTo(53, 11); SetColor(14, 8);
+        cout <<"Phone number ";
         TextColor(7); cout << ": "<< person.contact;
-        GoTo(37, 12); SetColor(14, 8);
-        cout <<"Email    ";
+        GoTo(53, 12); SetColor(14, 8);
+        cout <<"Email        ";
         TextColor(7); cout << ": "<< person.email;  
     }
     else{
-        DrawBox(36, 3, 11, 45, 11);
+        DrawBox(52, 3, 11, 45, 11);
         SetColor(15, 0);
-        GoTo(48, 3); cout <<"|I|N|F|O|R|M|A|T|I|O|N|" << "\n";
-        GoTo(37, 5); SetColor(14, 8);
-        cout <<"Ho va ten";
+        GoTo(64, 3); cout <<"|I|N|F|O|R|M|A|T|I|O|N|" << "\n";
+        GoTo(53, 5); SetColor(14, 8);
+        cout <<"Name         ";
         TextColor(7); cout <<": "<< person.name;
-        GoTo(37, 6); SetColor(14, 8); 
-        cout <<"Gioi tinh";
+        GoTo(53, 6); SetColor(14, 8); 
+        cout <<"Gender       ";
         TextColor(7);
         cout <<": ";
         (person.gender == 1) ? cout << "Nam" : cout <<"Nu";
-        GoTo(37, 7); SetColor(14, 8);
-        cout <<"Ngay sinh";
+        GoTo(53, 7); SetColor(14, 8);
+        cout <<"Date of birth";
         TextColor(7); cout <<": "<< person.birthday;
-        GoTo(37, 8); SetColor(14, 8);
-        cout <<"Chuc vu  ";
+        GoTo(53, 8); SetColor(14, 8);
+        cout <<"Role         ";
         TextColor(7); cout << ": "<< person.profession;
-        GoTo(37, 9); SetColor(14, 8);
-        cout <<"Nganh    ";
+        GoTo(53, 9); SetColor(14, 8);
+        cout <<"Major        ";
         TextColor(7); cout << ": "<< person.faulty;
-        GoTo(37, 10); SetColor(14, 8);
-        cout <<"Lop      ";
+        GoTo(53, 10); SetColor(14, 8);
+        cout <<"Class        ";
         TextColor(7); cout << ": "<< person.grade;
-        GoTo(37, 11); SetColor(14, 8);
-        cout <<"MSSV     ";
+        GoTo(53, 11); SetColor(14, 8);
+        cout <<"Student ID   ";
         TextColor(7); cout << ": "<< person.MSSV;
-        GoTo(37, 12); SetColor(14, 8);
-        cout <<"CCCD     ";
+        GoTo(53, 12); SetColor(14, 8);
+        cout <<"Social ID    ";
         TextColor(7); cout << ": "<< person.ID;
-        GoTo(37, 13); SetColor(14, 8);
-        cout <<"SDT      ";
+        GoTo(53, 13); SetColor(14, 8);
+        cout <<"Phone number ";
         TextColor(7); cout << ": "<< person.contact;
-        GoTo(37, 14); SetColor(14, 8);
-        cout <<"Email    ";
+        GoTo(53, 14); SetColor(14, 8);
+        cout <<"Email        ";
         TextColor(7); cout << ": "<< person.email;
     }
     GoTo(0, 16);
@@ -230,31 +231,32 @@ void Information(Account person){
 void ChangePassword(int pos){ //pos là vị trí tài khoản lưu trong mảng SignIn
     extern Account* SignIn;
     extern int quantity;
+    TextColor(7);
     system("cls");
     while (true){
-        DrawBox(38, 3, 4, 41, 11);
-        GoTo(53, 4); SetColor(5, 14);
+        DrawBox(54, 3, 4, 41, 11);
+        GoTo(69, 4); SetColor(5, 14);
         cout <<"CHANGE PASSWORD"<<endl;
         SetColor(15, 3);
-        GoTo(38, 5);
+        GoTo(54, 5);
         cout <<"Current password:";
-        GoTo(38, 6);
+        GoTo(54, 6);
         cout <<"New password    :";
         string matkhau;
         TextColor(7);
-        GoTo(56, 5); cin >> matkhau;
+        GoTo(72, 5); cin >> matkhau;
         if (matkhau != SignIn[pos].password){
             TextColor(4);
-            GoTo(47, 7); cout <<"Invalid current password";
+            GoTo(63, 7); cout <<"Invalid current password";
             sleep(1);
             system("cls");
         }
         else break;
     }
     TextColor(7);
-    GoTo(56, 6); cin >> SignIn[pos].password;
+    GoTo(72, 6); cin >> SignIn[pos].password;
     TextColor(2);
-    GoTo(45, 7); cout <<"Change password successfully";
+    GoTo(61, 7); cout <<"Change password successfully";
     sleep(2);
     ofstream ofs("Data\\Login.txt");
     ofs << quantity <<"\n";
@@ -280,11 +282,11 @@ void MenuInfo(int find){ //find là vị trí tài khoản lưu trong mảng Sig
         GoTo(29,7); cout <<"                                                                " << "\n";
     }
     else {
-        GoTo(41,1); cout <<" ,---.,--------. ,---.  ,------.,------. " << "\n";
-        GoTo(41,2); cout <<"'   .-'--.  .--'/  O  \\ |  .---'|  .---' " << "\n";
-        GoTo(41,3); cout <<"`.  `-.  |  |  |  .-.  ||  `--, |  `--,  " << "\n";
-        GoTo(41,4); cout <<".-'    | |  |  |  | |  ||  |`   |  |`    " << "\n";
-        GoTo(41,5); cout <<"`-----'  `--'  `--' `--'`--'    `--'     " << "\n";
+        GoTo(57,1); cout <<" ,---.,--------. ,---.  ,------.,------. " << "\n";
+        GoTo(57,2); cout <<"'   .-'--.  .--'/  O  \\ |  .---'|  .---'" << "\n";
+        GoTo(57,3); cout <<"`.  `-.  |  |  |  .-.  ||  `--, |  `--,  " << "\n";
+        GoTo(57,4); cout <<".-'    | |  |  |  | |  ||  |`   |  |`    " << "\n";
+        GoTo(57,5); cout <<"`-----'  `--'  `--' `--'`--'    `--'     " << "\n";
         //Goto(33,6); cout <<"                                         " << "\n";
     }
 
@@ -292,17 +294,17 @@ void MenuInfo(int find){ //find là vị trí tài khoản lưu trong mảng Sig
     string choice[] ={"View profile", "Change password", "Back"};
     int lens = 3;
 
-    DrawBox(36, 8, 7, 45, 11);
+    DrawBox(52, 8, 7, 45, 11);
     int yn = 10;
     int stt = 0;
 
     SetColor(7, 0); 
-    GoTo(52, yn);
+    GoTo(68, yn);
     cout << choice[0] << endl;
     TextColor(7);
 
     for (int i = 1; i < lens; i++){
-        GoTo(52, i + i + yn ); 
+        GoTo(68, i + i + yn ); 
         cout << choice[i] << endl;
     }
  
@@ -312,7 +314,7 @@ void MenuInfo(int find){ //find là vị trí tài khoản lưu trong mảng Sig
             if (c == -32){
                 c = getch();
                 if (c == 72){ //Di len
-                    GoTo(52, yn); TextColor(7);
+                    GoTo(68, yn); TextColor(7);
                     cout << choice[stt];
                     yn -= 2;
                     stt--;
@@ -320,11 +322,11 @@ void MenuInfo(int find){ //find là vị trí tài khoản lưu trong mảng Sig
                         yn = 2 * (lens - 1) + 10;
                         stt = lens - 1;
                     }
-                    GoTo(52, yn); SetColor(7, 0);
+                    GoTo(68, yn); SetColor(7, 0);
                     cout << choice[stt];
                 }
                 if (c == 80){ //Di xuong
-                    GoTo(52, yn); TextColor(7);
+                    GoTo(68, yn); TextColor(7);
                     cout << choice[stt];
                     yn += 2;
                     stt++;
@@ -332,24 +334,22 @@ void MenuInfo(int find){ //find là vị trí tài khoản lưu trong mảng Sig
                         stt = 0;
                         yn = 10;
                     } 
-                    GoTo(52, yn); SetColor(7, 0);
+                    GoTo(68, yn); SetColor(7, 0);
                     cout << choice[stt];
                 }
             }
             if (c == 13) {
-                TextColor(7);
-                system("cls");
                 if (stt == 0){
                     Information(SignIn[find]);
                     system("cls");
-                    DrawBox(36, 8, 7, 45, 11);
+                    DrawBox(52, 8, 7, 45, 11);
                     SetColor(7, 0); 
-                    GoTo(52, yn);
+                    GoTo(68, yn);
                     cout << choice[0] << endl;
                     TextColor(7);
 
                     for (int i = 1; i < lens; i++){
-                        GoTo(52, i + i + yn ); 
+                        GoTo(68, i + i + yn ); 
                         cout << choice[i] << endl;
                     }
                 }
