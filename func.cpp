@@ -264,7 +264,7 @@ void ChangePassword(int pos){ //pos là vị trí tài khoản lưu trong mảng
         ofs << SignIn[i].username <<' '<< SignIn[i].password<<' '<<SignIn[i].IsStaff<<"\n";
     ofs.close();
     system("cls");
-    Login();
+    return;
 }
 
 void MenuInfo(int find){ //find là vị trí tài khoản lưu trong mảng SignIn
@@ -273,13 +273,13 @@ void MenuInfo(int find){ //find là vị trí tài khoản lưu trong mảng Sig
     extern Account* SignIn;
     extern int quantity;
     if (!SignIn[find].IsStaff){
-        GoTo(29,1); cout <<"                                                                " << "\n";
-        GoTo(29,2); cout <<" ,---.,--------.,--. ,--.,------.  ,------.,--.  ,--.,--------. " << "\n";
-        GoTo(29,3); cout <<"'   .-'--.  .--'|  | |  ||  .-.  \\ |  .---'|  ,'.|  |'--.  .--' " << "\n";
-        GoTo(29,4); cout <<"`.  `-.  |  |   |  | |  ||  |  \\  :|  `--, |  |' '  |   |  |    " << "\n";
-        GoTo(29,5); cout <<".-'    | |  |   '  '-'  '|  '--'  /|  `---.|  | `   |   |  |    " << "\n";
-        GoTo(29,6); cout <<"`-----'  `--'    `-----' `-------' `------'`--'  `--'   `--'    " << "\n";
-        GoTo(29,7); cout <<"                                                                " << "\n";
+       GoTo(42,1); cout <<"                                                                " << "\n";
+        GoTo(42,2); cout <<" ,---.,--------.,--. ,--.,------.  ,------.,--.  ,--.,--------. " << "\n";
+        GoTo(42,3); cout <<"'   .-'--.  .--'|  | |  ||  .-.  \\ |  .---'|  ,'.|  |'--.  .--' " << "\n";
+        GoTo(42,4); cout <<"`.  `-.  |  |   |  | |  ||  |  \\  :|  `--, |  |' '  |   |  |    " << "\n";
+        GoTo(42,5); cout <<".-'    | |  |   '  '-'  '|  '--'  /|  `---.|  | `   |   |  |    " << "\n";
+        GoTo(42,6); cout <<"`-----'  `--'    `-----' `-------' `------'`--'  `--'   `--'    " << "\n";
+        GoTo(42,7); cout <<"                                                                " << "\n";
     }
     else {
         GoTo(57,1); cout <<" ,---.,--------. ,---.  ,------.,------. " << "\n";
@@ -342,7 +342,33 @@ void MenuInfo(int find){ //find là vị trí tài khoản lưu trong mảng Sig
                 if (stt == 0){
                     Information(SignIn[find]);
                     system("cls");
+
+                    if (!SignIn[find].IsStaff){
+                        GoTo(45,1); cout <<"                                                                " << "\n";
+                        GoTo(45,2); cout <<" ,---.,--------.,--. ,--.,------.  ,------.,--.  ,--.,--------. " << "\n";
+                        GoTo(45,3); cout <<"'   .-'--.  .--'|  | |  ||  .-.  \\ |  .---'|  ,'.|  |'--.  .--' " << "\n";
+                        GoTo(45,4); cout <<"`.  `-.  |  |   |  | |  ||  |  \\  :|  `--, |  |' '  |   |  |    " << "\n";
+                        GoTo(45,5); cout <<".-'    | |  |   '  '-'  '|  '--'  /|  `---.|  | `   |   |  |    " << "\n";
+                        GoTo(45,6); cout <<"`-----'  `--'    `-----' `-------' `------'`--'  `--'   `--'    " << "\n";
+                        GoTo(45,7); cout <<"                                                                " << "\n";
+                    }
+                    else {
+                        GoTo(57,1); cout <<" ,---.,--------. ,---.  ,------.,------. " << "\n";
+                        GoTo(57,2); cout <<"'   .-'--.  .--'/  O  \\ |  .---'|  .---'" << "\n";
+                        GoTo(57,3); cout <<"`.  `-.  |  |  |  .-.  ||  `--, |  `--,  " << "\n";
+                        GoTo(57,4); cout <<".-'    | |  |  |  | |  ||  |`   |  |`    " << "\n";
+                        GoTo(57,5); cout <<"`-----'  `--'  `--' `--'`--'    `--'     " << "\n";
+                        //Goto(33,6); cout <<"                                         " << "\n";
+                    }
+
+
+                    string choice[] ={"View profile", "Change password", "Back"};
+                    int lens = 3;
+
                     DrawBox(52, 8, 7, 45, 11);
+                    int yn = 10;
+                    int stt = 0;
+
                     SetColor(7, 0); 
                     GoTo(68, yn);
                     cout << choice[0] << endl;

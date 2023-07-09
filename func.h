@@ -10,6 +10,8 @@
 
 
 using namespace std;
+#define _CRT_SECURE_NO_DEPRECATE
+#define _CRT_SECURE_NO_WARNINGS
 
 struct Account{
     string username;
@@ -142,3 +144,5 @@ void Main_Menu_For_Admin(int find);
 void Menu_Create();
 void Menu_Add();
 void Menu_View();
+void Main_Menu_For_Student(int find);
+void view(int find);

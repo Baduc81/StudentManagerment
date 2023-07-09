@@ -80,13 +80,13 @@ void InputSchoolYear(hcmus &KHTN){
         string address = path + '\\' + temp->data.nameClass;
         WriteOnFile_Student(temp->data.student, temp->data.NumberOfStudent_Current, address);
         /*Ghi danh sach lop len List Of Classes*/
-        ofs << endl;
         ofs << temp->data.nameClass << ',';
         ofs << temp->data.major << ',';
         ofs << temp->data.TimeBegin << ',';
         ofs << temp->data.NumberOfStudent_max;
         /*---------*/
         if (temp == KHTN.ptr[n].EndList) break;
+        else ofs << endl;
         temp = temp->pNext;
     }
     ofs.close();
@@ -106,9 +106,28 @@ void InputSemester(hcmus &KHTN){
                     return;
                 }
                 KHTN.ptr[i].NumberOfSemester++;
-                GoTo(55, 9); cout <<"Enter semester  : ";
-                cin >> KHTN.ptr[i].semester[KHTN.ptr[i].NumberOfSemester].STT;
-                cin.ignore();
+                short hocky;
+                bool ktra = 1;
+                while (ktra){
+                    ktra = 0;
+                    GoTo(55, 8); cout <<"Enter the school year of new semester: " << temp;
+                    GoTo(55, 9); cout <<"Enter semester  : ";
+                    cin >> hocky;
+                    cin.ignore();
+                    for (int j = 1; j < KHTN.ptr[i].NumberOfSemester; j++){
+                        if (hocky == KHTN.ptr[i].semester[j].STT){
+                            TextColor(4);
+                            GoTo(55,10);
+                            cout <<"School year " << KHTN.ptr[i].SchoolYear <<" has already had this semester";
+                            TextColor(7);
+                            ktra = 1;
+                            sleep(1);
+                            system("cls");
+                            break;
+                        }
+                    }
+                }
+                KHTN.ptr[i].semester[KHTN.ptr[i].NumberOfSemester].STT = hocky;
                 GoTo(55, 10);cout <<"Enter start date: ";
                 getline(cin, KHTN.ptr[i].semester[KHTN.ptr[i].NumberOfSemester].StartDate);
                 GoTo(55, 11);cout <<"Enter end date  : ";
@@ -123,7 +142,7 @@ void InputSemester(hcmus &KHTN){
 
                 ofstream ofs("Data\\" + temp + "\\List Of Semester.csv", ios::app);
                 if (ofs){
-                    ofs << endl;
+                    if (KHTN.ptr[i].NumberOfSemester != 1) ofs << endl;
                     ofs << KHTN.ptr[i].semester[KHTN.ptr[i].NumberOfSemester].STT << ',';
                     ofs << KHTN.ptr[i].semester[KHTN.ptr[i].NumberOfSemester].StartDate << ',';
                     ofs << KHTN.ptr[i].semester[KHTN.ptr[i].NumberOfSemester].EndDate;
@@ -246,7 +265,7 @@ void CreateSimpleClass(SchoolTime& temp){
     path = "Data\\" + temp.SchoolYear + "\\List Of Classes.csv";
     ofs.open(path, ios::app);
     if (ofs){
-        ofs << endl;
+        if (node != temp.HeadList) ofs << endl;
         ofs << node->data.nameClass << ',';
         ofs << node->data.major << ',';
         ofs << node->data.TimeBegin << ',';
@@ -329,7 +348,7 @@ void CreateMultipleClasses(SchoolTime& temp){
         path = "Data\\" + temp.SchoolYear + "\\List Of Classes.csv";
         ofs.open(path, ios::app);
         if (ofs){
-            ofs << endl;
+            if (node != temp.HeadList) ofs << endl;
             ofs << node->data.nameClass << ',';
             ofs << node->data.major << ',';
             ofs << node->data.TimeBegin << ',';
@@ -405,8 +424,8 @@ void InputStudentFromFile(){
         if (link[i] == '\\') break;
         NameOfClass = link[i] + NameOfClass;
     }
-    cout << "Name: "<<NameOfClass << endl;
-    system("pause");
+    //cout << "Name: "<<NameOfClass << endl;
+    //system("pause");
     SchoolTime temp = NamHoc.ptr[NamHoc.NumberOfSchoolYear - 1];
     ListOfClasses* tam = temp.HeadList;
     while (tam != nullptr){
@@ -451,14 +470,15 @@ void InputStudentFromFile(){
         getline(ifs, tam->data.student[i].Gender, ',');
         getline(ifs, tam->data.student[i].DateOfBirth, ',');
         getline(ifs, tam->data.student[i].SocialID);
-        cout << tam->data.student[i].StudentID <<' '<<tam->data.student[i].FirstName  <<' '<<tam->data.student[i].LastName;
-        cout << ' '<<tam->data.student[i].Gender<<' '<<tam->data.student[i].DateOfBirth << ' '<<tam->data.student[i].SocialID << endl;
-        system("pause");
+        //cout << tam->data.student[i].StudentID <<' '<<tam->data.student[i].FirstName  <<' '<<tam->data.student[i].LastName;
+        //cout << ' '<<tam->data.student[i].Gender<<' '<<tam->data.student[i].DateOfBirth << ' '<<tam->data.student[i].SocialID << endl;
+        //system("pause");
     }
     if (ifs.eof()){
         GoTo(45, 9);
         TextColor(2);
-        cout <<"Da cap nhat danh sach sinh vien vao lop";
+        cout <<"Successfully";
+        system("pause");
         TextColor(7);
     }
     ifs.close();
@@ -863,7 +883,8 @@ void PrintListOfCourseInSemester(HocKy& temp){
     ListOfCourse* node = temp.HeadList;
     if (node == nullptr){
         SetColor(14, 4);
-        cout <<"Chua co mon hoc nao duoc tao trong hoc ky nay";
+        cout <<"Chua co mon hoc nao duoc tao trong hoc ky nay" << endl;
+        TextColor(7);
         system("pause");
         return;
     }
@@ -1264,7 +1285,7 @@ void AddStudentIntoCourse(Course& temp){
     while (kt){
         //kt = 1;
         DS_Lop_Head = NamHoc.ptr[NamHoc.NumberOfSchoolYear - 1].HeadList;
-        cout <<"Nhap lop cua sinh vien do: ";
+        GoTo(54, 5); cout <<"Enter student's class: ";
         getline(cin, CMPnameClass);
         while (DS_Lop_Head != nullptr){
             if (DS_Lop_Head->data.nameClass == CMPnameClass){kt = 0; break;}
@@ -1273,7 +1294,9 @@ void AddStudentIntoCourse(Course& temp){
         }
         if (kt){
             TextColor(4);
-            cout <<"Lop hoc khong ton tai, vui long nhap lai" << endl;
+            GoTo(54, 6); cout <<"This class doesn't exist" << endl;
+            sleep(1);
+            system("cls");
             TextColor(7);
         }
     }
@@ -1281,7 +1304,8 @@ void AddStudentIntoCourse(Course& temp){
     kt = 1;
     StudentInfo res;
     while (kt){
-        cout <<"Nhap ma so sinh vien: ";
+        GoTo(54, 5); cout << "Enter student's class: " << CMPnameClass;
+        GoTo(54, 6); cout <<"Enter studen ID: ";
         getline(cin, ID);
         for (int i = 0; i < DS_Lop_Head->data.NumberOfStudent_Current; i++){
             if (ID == DS_Lop_Head->data.student[i].StudentID) { 
@@ -1292,7 +1316,9 @@ void AddStudentIntoCourse(Course& temp){
         }
         if (kt){
             TextColor(4);
-            cout << "Ma so sinh vien khong ton tai" << endl;
+            GoTo(54, 7); cout << "Student ID doesn't exist" << endl;
+            sleep(1);
+            system("cls");
             TextColor(7);
         }
         else{
@@ -1304,20 +1330,22 @@ void AddStudentIntoCourse(Course& temp){
             }
             if (kt){
                 TextColor(4);
-                cout << "Ma so sinh vien da ton tai trong khoa hoc" << endl;
+                GoTo(54, 7); cout << "This student ID has already existed in course" << endl;
+                sleep(1);
+                system("cls");
                 TextColor(7);
             }
         }
     }
-    cout << res.FirstName << endl;
-    cout << res.LastName << endl;
-    cout << res.Gender << endl;
-    cout << res.DateOfBirth << endl;
-    cout << res.StudentID << endl;
-    cout << res.SocialID << endl;
+    GoTo(54, 7); cout << res.FirstName << endl;
+    GoTo(54, 8); cout << res.LastName << endl;
+    GoTo(54, 9); cout << res.Gender << endl;
+    GoTo(54, 10);cout << res.DateOfBirth << endl;
+    GoTo(54, 11);cout << res.StudentID << endl;
+    GoTo(54, 12);cout << res.SocialID << endl;
     temp.student[temp.NumberOfStudent_Current] = res;
     TextColor(2);
-    cout <<"Da them sinh vien nay vao khoa hoc" << endl;
+    GoTo(54, 13); cout <<"Successfully" << endl;
     TextColor(7);
     system("pause");
     temp.NumberOfStudent_Current++;
@@ -1334,9 +1362,9 @@ void AddStudentIntoCourse(){
     system("cls");
     extern hcmus NamHoc;
     string courseName, className;
-    cout <<"Enter name of course: ";
+    GoTo(54, 5); cout <<"Enter name of course: ";
     getline(cin, courseName);
-    cout <<"Enter class name of the course: ";
+    GoTo(54, 6); cout <<"Enter class name of the course: ";
     getline(cin, className);
     int n = NamHoc.NumberOfSchoolYear - 1;
     int hocky_stt = NamHoc.ptr[n].NumberOfSemester;
@@ -1347,7 +1375,9 @@ void AddStudentIntoCourse(){
         tam = tam->pNext;
     }
     if (!kt){
-        cout << "This course does not exist" << endl;
+        TextColor(4);
+        GoTo(54, 7); cout << "This course does not exist" << endl;
+        TextColor(7);
         system("pause");
         return;
     }
@@ -1361,7 +1391,7 @@ void AddStudentIntoCourse(){
     while (kt){
         //kt = 1;
         DS_Lop_Head = NamHoc.ptr[NamHoc.NumberOfSchoolYear - 1].HeadList;
-        cout <<"Nhap lop cua sinh vien do: ";
+        GoTo(54, 7); cout <<"Enter student's class: ";
         getline(cin, CMPnameClass);
         while (DS_Lop_Head != nullptr){
             if (DS_Lop_Head->data.nameClass == CMPnameClass){kt = 0; break;}
@@ -1370,7 +1400,7 @@ void AddStudentIntoCourse(){
         }
         if (kt){
             TextColor(4);
-            cout <<"Lop hoc khong ton tai, vui long nhap lai" << endl;
+            GoTo(54,8); cout <<"This class doesn't exist" << endl;
             TextColor(7);
         }
     }
@@ -1378,7 +1408,7 @@ void AddStudentIntoCourse(){
     kt = 1;
     StudentInfo res;
     while (kt){
-        cout <<"Nhap ma so sinh vien: ";
+        GoTo(54, 8); cout <<"Enter student ID: ";
         getline(cin, ID);
         for (int i = 0; i < DS_Lop_Head->data.NumberOfStudent_Current; i++){
             if (ID == DS_Lop_Head->data.student[i].StudentID) { 
@@ -1389,7 +1419,7 @@ void AddStudentIntoCourse(){
         }
         if (kt){
             TextColor(4);
-            cout << "Ma so sinh vien khong ton tai" << endl;
+            GoTo(54, 9); cout << "Student ID doesn't exist" << endl;
             TextColor(7);
         }
         else{
@@ -1401,20 +1431,20 @@ void AddStudentIntoCourse(){
             }
             if (kt){
                 TextColor(4);
-                cout << "Ma so sinh vien da ton tai trong khoa hoc" << endl;
+                GoTo(54, 9); cout << "This student ID has already existed in course" << endl;
                 TextColor(7);
             }
         }
     }
-    cout << res.FirstName << endl;
-    cout << res.LastName << endl;
-    cout << res.Gender << endl;
-    cout << res.DateOfBirth << endl;
-    cout << res.StudentID << endl;
-    cout << res.SocialID << endl;
+    GoTo(54, 9);  cout << res.FirstName << endl;
+    GoTo(54, 10); cout << res.LastName << endl;
+    GoTo(54, 11); cout << res.Gender << endl;
+    GoTo(54, 12); cout << res.DateOfBirth << endl;
+    GoTo(54, 13); cout << res.StudentID << endl;
+    GoTo(54, 14); cout << res.SocialID << endl;
     temp.student[temp.NumberOfStudent_Current] = res;
     TextColor(2);
-    cout <<"Da them sinh vien nay vao khoa hoc" << endl;
+    GoTo(54, 15); cout <<"Successfully" << endl;
     TextColor(7);
     system("pause");
     temp.NumberOfStudent_Current++;
@@ -1584,6 +1614,13 @@ void PrintListOfStudentInCourse(Course& temp){
                 }
                 if (c == 68){
                     if (ImportFileCSV(temp)){
+                        extern hcmus NamHoc;
+                        int n = NamHoc.NumberOfSchoolYear - 1;
+                        int hocky_stt = NamHoc.ptr[n].NumberOfSemester;
+                        string path = "Data\\" + NamHoc.ptr[n].SchoolYear + "\\Semester" + to_string(NamHoc.ptr[n].semester[hocky_stt].STT) + '\\' + temp.CourseID;
+                        //cout << path  << endl;
+                        //system("pause");
+                        WriteOnFile_Student(temp.student, temp.NumberOfStudent_Current, path);
                         TextColor(7);
                         system("cls");
                         GoTo(120, 1); 
@@ -1806,10 +1843,10 @@ void EditResult(Course& temp, int pos){
     cout <<"Sinh vien: " << temp.student[pos].FirstName + ' ' + temp.student[pos].LastName << endl;
     cout <<"MSSV     : " << temp.student[pos].StudentID << endl;
     string str[4];
-    str[0] = "Diem giua ky: ";
-    str[1] = "Diem cuoi ky: ";
-    str[2] = "Diem cong   : ";
-    str[3] = "Diem tong   : ";
+    str[0] = "Midterm Mark: ";
+    str[1] = "Final Mark  : ";
+    str[2] = "Other Mark  : ";
+    str[3] = "Total Mark  : ";
     float res[4];
     res[0] = temp.student[pos].Midterm_mark;
     res[1] = temp.student[pos].Final_mark;
@@ -1896,10 +1933,10 @@ void ExportFileCSV(Course temp){
     string filename = temp.CourseName + '_' + temp.ClassName + ".csv";
     ofstream ofs(filename);
     if (!ofs){
-        cout << "Co loi, khong mo duoc file";
+        cout << "Error opening file";
         return;
     }
-    ofs << "No,Name,Gender,Date of Birth,Student ID,Diem GK,Diem CK,Diem cong,Tong Phay" << endl;
+    ofs << "No,Name,Gender,Date of Birth,Student ID,Midterm Mark,Final Mark,Other Mark,Total Mark" << endl;
     for (int i = 0; i < temp.NumberOfStudent_Current; i++){
         ofs << i + 1 << ',';
         ofs << temp.student[i].FirstName << ' ' << temp.student[i].LastName  << ',';
@@ -1978,7 +2015,7 @@ void WriteOnFile_One_Student(StudentInfo temp, int stt, string path){
         cout << "Co loi khong mo duoc file";
         return;
     }
-    ofs << endl;
+    if (stt != 0) ofs << endl;
     ofs << stt + 1 << ',';
     ofs << temp.StudentID << ',';
     ofs << temp.FirstName << ',';
@@ -1998,8 +2035,11 @@ void WriteOnFile_Student(StudentInfo *temp, int n, string path){
     ofstream ofs(path);
     if (!ofs){
         cout << "Co loi khong mo duoc file";
+        //system("pause");
         return;
     }
+    //cout <<"Hello";
+    //system("pause");
     // ofs << "First Name,";
     // ofs << "Last Name,";
     // ofs << "Gender,";
@@ -2028,13 +2068,17 @@ void WriteOnFile_Student(StudentInfo *temp, int n, string path){
     ofs.close();
 }
 void WriteOnFile_One_Course(Course temp, string path){
+    extern hcmus NamHoc;
+    int n = NamHoc.NumberOfSchoolYear - 1;
+    int hocky_stt = NamHoc.ptr[n].NumberOfSemester;
+
     path = path + ".csv";
     ofstream ofs(path, ios::app);
     if (!ofs){
         cout <<"Co loi, khong ghi len file duoc" << endl;
         return;
     }
-    ofs << endl;
+    if (NamHoc.ptr[n].semester[hocky_stt].HeadList != nullptr) ofs << endl;
     ofs << temp.CourseID << ',';
     ofs << temp.CourseName << ',';
     ofs << temp.ClassName << ',';
@@ -2089,12 +2133,14 @@ void UploadAllInfor(){
     string path = "Data\\";
     //string s1, s2, s3, s4;
     char ch;
-    while (ifs >> schoolyear_stt){
+    while (!ifs.eof()){
+        getline(ifs, schoolyear_stt);
         reallocate(NamHoc);
         int n = NamHoc.NumberOfSchoolYear - 1;
         NamHoc.ptr[n].SchoolYear = schoolyear_stt;
         NamHoc.ptr[n].HeadList = nullptr;
         NamHoc.ptr[n].EndList = nullptr;
+        //cout << NamHoc.NumberOfSchoolYear <<' '<<NamHoc.ptr[n].SchoolYear <<' '<<path + schoolyear_stt + "\\List Of Classes.csv"<< endl;
         //cout << path + schoolyear_stt + "\\List Of Classes.csv" << endl;
         //system("pause");
         ifs1.open(path + schoolyear_stt + "\\List Of Classes.csv");
@@ -2110,7 +2156,7 @@ void UploadAllInfor(){
             getline(ifs1, node->data.nameClass, ',');
             getline(ifs1, node->data.major, ',');
             getline(ifs1, node->data.TimeBegin, ',');
-            ifs >> ch; //doc dau phay
+            //ifs1 >> ch; //doc dau phay
             ifs1 >> node->data.NumberOfStudent_max;
             node->data.student = new StudentInfo[node->data.NumberOfStudent_max + 1];
             ifs1.ignore();
@@ -2119,7 +2165,7 @@ void UploadAllInfor(){
             //system("pause");
             ifs2.open(path + schoolyear_stt + "\\Class\\" + node->data.nameClass + ".csv");
             if (!ifs2){
-                cout <<"Co loi khong mo duoc file" << endl;
+                cout <<"Co loi khong mo duoc file 1" << endl;
                 return;
             }
             int i = 0;
@@ -2162,7 +2208,7 @@ void UploadAllInfor(){
         ifs1.open(path + schoolyear_stt + "\\List Of Semester.csv");
         if (!ifs1){
             //cout  << path + schoolyear_stt + "\\List Of Semester.csv"  << endl;
-            cout <<"Co loi, khong mo duoc file2" << endl;
+            cout <<"Co loi, khong mo duoc file 2" << endl;
             return;
         }
         while (!ifs1.eof()){ //Course
@@ -2177,7 +2223,7 @@ void UploadAllInfor(){
             //system("pause");
             ifs2.open(path + schoolyear_stt + "\\Semester" + to_string(NamHoc.ptr[n].semester[Number_Semester].STT) + "\\Course.csv");
             if (!ifs2){
-                cout <<"Co loi khong mo duoc file" << endl;
+                cout <<"Co loi khong mo duoc file 3" << endl;
                 return;
             }
             //cout <<path + schoolyear_stt + "\\Semester" + to_string(NamHoc.ptr[n].semester[Number_Semester].STT) + "\\Course.csv" << endl;

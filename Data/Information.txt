@@ -14,15 +14,5 @@ Sinh Vien
 0823484108
 Cong nghe thong tin
 1
-22CTT2
-22120071
-Nguyen Quynh Huong
-13/10/2004
-22120070@student.ueh.edu.vn
-Sinh Vien
-056238410280
-0556843238
-Kinh doanh thuong mai
-0
-22ECOUEH
-22120070
+16CTT2
+20120009

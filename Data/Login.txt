@@ -1,4 +1,3 @@
-3
+2
 admin1 123 1
-baduc baduc 0
-quynhhuong baduc 0
+20120009 1234 0
